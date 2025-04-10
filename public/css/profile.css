@@ -1,0 +1,43 @@
+body {
+    background: url('https://images.unsplash.com/photo-1519681393784-d120267933ba') no-repeat center center fixed;
+    background-size: cover;
+    min-height: 100vh;
+}
+
+.profile-icon {
+    font-size: 5rem;
+    color: #4361ee;
+}
+
+.nav-pills .nav-link.active {
+    background-color: #4361ee;
+}
+
+.nav-pills .nav-link {
+    color: #2c3e50;
+    transition: all 0.3s ease;
+}
+
+.nav-card {
+background-color: rgba(255, 255, 255, 0.98);
+border-radius: 15px;
+box-shadow: 0 10px 25px rgba(67, 97, 238, 0.15);
+transition: all 0.3s ease;
+}
+
+.content-card {
+background-color: rgba(255, 255, 255, 0.98);
+border-radius: 15px;
+box-shadow:0px 10px 20px 10px rgba(67, 97, 238, 0.15);
+height: 100%;
+}
+
+.nav-card:hover, .content-card:hover {
+box-shadow: 0 12px 30px rgba(67, 97, 238, 0.2);
+transform: translateY(-2px);
+}
+
+.card {
+box-shadow: 0 15px 35px rgba(67, 97, 238, 0.2) !important;
+border: none !important;
+}

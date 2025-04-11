@@ -4,6 +4,15 @@
 
 @push('styles')
 <style>
+    body {
+        background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+            url('https://images.unsplash.com/photo-1521587760476-6c12a4b040da?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+        background-size: cover;
+        background-position: center;
+        background-attachment: fixed;
+        min-height: 100vh;
+    }
+
     .member-card {
         transition: all 0.3s ease;
         border: none;
@@ -21,13 +30,13 @@
         left: -50%;
         width: 200%;
         height: 200%;
-        background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1));
+        background: linear-gradient(45deg, transparent, rgba(196, 188, 188, 0.53));
         transform: rotate(45deg);
     }
 
     .member-card:hover {
         transform: translateY(-5px);
-        box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        box-shadow: 0 10px 20px rgb(0, 0, 0);
     }
 
     .card-icon {
@@ -44,7 +53,7 @@
         position: absolute;
         top: 10px;
         right: 10px;
-        background: rgba(255,255,255,0.2);
+        background: rgba(255, 255, 255, 0.2);
         padding: 5px 10px;
         border-radius: 20px;
         font-size: 0.8rem;
@@ -68,7 +77,7 @@
 @section('content')
 <div class="container-fluid py-4">
     <h2 class="mb-4">Welcome Back, {{ Auth::user()->name }}</h2>
-    
+
     <div class="row g-4">
         <!-- Account Status Card -->
         <div class="col-12 col-md-6 col-xl-3" data-type="status" data-route="">
@@ -79,7 +88,7 @@
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
                         <h5 class="mb-0">Active</h5>
-                        <p class="mb-0">Account Status</p>
+                        <p class="mb-0">Membership Status</p>
                     </div>
                     <i class="bi bi-shield-check card-icon"></i>
                 </div>
@@ -88,11 +97,11 @@
 
         <!-- Remaining Limits Card -->
         <div class="col-12 col-md-6 col-xl-3" data-type="limits" data-route="">
-            <div class="member-card bg-info p-4 shadow">
+            <div class="member-card bg-dark p-4 shadow">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
                         <h5 class="mb-0">25</h5>
-                        <p class="mb-0">Remaining Books</p>
+                        <p class="mb-0">Remaining Books Limit</p>
                     </div>
                     <i class="bi bi-journal-check card-icon"></i>
                 </div>
@@ -129,11 +138,11 @@
     <!-- Dynamic Content Section -->
     <div id="dynamic-content" class="dynamic-content"></div>
 
-   
-@endsection
 
-@push('scripts')
-<!-- <script>
+    @endsection
+
+    @push('scripts')
+    <!-- <script>
 document.querySelectorAll('.member-card').forEach(card => {
     card.addEventListener('click', async function() {
         // Remove active class from all cards
@@ -235,4 +244,4 @@ document.querySelectorAll('.member-card').forEach(card => {
     });
 });
 </script> -->
-@endpush
+    @endpush

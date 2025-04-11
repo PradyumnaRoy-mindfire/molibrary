@@ -71,12 +71,20 @@ class AuthController extends Controller
             'password' => 'required|min:6',
             'role' => 'required|in:librarian,member,library_admin,super_admin',
         ]);
-
+        
         if (Auth::attempt($loginData)) {
-            return redirect()->route('dashboard');
-        } else {
-            return redirect()->route('login')->with('loginFailed', "Credential is not valid...Try Again");
-        }
+            $user = Auth::user();
+            
+            if ($user->role === 'super_admin') {
+                return redirect()->route('superadmin-dashboard');
+            } elseif ($user->role === 'library_admin') {
+                return redirect()->route('libraryadmin-dashboard');
+            } elseif ($user->role === 'librarian') {
+                return redirect()->route('librarian-dashboard');
+            } else {
+                return redirect()->route('member-dashboard');
+            }
+        } 
     }
 
     public function profileUpdate(Request $request) {

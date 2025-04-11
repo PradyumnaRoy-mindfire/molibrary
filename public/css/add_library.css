@@ -1,0 +1,76 @@
+.library-form-container {
+    background-color: rgba(255, 255, 255, 0.91); /* more transparent */
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.form-header {
+    border-bottom: 2px solid #4361ee;
+    padding-bottom: 15px;
+}
+
+.form-control, .form-select {
+    border-radius: 8px;
+    padding: 12px 15px;
+    border: 1px solid #ced4da;
+    transition: all 0.3s;
+}
+
+.form-control:focus, .form-select:focus {
+    border-color: #4361ee;
+    box-shadow: 0 0 0 0.25rem rgba(67, 97, 238, 0.25);
+}
+
+.btn-submit {
+    background-color: #4361ee;
+    border: none;
+    padding: 12px 25px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    transition: all 0.3s;
+}
+
+.btn-submit:hover {
+    background-color: #3a56d4;
+    transform: translateY(-2px);
+}
+
+.btn-view {
+    background-color: #6c757d;
+    color: white;
+    padding: 12px 25px;
+    text-decoration: none;
+    border-radius: 8px;
+}
+
+.btn-view:hover {
+    background-color: #5a6268;
+    text-decoration: none;
+    color: white;
+}
+
+.form-label {
+    font-weight: 500;
+    color: #2b2d42;
+}
+
+.library-icon {
+    font-size: 2.5rem;
+    color: #4361ee;
+}
+
+.form-error {
+    color: red;
+    font-size: 0.9rem;
+    margin-top: 4px;
+    display: block;
+}
+
+@media (max-width: 576px) {
+    .btn-actions {
+        flex-direction: column;
+    }
+    .btn-actions a, .btn-actions button {
+        width: 100%;
+    }
+}

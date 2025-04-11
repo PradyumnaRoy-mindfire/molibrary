@@ -13,6 +13,12 @@
             margin: 0;
             padding: 0;
             overflow-x: hidden;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
+                        url('https://images.unsplash.com/photo-1521587760476-6c12a4b040da?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
         }
 
         .horizontal-nav {
@@ -123,7 +129,6 @@
             width: 80%;
             justify-content: center;
             text-align: center;
-            /* padding-left: 0.75rem; */
             padding-right: 0.75rem;
         }
 
@@ -183,56 +188,88 @@
 
     <!-- Sidebar -->
     <div id="sidebar" class="sidebar">
-        <ul class="nav flex-column px-3" id="sideNavLinks">
+        <ul class="nav flex-column px-3 pt-4" id="sideNavLinks">
+            <!-- Super addmin nav item -->
+            @if(Auth::user()->role === 'super_admin')
             <li class="nav-item mb-2">
-                <a class="nav-link active" href="#"><i class="bi bi-house-door me-2 fs-4 fw-bold "></i><span>Dashboard</span></a>
+                <a class="nav-link " href="{{ route('superadmin-dashboard') }}"><i class="bi bi-house-door me-2 fs-4 fw-bold "></i><span>Dashboard</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('add.library') }}">
+                    <i class="bi bi-building-add me-2 fs-4 fw-bold"></i>
+                    <span>Add Library</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('manage.library') }}">
+                    <i class="bi bi-gear-wide-connected me-2 fs-4 fw-bold"></i>
+                    <span>Manage Library</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('restricted.libraries') }}">
+                    <i class="bi bi-shield-lock me-2 fs-4 fw-bold"></i>
+                    <span>Restricted Libraries</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('library.admins') }}">
+                    <i class="bi bi-person-badge me-2 fs-4 fw-bold"></i>
+                    <span>Library Admins</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('all.members') }}">
+                    <i class="bi bi-people me-2 fs-4 fw-bold"></i>
+                    <span>All Members</span>
+                </a>
             </li>
 
-            @if(Auth::user()->role === 'super_admin')
-            <li class="nav-item">
-                <a class="nav-link" href="#"><i class="bi bi-shield-lock me-2 fs-4 fw-bold"></i><span>System Settings</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#"><i class="bi bi-people me-2 fs-4 fw-bold"></i><span>All Members</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#"><i class="bi bi-bookmark-check me-2 fs-4 fw-bold"></i><span>Reserved Books</span></a>
-            </li>
+            <!-- library admin nav item -->
             @elseif(Auth::user()->role === 'library_admin')
+            <li class="nav-item mb-2">
+                <a class="nav-link " href="{{ route('superadmin-dashboard') }}"><i class="bi bi-house-door me-2 fs-4 fw-bold "></i><span>Dashboard</span></a>
+            </li>
             <li class="nav-item">
                 <a class="nav-link" href="#"><i class="bi bi-building me-2 fs-4 fw-bold"></i><span>Library Management</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#"><i class="bi bi-file-bar-graph me-2 fs-4 fw-bold"></i><span>Reports</span></a>
             </li>
+
+            <!-- Librarian nav -->
             @elseif(Auth::user()->role === 'librarian')
+            <li class="nav-item mb-2">
+                <a class="nav-link " href="{{ route('superadmin-dashboard') }}"><i class="bi bi-house-door me-2 fs-4 fw-bold "></i><span>Dashboard</span></a>
+            </li>
             <li class="nav-item">
                 <a class="nav-link" href="#"><i class="bi bi-book me-2 fs-4 fw-bold"></i><span>Book Management</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#"><i class="bi bi-person-lines-fill me-2 fs-4 fw-bold"></i><span>Member Management</span></a>
+                <a class="nav-link" href="#"><i class="bi bi-person-lines-fill me-2 fs-4 fw-bold"></i><span>Member Manage</span></a>
             </li>
             @elseif(Auth::user()->role === 'member')
-            <li class="nav-item">
-                <a class="nav-link" href="#"><i class="bi bi-search me-3 fs-3 fw-bold"></i><span>Browse Books</span></a>
+            <li class="nav-item mb-2">
+                <a class="nav-link " href="{{ route('member-dashboard') }}"><i class="bi bi-house-door me-2 fs-4 fw-bold "></i><span>Dashboard</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#"><i class="bi bi-clock-history me-3 fs-3 fw-bold"></i><span>Borrowing History</span></a>
+                <a class="nav-link" href="{{ route('browse-books') }}"><i class="bi bi-search me-3 fs-3 fw-bold"></i><span>Browse Books</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#"><i class="bi bi-book-half me-3 fs-3 fw-bold"></i></i><span>Reserved Books</span></a>
+                <a class="nav-link" href="{{ route('borrowing-history') }}"><i class="bi bi-clock-history me-3 fs-3 fw-bold"></i><span>Borrowing History</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#"><i class="bi bi-file-earmark-pdf me-3 fs-3 fw-bold"></i><span>e-Books</span></a>
+                <a class="nav-link" href="{{ route('reserved-books') }}"><i class="bi bi-book-half me-3 fs-3 fw-bold"></i></i><span>Reserved Books</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('books') }}"><i class="bi bi-file-earmark-pdf me-3 fs-3 fw-bold"></i><span>e-Books</span></a>
             </li>
             @endif
 
             <li class="nav-item">
-                <a class="nav-link" href="#"><i class="bi bi-gear me-2 fs-4 fw-bold"></i><span>Settings</span></a>
+                <a class="nav-link" href="{{ route('settings') }}"><i class="bi bi-gear me-2 fs-4 fw-bold"></i><span>Settings</span></a>
             </li>
 
-
-            <!-- Logout styled like others -->
             <form method="get" action="{{ route('logout') }}">
                 @csrf
                 <button type="submit" class="nav-link text-danger w-100 text-start">
@@ -241,54 +278,13 @@
             </form>
         </ul>
     </div>
-
     
 
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        const sidebar = document.getElementById("sidebar");
-        const mainContent = document.getElementById("mainContent");
-        const toggleBtn = document.getElementById("sidebarToggle");
+    <script src="{{ url('js/navbar.js') }}"></script>
 
-        toggleBtn.addEventListener("click", () => {
-            sidebar.classList.toggle("collapsed");
-            mainContent?.classList.toggle("full");
-        });
 
-        // Highlight active link
-        document.querySelectorAll('#sideNavLinks .nav-link').forEach(link => {
-            link.addEventListener('click', () => {
-                document.querySelectorAll('#sideNavLinks .nav-link').forEach(l => l.classList.remove('active'));
-                link.classList.add('active');
-            });
-        });
-
-        // Notification toggle
-        const notificationBtn = document.getElementById("notificationBtn");
-        const notificationBox = document.getElementById("notificationBox");
-
-        notificationBtn.addEventListener("click", () => {
-            notificationBox.style.display = notificationBox.style.display === "none" ? "block" : "none";
-        });
-
-        document.addEventListener("click", function(event) {
-            if (!notificationBtn.contains(event.target) && !notificationBox.contains(event.target)) {
-                notificationBox.style.display = "none";
-            }
-        });
-    </script>
 </body>
 
 </html>
-
-
-
-
-
-
-
-
-
-
-
-

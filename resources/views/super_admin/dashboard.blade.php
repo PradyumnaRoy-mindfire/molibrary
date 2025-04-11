@@ -1,10 +1,16 @@
 @extends('layout.app')
 
-@section('title', 'Superadmin Dashboard')
-
-@push('styles')
+@section('title', 'Super Admin Dashboard')
 <style>
-    .stats-card {
+    body{
+        background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
+                        url('https://images.unsplash.com/photo-1521587760476-6c12a4b040da?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            min-height: 100vh;
+    }
+    .member-card {
         transition: all 0.3s ease;
         border: none;
         border-radius: 15px;
@@ -14,42 +20,30 @@
         overflow: hidden;
     }
 
-    .stats-card::before {
+    .member-card::before {
         content: '';
         position: absolute;
         top: -50%;
         left: -50%;
         width: 200%;
         height: 200%;
-        background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1));
+        background: linear-gradient(45deg, transparent, rgba(196, 188, 188, 0.53));
         transform: rotate(45deg);
     }
 
-    .stats-card:hover {
+    .member-card:hover {
         transform: translateY(-5px);
-        box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        box-shadow: 0 10px 20px rgb(0, 0, 0);
     }
 
     .card-icon {
-        font-size: 2.5rem;
-        opacity: 0.8;
+        font-size: 2rem;
+        opacity: 0.9;
         transition: transform 0.3s ease;
     }
 
-    .stats-card:hover .card-icon {
+    .member-card:hover .card-icon {
         transform: scale(1.1);
-    }
-
-    .more-options {
-        position: absolute;
-        top: 10px;
-        right: 10px;
-        opacity: 0.8;
-        transition: opacity 0.3s ease;
-    }
-
-    .stats-card:hover .more-options {
-        opacity: 1;
     }
 
     .dynamic-content {
@@ -64,153 +58,73 @@
         opacity: 1;
         margin-top: 20px;
     }
-
-    .data-table {
-        background: white;
-        border-radius: 15px;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    }
 </style>
-@endpush
 
 @section('content')
 <div class="container-fluid py-4">
-    <h2 class="mb-4">Superadmin Dashboard Overview</h2>
+    <h2 class="mb-4">Library Analytics Dashboard</h2>
     
     <div class="row g-4">
-        <!-- Total Users-->
-        <div class="col-12 col-md-6 col-xl-3" data-type="users" data-route="">
-            <div class="stats-card bg-primary p-4 shadow">
-                <button class="btn btn-link more-options text-white p-0">
-                    <i class="bi bi-three-dots-vertical"></i>
-                </button>
+        <!-- Top Choices Books -->
+        <div class="col-12 col-md-6 col-xl-3" data-type="top-books" data-route="">
+            <div class="member-card bg-purple p-4 shadow" style="background: #6f42c1;">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
-                        <h5 class="mb-0">25</h5>
-                        <p class="mb-0">Total Users</p>
+                        <h5 class="mb-0">1.2K</h5>
+                        <p class="mb-0">Top Choices Books</p>
                     </div>
-                    <i class="bi bi-people-fill card-icon"></i>
+                    <i class="bi bi-fire card-icon"></i>
                 </div>
             </div>
         </div>
 
-        <!-- Active Member -->
-        <div class="col-12 col-md-6 col-xl-3" data-type="members" data-route="">
-            <div class="stats-card bg-success p-4 shadow">
-                <button class="btn btn-link more-options text-white p-0">
-                    <i class="bi bi-three-dots-vertical"></i>
-                </button>
+        <!-- Popular Libraries -->
+        <div class="col-12 col-md-6 col-xl-3" data-type="popular-libraries" data-route="">
+            <div class="member-card bg-orange p-4 shadow" style="background: #fd7e14;">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
-                        <h5 class="mb-0">20</h5>
-                        <p class="mb-0">Active Members</p>
+                        <h5 class="mb-0">48</h5>
+                        <p class="mb-0">Popular Libraries</p>
                     </div>
-                    <i class="bi bi-person-check-fill card-icon"></i>
+                    <i class="bi bi-building-gear card-icon"></i>
                 </div>
             </div>
         </div>
 
-        <!-- Total Libraries -->
-        <div class="col-12 col-md-6 col-xl-3" data-type="libraries" data-route="">
-            <div class="stats-card bg-info p-4 shadow">
-                <button class="btn btn-link more-options text-white p-0">
-                    <i class="bi bi-three-dots-vertical"></i>
-                </button>
+        <!-- Most Reserved Books -->
+        <div class="col-12 col-md-6 col-xl-3" data-type="reserved-books" data-route="">
+            <div class="member-card bg-teal p-4 shadow" style="background: #20c997;">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
-                        <h5 class="mb-0">15</h5>
-                        <p class="mb-0">Total Libraries</p>
+                        <h5 class="mb-0">356</h5>
+                        <p class="mb-0">Most Reserved Books</p>
                     </div>
-                    <i class="bi bi-building-fill card-icon"></i>
+                    <i class="bi bi-bookmark-star card-icon"></i>
                 </div>
             </div>
         </div>
 
-        <!-- Total Books here -->
-        <div class="col-12 col-md-6 col-xl-3" data-type="books" data-route="">
-            <div class="stats-card bg-warning p-4 shadow">
-                <button class="btn btn-link more-options text-white p-0">
-                    <i class="bi bi-three-dots-vertical"></i>
-                </button>
+        <!-- Total Revenue -->
+        <div class="col-12 col-md-6 col-xl-3" data-type="total-revenue" data-route="">
+            <div class="member-card bg-blue p-4 shadow" style="background: #0d6efd;">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
-                        <h5 class="mb-0">10</h5>
-                        <p class="mb-0">Total Books</p>
+                        <h5 class="mb-0">₹1.2M</h5>
+                        <p class="mb-0">Total Revenue</p>
                     </div>
-                    <i class="bi bi-book-fill card-icon"></i>
+                    <i class="bi bi-currency-rupee card-icon"></i>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Dynamically Content will be added here-->
+    <!-- Dynamic Content Section -->
     <div id="dynamic-content" class="dynamic-content"></div>
 </div>
 @endsection
 
 @push('scripts')
-<!-- <script>
-document.querySelectorAll('.stats-card').forEach(card => {
-    card.addEventListener('click', async function() {
-        // Remove active class from all cards
-        document.querySelectorAll('.stats-card').forEach(c => {
-            c.classList.remove('active');
-        });
-        
-        // Add active class to clicked card
-        this.classList.add('active');
-        
-        const route = this.parentElement.dataset.route;
-        const dynamicContent = document.getElementById('dynamic-content');
-        
-        // Show loading state
-        dynamicContent.innerHTML = `
-            <div class="text-center py-4">
-                <div class="spinner-border text-primary" role="status">
-                    <span class="visually-hidden">Loading...</span>
-                </div>
-            </div>
-        `;
-        dynamicContent.classList.add('active');
+<script>
 
-        try {
-            const response = await fetch(route);
-            const data = await response.json();
-            
-            // Generate table HTML
-            const tableHtml = `
-                <div class="data-table p-4">
-                    <h5 class="mb-3">${data.title}</h5>
-                    <div class="table-responsive">
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    ${data.headers.map(header => `<th>${header}</th>`).join('')}
-                                </tr>
-                            </thead>
-                            <tbody>
-                                ${data.rows.map(row => `
-                                    <tr>
-                                        ${row.map(cell => `<td>${cell}</td>`).join('')}
-                                    </tr>
-                                `).join('')}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            `;
-
-            dynamicContent.innerHTML = tableHtml;
-            
-        } catch (error) {
-            dynamicContent.innerHTML = `
-                <div class="alert alert-danger">
-                    Error loading data: ${error.message}
-                </div>
-            `;
-            console.error('Error:', error);
-        }
-    });
-});
-</script> -->
+</script>
 @endpush

@@ -16,7 +16,7 @@
     @include('layout.navbar')
 
     <!-- Main content wrapper -->
-    <div id="mainContent" class="main-content">
+    <div id="mainContent" class="main-content pt-4">
         @yield('content')
     </div>
 

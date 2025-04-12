@@ -76,14 +76,17 @@ class AuthController extends Controller
             $user = Auth::user();
             
             if ($user->role === 'super_admin') {
-                return redirect()->route('superadmin-dashboard');
+                return redirect()->route('superadmin.dashboard');
             } elseif ($user->role === 'library_admin') {
-                return redirect()->route('libraryadmin-dashboard');
+                return redirect()->route('libraryadmin.dashboard');
             } elseif ($user->role === 'librarian') {
-                return redirect()->route('librarian-dashboard');
+                return redirect()->route('librarian.dashboard');
             } else {
-                return redirect()->route('member-dashboard');
+                return redirect()->route('member.dashboard');
             }
+        }
+        else {
+            return back()->with('loginFailed', 'Invalid credentials, please try again.');
         } 
     }
 

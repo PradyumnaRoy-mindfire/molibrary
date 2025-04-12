@@ -29,6 +29,11 @@
                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
                         @endif
+                        @if (session('resetPasswordSuccess'))
+                        <x-alert type="success">
+                            {{ session('resetPasswordSuccess') }}
+                        </x-alert>
+                        @endif
 
                         <form action="{{ route('login') }}" method="POST">
                             @csrf

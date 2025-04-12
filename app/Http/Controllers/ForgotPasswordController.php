@@ -39,7 +39,7 @@ class ForgotPasswordController extends Controller
             // $otp = rand(10000,99999);
             $otp = 12345;
             session(['otp' => $otp]);
-            // Mail::to($user->email)->send(new SendMail($this->otp));
+            // Mail::to($user->email)->send(new SendMail($otp));
         }
         return response()->json(['exists' => !!$user]);
     }
@@ -62,5 +62,25 @@ class ForgotPasswordController extends Controller
             
         }
         
+    }
+
+    public function resetPassword(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'password' => 'required|confirmed',
+        ]);
+    
+        if ($validator->fails()) {
+            return response()->json(['success' => false, 'errors' => $validator->errors()], 422);
+        }
+    
+        $user = User::where('email', $request->email)
+            ->where('role', $request->role)
+            ->first();
+        $user->password = $request->password;
+        $user->save();
+        
+        session()->flash('resetPasswordSuccess', 'Password reset successfully!');
+        return response()->json(['success' => true, 'message' => 'Password reset successfully']);
     }
 }

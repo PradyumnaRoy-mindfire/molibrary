@@ -14,13 +14,15 @@ class RoleMiddleware
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-    public function handle(Request $request, Closure $next): Response
+    public function handle(Request $request, Closure $next, $role): Response
     {
         $user = FacadesAuth::user();
-        $roles = ['super_admin','library_admin','librarian','member'];
-        if (!in_array($user->role, $roles)) {
+        // $roles = ['super_admin','library_admin','librarian','member'];
+        if ($user->role !== $role ) {
             abort(403, 'Unauthorized acccess.You can not enter this page...');
         }
         return $next($request);
+        
     }
+
 }

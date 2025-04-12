@@ -13,4 +13,5 @@ class MemberController extends Controller
     public function showDashboard()  {
         return view('member.dashboard');
     }
+    
 }

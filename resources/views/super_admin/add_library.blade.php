@@ -21,7 +21,7 @@
                             {{ session('libraryStored') }}
                         </x-alert>
                     @endif
-                    <form method="POST" id="libraryForm" action="{{ route('store-library') }}">
+                    <form method="POST" id="libraryForm" action="{{ route('store.library') }}">
                         @csrf
 
                         <div class="mb-4">
@@ -65,7 +65,7 @@
                                 <i class="bi bi-save me-2"></i>Add Library
                             </button>
 
-                            <a href="" class="btn-view">
+                            <a href="{{ route('manage.library') }}" class="btn-view">
                                 <i class="bi bi-eye me-2"></i>View Libraries
                             </a>
                         </div>

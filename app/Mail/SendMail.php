@@ -39,7 +39,7 @@ class SendMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'mail.forgot-password',
+            view: 'mail.forgot_password_otp_mail',
         );
     }
 

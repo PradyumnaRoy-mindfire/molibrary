@@ -192,7 +192,7 @@
             <!-- Super addmin nav item -->
             @if(Auth::user()->role === 'super_admin')
             <li class="nav-item mb-2">
-                <a class="nav-link " href="{{ route('superadmin-dashboard') }}"><i class="bi bi-house-door me-2 fs-4 fw-bold "></i><span>Dashboard</span></a>
+                <a class="nav-link " href="{{ route('superadmin.dashboard') }}"><i class="bi bi-house-door me-2 fs-4 fw-bold "></i><span>Dashboard</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('add.library') }}">
@@ -228,7 +228,7 @@
             <!-- library admin nav item -->
             @elseif(Auth::user()->role === 'library_admin')
             <li class="nav-item mb-2">
-                <a class="nav-link " href="{{ route('superadmin-dashboard') }}"><i class="bi bi-house-door me-2 fs-4 fw-bold "></i><span>Dashboard</span></a>
+                <a class="nav-link " href="{{ route('superadmin.dashboard') }}"><i class="bi bi-house-door me-2 fs-4 fw-bold "></i><span>Dashboard</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#"><i class="bi bi-building me-2 fs-4 fw-bold"></i><span>Library Management</span></a>
@@ -240,7 +240,7 @@
             <!-- Librarian nav -->
             @elseif(Auth::user()->role === 'librarian')
             <li class="nav-item mb-2">
-                <a class="nav-link " href="{{ route('superadmin-dashboard') }}"><i class="bi bi-house-door me-2 fs-4 fw-bold "></i><span>Dashboard</span></a>
+                <a class="nav-link " href="{{ route('superadmin.dashboard') }}"><i class="bi bi-house-door me-2 fs-4 fw-bold "></i><span>Dashboard</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#"><i class="bi bi-book me-2 fs-4 fw-bold"></i><span>Book Management</span></a>
@@ -250,16 +250,16 @@
             </li>
             @elseif(Auth::user()->role === 'member')
             <li class="nav-item mb-2">
-                <a class="nav-link " href="{{ route('member-dashboard') }}"><i class="bi bi-house-door me-2 fs-4 fw-bold "></i><span>Dashboard</span></a>
+                <a class="nav-link " href="{{ route('member.dashboard') }}"><i class="bi bi-house-door me-2 fs-4 fw-bold "></i><span>Dashboard</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('browse-books') }}"><i class="bi bi-search me-3 fs-3 fw-bold"></i><span>Browse Books</span></a>
+                <a class="nav-link" href="{{ route('browse.books') }}"><i class="bi bi-search me-3 fs-3 fw-bold"></i><span>Browse Books</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('borrowing-history') }}"><i class="bi bi-clock-history me-3 fs-3 fw-bold"></i><span>Borrowing History</span></a>
+                <a class="nav-link" href="{{ route('borrowing.history') }}"><i class="bi bi-clock-history me-3 fs-3 fw-bold"></i><span>Borrowing History</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('reserved-books') }}"><i class="bi bi-book-half me-3 fs-3 fw-bold"></i></i><span>Reserved Books</span></a>
+                <a class="nav-link" href="{{ route('reserved.books') }}"><i class="bi bi-book-half me-3 fs-3 fw-bold"></i></i><span>Reserved Books</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('books') }}"><i class="bi bi-file-earmark-pdf me-3 fs-3 fw-bold"></i><span>e-Books</span></a>

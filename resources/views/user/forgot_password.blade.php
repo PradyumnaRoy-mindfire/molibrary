@@ -61,34 +61,37 @@
                 </form>
 
                 {{-- Step 3: Reset Password --}}
-                <form id="step3-form" class="mt-4 d-none" method="POST" action="{{ route('check-user') }}">
-                    @csrf
+                <form id="step3-form" class="mt-4 d-none">
                     <label for="password" class="form-label fw-bold">New Password</label>
                     <input type="password" name="password" id="password" class="form-control form-control-lg mb-3" required>
 
                     <label for="password_confirmation" class="form-label fw-bold">Confirm New Password</label>
                     <input type="password" name="password_confirmation" id="password_confirmation" class="form-control form-control-lg mb-3" required>
 
-                    <button type="submit" class="btn btn-dark w-100 fw-bold">Reset Password</button>
+                    <button type="submit" class="btn btn-dark w-100 fw-bold" >Reset Password</button>
                 </form>
             </div>
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         let timerInterval;
         let seconds = 60;
+        let email = '';
+        let role = '';
 
+        // Function to send OTP 
         function sendOTP() {
-            const email = document.getElementById('email').value;
-            const role = document.getElementById('role').value;
+            email = document.getElementById('email').value;
+            role = document.getElementById('role').value;
 
             if (!email || !role) {
                 showAlert('Please enter email and select a role.', 'danger');
                 return;
             }
 
-            fetch("{{ route('check-user') }}", {
+            fetch("{{ route('check.user') }}", {
                     method: "POST",
                     headers: {
                         'Content-Type': 'application/json',
@@ -123,7 +126,7 @@
                 });
         }
 
-        
+
 
         function startTimer() {
             seconds = 60;
@@ -146,7 +149,7 @@
 
         function verifyOTP() {
             const otp = document.getElementById('otp').value;
-            fetch("{{ route('verify-otp') }}", {
+            fetch("{{ route('verify.otp') }}", {
                     method: "POST",
                     headers: {
                         'Content-Type': 'application/json',
@@ -161,7 +164,7 @@
                     if (otpRes.success) {
                         document.getElementById('step2-form').classList.add('d-none');
                         document.getElementById('step3-form').classList.remove('d-none');
-                        showAlert('OTP verified successfully','success')
+                        showAlert('OTP verified successfully', 'success')
                         startTimer();
                     } else {
                         showAlert('OTP does not match.', 'danger');
@@ -177,6 +180,39 @@
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
         `;
+        }
+        
+        document.getElementById("step3-form").addEventListener("submit", function(e) {
+            e.preventDefault();
+            resetPassword();
+        });
+
+        function resetPassword() {
+            const password = document.getElementById('password').value;
+            const password_confirmation = document.getElementById('password_confirmation').value;
+            fetch("{{ route('reset.password') }}", {
+                    method: "POST",
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                    },
+                    body: JSON.stringify({
+                        email,
+                        role,
+                        password,
+                        password_confirmation
+                    }),
+                })
+                .then(res => res.json())
+                .then(resetRes => {
+                    if (resetRes.success) {
+                        document.getElementById('step3-form').classList.add('d-none');
+                        showAlert('Password reset successfully', 'success')
+                        window.location.href = "{{ route('login') }}";
+                    } else {
+                        showAlert('Something went wrong. Please try again.', 'danger');
+                    }
+                });
         }
     </script>
 </body>

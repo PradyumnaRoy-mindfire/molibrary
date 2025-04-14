@@ -20,6 +20,8 @@ class SuperAdminController extends Controller
     {
         return view('super_admin.assign_admin', ['library' => $library]);
     }
+
+            //assigning admin to a library
     public function assignAdminToLibrary(Request $request, Library $library)
     {
         $request->validate([
@@ -53,7 +55,7 @@ class SuperAdminController extends Controller
             return back()->with('assignAdminError', 'User not found.');
         }
     }
-
+            //showing all members' ndetails, 
     public function showAllMembers()
     {
         //  member stats with fines and borrow counts
@@ -68,7 +70,7 @@ class SuperAdminController extends Controller
                 DB::raw('COUNT(DISTINCT borrows.id) as borrowed_books_count')
             )
             ->groupBy('users.id', 'users.name')
-            ->paginate(1);
+            ->paginate(10);
 
         // borrow category counts per member
         $categoryCounts = DB::table('users')
@@ -84,7 +86,7 @@ class SuperAdminController extends Controller
             ->groupBy('users.id', 'categories.name')
             ->get();
 
-        // Group top 3 categories per user
+        // Group top 3 preferred categories per user
         $topCategories = $categoryCounts->groupBy('user_id')->map(function ($group) {
             return $group
                 ->sortByDesc('borrow_count')
@@ -99,6 +101,8 @@ class SuperAdminController extends Controller
             $member->preferred_categories = $topCategories[$member->id] ?? [];
             return $member;
         });
-        return view('super_admin.allMembers', compact('members'));
+        return view('super_admin.all_members', compact('members'));
     }
+
+    
 }

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BookController;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\LibraryAdminController;
 use App\Http\Controllers\LibraryController;
@@ -64,7 +65,32 @@ Route::controller(MemberController::class)->group(function () {
     });
 });
 
+    //library admin sidebar features
+Route::controller(LibraryAdminController::class)->group(function(){
+    Route::middleware([Authenticate::class,RoleMiddleware::class.':library_admin'])->group(function (){
+        Route::get('/dashboard','showDashboard')->name('libraryadmin.dashboard');
+        Route::get('/manage-books','showLibrarybooks')->name('manage.books');
+    });
+});
 
+Route::controller(BookController::class)->group(function(){
+    Route::middleware([Authenticate::class,RoleMiddleware::class.':library_admin'])->group(function (){
+        // Route::get('/manage-books','showDashbooks')->name('libraryadmin.dashboard');
+    });
+});
+
+
+        //super admin controller (sidebar features)
+Route::controller(SuperAdminController::class)->group(function () {
+    Route::middleware([Authenticate::class, RoleMiddleware::class.':super_admin'])->group(function () {
+        Route::get('/superadmin-dashboard', 'showDashboard')->name('superadmin.dashboard');
+        Route::get('/manage-library/{library}/assign-admin', 'assignAdminForm')->name('assign.admin');
+        Route::post('/manage-library/{library}/assign-admin', 'assignAdminToLibrary')->name('assign.admin');
+        Route::get('/members', 'showAllMembers')->name('all.members');
+    });
+});
+
+        //library controller functioned by super admin
 Route::controller(LibraryController::class)->group(function () {
 
     Route::middleware(Authenticate::class , RoleMiddleware::class.':super_admin')->group(function () {
@@ -74,23 +100,9 @@ Route::controller(LibraryController::class)->group(function () {
         Route::get('/manage-library',  'showLibraries')->name('manage.library');
         Route::get('/restricted-libraries', 'restricted')->name('restricted.libraries');
 
-        Route::get('/library-admins', 'index')->name('library.admins');
+        Route::get('/library-admins', 'showLibraryAdmins')->name('library.admins');
+        Route::get('/library-admin-edit/{admin_id}', 'editLibraryAdminDetails')->name('library.admin.edit');
 
-    });
-});
-
-Route::controller(LibraryAdminController::class)->group(function(){
-    Route::middleware([Authenticate::class,RoleMiddleware::class.':library_admin'])->group(function (){
-        // Route::get('/library-admins', 'index')->name('library.admins');
-    });
-});
-
-Route::controller(SuperAdminController::class)->group(function () {
-    Route::middleware([Authenticate::class, RoleMiddleware::class.':super_admin'])->group(function () {
-        Route::get('/superadmin-dashboard', 'showDashboard')->name('superadmin.dashboard');
-        Route::get('/assign-admin/{library}', 'assignAdminForm')->name('assign.admin');
-        Route::post('/assign-admin/{library}', 'assignAdminToLibrary')->name('assign.admin');
-        Route::get('/members', 'showAllMembers')->name('all.members');
     });
 });
 

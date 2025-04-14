@@ -1,64 +1,10 @@
 @extends('layout.app')
 
 @section('title', 'Super Admin Dashboard')
-<style>
-    body{
-        background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
-                        url('https://images.unsplash.com/photo-1521587760476-6c12a4b040da?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed;
-            min-height: 100vh;
-    }
-    .member-card {
-        transition: all 0.3s ease;
-        border: none;
-        border-radius: 15px;
-        color: white;
-        cursor: pointer;
-        position: relative;
-        overflow: hidden;
-    }
 
-    .member-card::before {
-        content: '';
-        position: absolute;
-        top: -50%;
-        left: -50%;
-        width: 200%;
-        height: 200%;
-        background: linear-gradient(45deg, transparent, rgba(196, 188, 188, 0.53));
-        transform: rotate(45deg);
-    }
-
-    .member-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 20px rgb(0, 0, 0);
-    }
-
-    .card-icon {
-        font-size: 2rem;
-        opacity: 0.9;
-        transition: transform 0.3s ease;
-    }
-
-    .member-card:hover .card-icon {
-        transform: scale(1.1);
-    }
-
-    .dynamic-content {
-        transition: all 0.3s ease;
-        max-height: 0;
-        overflow: hidden;
-        opacity: 0;
-    }
-
-    .dynamic-content.active {
-        max-height: 1000px;
-        opacity: 1;
-        margin-top: 20px;
-    }
-</style>
+@push('styles')
+<link rel="stylesheet" href=" {{ url('css/super_admin_dashboard.css') }}">
+@endpush
 
 @section('content')
 <div class="container-fluid py-4">

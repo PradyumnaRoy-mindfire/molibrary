@@ -13,8 +13,8 @@
             margin: 0;
             padding: 0;
             overflow-x: hidden;
-            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), 
-                        url('https://images.unsplash.com/photo-1521587760476-6c12a4b040da?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+                url('https://images.unsplash.com/photo-1521587760476-6c12a4b040da?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
@@ -195,46 +195,40 @@
                 <a class="nav-link " href="{{ route('superadmin.dashboard') }}"><i class="bi bi-house-door me-2 fs-4 fw-bold "></i><span>Dashboard</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('add.library') }}">
-                    <i class="bi bi-building-add me-2 fs-4 fw-bold"></i>
-                    <span>Add Library</span>
-                </a>
+                <a class="nav-link" href="{{ route('add.library') }}"><i class="bi bi-building-add me-2 fs-4 fw-bold"></i><span>Add Library</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('manage.library') }}">
-                    <i class="bi bi-gear-wide-connected me-2 fs-4 fw-bold"></i>
-                    <span>Manage Library</span>
-                </a>
+                <a class="nav-link" href="{{ route('manage.library') }}"><i class="bi bi-gear-wide-connected me-2 fs-4 fw-bold"></i><span>Manage Library</span></a>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link" href="{{ route('restricted.libraries') }}">
                     <i class="bi bi-shield-lock me-2 fs-4 fw-bold"></i>
                     <span>Restricted Libraries</span>
                 </a>
+            </li> -->
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('library.admins') }}"><i class="bi bi-person-badge me-2 fs-4 fw-bold"></i><span>Library Admins</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('library.admins') }}">
-                    <i class="bi bi-person-badge me-2 fs-4 fw-bold"></i>
-                    <span>Library Admins</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('all.members') }}">
-                    <i class="bi bi-people me-2 fs-4 fw-bold"></i>
-                    <span>All Members</span>
-                </a>
+                <a class="nav-link" href="{{ route('all.members') }}"><i class="bi bi-people me-2 fs-4 fw-bold"></i><span>All Members</span></a>
             </li>
 
             <!-- library admin nav item -->
             @elseif(Auth::user()->role === 'library_admin')
             <li class="nav-item mb-2">
-                <a class="nav-link " href="{{ route('superadmin.dashboard') }}"><i class="bi bi-house-door me-2 fs-4 fw-bold "></i><span>Dashboard</span></a>
+                <a class="nav-link " href="{{ route('libraryadmin.dashboard') }}"><i class="bi bi-house-door me-2 fs-4 fw-bold "></i><span>Dashboard</span></a>
             </li>
+
             <li class="nav-item">
-                <a class="nav-link" href="#"><i class="bi bi-building me-2 fs-4 fw-bold"></i><span>Library Management</span></a>
+                <a class="nav-link" href="{{ route('manage.books') }}"><i class="bi bi-book-half me-2 fs-4 fw-bold"></i><span>Book Management</span></a>
             </li>
+
             <li class="nav-item">
-                <a class="nav-link" href="#"><i class="bi bi-file-bar-graph me-2 fs-4 fw-bold"></i><span>Reports</span></a>
+                <a class="nav-link" href="#"><i class="bi bi-tags me-2 fs-4 fw-bold"></i><span>Manage Genres</span> </a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="#"><i class="bi bi-person-check me-2 fs-4 fw-bold"></i><span>Approve Librarian</span></a>
             </li>
 
             <!-- Librarian nav -->
@@ -278,7 +272,7 @@
             </form>
         </ul>
     </div>
-    
+
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>

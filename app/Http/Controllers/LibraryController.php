@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Library;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class LibraryController extends Controller
 {
@@ -31,9 +32,32 @@ class LibraryController extends Controller
     // showing libraries
     public function showLibraries()
     {
-        $libraries = \App\Models\Library::leftJoin('users', 'libraries.admin_id', '=', 'users.id')
+        $libraries = Library::leftJoin('users', 'libraries.admin_id', '=', 'users.id')
             ->select('libraries.*', 'users.name as admin_name', 'users.email as admin_email')
             ->get();
         return view('super_admin.manage_library', ['libraries' => $libraries]);
+    }
+
+    //showing the library admins
+    public function showLibraryAdmins()
+    {
+        $admins = DB::table('libraries')
+            ->join('users', 'libraries.admin_id', '=', 'users.id')
+            ->leftJoin('librarians', 'libraries.id', '=', 'librarians.library_id')
+            ->select(
+                'users.id as admin_id',
+                'users.name as admin_name',
+                'libraries.name as library_name',
+                DB::raw('COUNT(librarians.id) as librarian_count')
+            )
+            ->groupBy('users.id', 'users.name', 'libraries.name')
+            ->paginate(10);
+
+        return view('super_admin.all_library_admins',compact('admins'));
+    }
+
+    //edit a library admin
+    public function editLibraryAdminDetails() {
+        
     }
 }

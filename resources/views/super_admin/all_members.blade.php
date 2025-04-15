@@ -55,6 +55,6 @@
 @endsection
 
 @push('scripts')
-<script src=" {{ url('js/allMember.js') }} "></script>
+<script src=" {{ url('js/super_admin/all_member.js') }} "></script>
 @endpush
 

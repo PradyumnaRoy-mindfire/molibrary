@@ -190,10 +190,10 @@
     <div id="sidebar" class="sidebar">
         <ul class="nav flex-column px-3 pt-4" id="sideNavLinks">
             <!-- Super addmin nav item -->
-            @if(Auth::user()->role === 'super_admin')
             <li class="nav-item mb-2">
-                <a class="nav-link " href="{{ route('superadmin.dashboard') }}"><i class="bi bi-house-door me-2 fs-4 fw-bold "></i><span>Dashboard</span></a>
+                <a class="nav-link " href="{{ route('dashboard') }}"><i class="bi bi-house-door me-2 fs-4 fw-bold "></i><span>Dashboard</span></a>
             </li>
+            @if(Auth::user()->role === 'super_admin')
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('add.library') }}"><i class="bi bi-building-add me-2 fs-4 fw-bold"></i><span>Add Library</span></a>
             </li>
@@ -215,9 +215,9 @@
 
             <!-- library admin nav item -->
             @elseif(Auth::user()->role === 'library_admin')
-            <li class="nav-item mb-2">
-                <a class="nav-link " href="{{ route('libraryadmin.dashboard') }}"><i class="bi bi-house-door me-2 fs-4 fw-bold "></i><span>Dashboard</span></a>
-            </li>
+            <!-- <li class="nav-item mb-2">
+                <a class="nav-link " href="{{-- route('libraryadmin.dashboard') --}}"><i class="bi bi-house-door me-2 fs-4 fw-bold "></i><span>Dashboard</span></a>
+            </li> -->
 
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('manage.books') }}"><i class="bi bi-book-half me-2 fs-4 fw-bold"></i><span>Book Management</span></a>
@@ -228,14 +228,14 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="#"><i class="bi bi-person-check me-2 fs-4 fw-bold"></i><span>Approve Librarian</span></a>
+                <a class="nav-link" href="approve.librarians"><i class="bi bi-person-check me-2 fs-4 fw-bold"></i><span>Approve Librarian</span></a>
             </li>
 
             <!-- Librarian nav -->
             @elseif(Auth::user()->role === 'librarian')
-            <li class="nav-item mb-2">
-                <a class="nav-link " href="{{ route('superadmin.dashboard') }}"><i class="bi bi-house-door me-2 fs-4 fw-bold "></i><span>Dashboard</span></a>
-            </li>
+            <!-- <li class="nav-item mb-2">
+                <a class="nav-link " href="{{-- route('superadmin.dashboard') --}}"><i class="bi bi-house-door me-2 fs-4 fw-bold "></i><span>Dashboard</span></a>
+            </li> -->
             <li class="nav-item">
                 <a class="nav-link" href="#"><i class="bi bi-book me-2 fs-4 fw-bold"></i><span>Book Management</span></a>
             </li>
@@ -243,9 +243,9 @@
                 <a class="nav-link" href="#"><i class="bi bi-person-lines-fill me-2 fs-4 fw-bold"></i><span>Member Manage</span></a>
             </li>
             @elseif(Auth::user()->role === 'member')
-            <li class="nav-item mb-2">
-                <a class="nav-link " href="{{ route('member.dashboard') }}"><i class="bi bi-house-door me-2 fs-4 fw-bold "></i><span>Dashboard</span></a>
-            </li>
+            <!-- <li class="nav-item mb-2">
+                <a class="nav-link " href="{{-- route('member.dashboard') --}}"><i class="bi bi-house-door me-2 fs-4 fw-bold "></i><span>Dashboard</span></a>
+            </li> -->
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('browse.books') }}"><i class="bi bi-search me-3 fs-3 fw-bold"></i><span>Browse Books</span></a>
             </li>

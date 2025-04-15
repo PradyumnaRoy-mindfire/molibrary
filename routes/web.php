@@ -2,10 +2,10 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BookController;
+use App\Http\Controllers\DashboardControler;
 use App\Http\Controllers\ForgotPasswordController;
 use App\Http\Controllers\LibraryAdminController;
 use App\Http\Controllers\LibraryController;
-use App\Http\Controllers\MailController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\SuperAdminController;
 use App\Http\Middleware\RoleMiddleware;
@@ -13,14 +13,9 @@ use Illuminate\Auth\Middleware\Authenticate;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('/home', function () {
-    return view('welcome');
+    return redirect()->route('login.form');
 });
 
-
-Route::get('/send-mail', [MailController::class, 'sendMail']);
 
 Route::controller(AuthController::class)->group(function () {
     Route::get('/register', 'showRegisterForm')->name('register.form');
@@ -39,6 +34,14 @@ Route::controller(AuthController::class)->group(function () {
     });
 });
 
+
+        //show role wise dahsboard
+Route::controller(DashboardControler::class)->group(function(){
+    Route::middleware(Authenticate::class)->group(function() {
+        Route::get('/dashboard','showDashboard')->name('dashboard');
+    });
+});
+
 Route::controller(ForgotPasswordController::class)->group(function () {
     Route::get('/forgot-password', 'forgotPassword')->name('forgot-password');
     Route::post('/check-user', 'initiateResetFormData')->name('check.user');
@@ -47,14 +50,10 @@ Route::controller(ForgotPasswordController::class)->group(function () {
     Route::post('/reset-password',  'resetPassword')->name('reset.password');
 });
 
-Route::post('/test-reset', function () {
-    return 'working';
-});
-
+        //member all features 
 Route::controller(MemberController::class)->group(function () {
-
-    Route::middleware(Authenticate::class)->group(function () {
-        Route::get('/member-dashboard', 'showDashboard')->name('member.dashboard');
+    Route::middleware(Authenticate::class,RoleMiddleware::class.':member')->group(function () {
+        // Route::get('/dashboard', 'showDashboard')->name('member.dashboard');
         // Route::get('books', 'books')->name('books');
 
         Route::get('/browse-books', 'books')->name('browse.books');
@@ -68,14 +67,20 @@ Route::controller(MemberController::class)->group(function () {
     //library admin sidebar features
 Route::controller(LibraryAdminController::class)->group(function(){
     Route::middleware([Authenticate::class,RoleMiddleware::class.':library_admin'])->group(function (){
-        Route::get('/dashboard','showDashboard')->name('libraryadmin.dashboard');
+        // Route::get('/dashboard','showDashboard')->name('libraryadmin.dashboard');
         Route::get('/manage-books','showLibrarybooks')->name('manage.books');
+        
+        Route::get('/approve-librarians','approveLibrarians')->name('approve.librarians');
+
     });
 });
 
 Route::controller(BookController::class)->group(function(){
     Route::middleware([Authenticate::class,RoleMiddleware::class.':library_admin'])->group(function (){
-        // Route::get('/manage-books','showDashbooks')->name('libraryadmin.dashboard');
+        Route::get('/manage-books/{library}/add-book','addBookForm')->name('add.book');
+        Route::post('/manage-books/{library}/store-book','storeBook')->name('book.store');
+
+        Route::get('/manage-books/{book}/edit-book','editBook')->name('edit.book');
     });
 });
 
@@ -83,7 +88,7 @@ Route::controller(BookController::class)->group(function(){
         //super admin controller (sidebar features)
 Route::controller(SuperAdminController::class)->group(function () {
     Route::middleware([Authenticate::class, RoleMiddleware::class.':super_admin'])->group(function () {
-        Route::get('/superadmin-dashboard', 'showDashboard')->name('superadmin.dashboard');
+        // Route::get('/dashboard', 'showDashboard')->name('superadmin.dashboard');
         Route::get('/manage-library/{library}/assign-admin', 'assignAdminForm')->name('assign.admin');
         Route::post('/manage-library/{library}/assign-admin', 'assignAdminToLibrary')->name('assign.admin');
         Route::get('/members', 'showAllMembers')->name('all.members');

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\LoginRequest;
+use App\Http\Requests\RegisterRequest;
 use App\Models\Library;
 use App\Models\Librarian;
 use App\Models\User;
@@ -16,6 +18,9 @@ class AuthController extends Controller
     //
     public function showLoginForm()
     {
+        if (Auth::user()) {
+            return redirect()->route('dashboard');
+        }
         return view('user.login');
     }
     public function showRegisterForm()
@@ -29,23 +34,10 @@ class AuthController extends Controller
     }
     
 
-    public function registerUser(Request $request)
+    public function registerUser(RegisterRequest $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => [
-                'required',
-                'email',
-                Rule::unique('users')->where(function ($query) use ($request) {
-                    return $query->where('role', $request->role);
-                })
-            ],
-            'phone' => 'required|max:10|min:10',
-            'password' => 'required|min:6',
-            'role' => 'required|in:librarian,member',
-            'library_id' => 'required_if:role,librarian|exists:libraries,id',
-        ]);
-
+        $request->validated();
+        
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -64,26 +56,13 @@ class AuthController extends Controller
         return redirect()->route('login')->with('success', 'Registration successful. Please wait for approval.');
     }
 
-    public function loginUser(Request $request)
+    public function loginUser(LoginRequest $request)
     {
-        $loginData = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required|min:6',
-            'role' => 'required|in:librarian,member,library_admin,super_admin',
-        ]);
+        $loginData = $request->validated();
         
         if (Auth::attempt($loginData)) {
             $user = Auth::user();
-            
-            if ($user->role === 'super_admin') {
-                return redirect()->route('superadmin.dashboard');
-            } elseif ($user->role === 'library_admin') {
-                return redirect()->route('libraryadmin.dashboard');
-            } elseif ($user->role === 'librarian') {
-                return redirect()->route('librarian.dashboard');
-            } else {
-                return redirect()->route('member.dashboard');
-            }
+            return redirect()->route('dashboard');
         }
         else {
             return back()->with('loginFailed', 'Invalid credentials, please try again.');

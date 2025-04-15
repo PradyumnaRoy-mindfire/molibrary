@@ -9,7 +9,7 @@
 @endpush
 
 @section('content')
-<div class="container my-5">
+<div class="container my-2">
     <h2 class="text-center mb-4 text-white">Library Overview</h2>
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
         @foreach ($libraries as $library)

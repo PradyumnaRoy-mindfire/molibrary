@@ -22,7 +22,6 @@ const currentUrl = window.location.href;
 
 document.querySelectorAll('#sideNavLinks .nav-link').forEach(link => {
     const linkUrl = link.href;
-    console.log(currentUrl,"  ",linkUrl);
     if (currentUrl === linkUrl || currentUrl.startsWith(linkUrl)||currentUrl.endsWith(linkUrl)) {
         link.classList.add('active');
     }

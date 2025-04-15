@@ -27,7 +27,8 @@ class LibraryAdminController extends Controller
                 'books.*',
                 'authors.name as author_name',
                 'categories.name as category_name',
-                'libraries.name as library_name'
+                'libraries.name as library_name',
+                'libraries.id as library_id' 
             )
             ->orderBy('books.created_at', 'desc')
             ->paginate(6); 
@@ -35,5 +36,9 @@ class LibraryAdminController extends Controller
         $categories = DB::table('categories')->get();
 
         return view('library_admin.manage_books', compact('books', 'categories'));
+    }
+
+    public function approveLibrarians() {
+        return view('library_admin.approve_librarians');
     }
 }

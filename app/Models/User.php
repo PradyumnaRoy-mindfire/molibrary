@@ -35,6 +35,10 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    public function librarian()
+    {
+        return $this->hasOne(Librarian::class);
+    }
     /**
      * Get the attributes that should be cast.
      *

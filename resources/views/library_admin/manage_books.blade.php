@@ -7,7 +7,7 @@
 
     {{-- Header Section --}}
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-3">
-        <h3 class="mb-3 mb-md-0 text-white">Book Collection</h3>
+        <h3 class="mb-3 mb-md-0 text-white">{{$books[0]->library->name}} Book Collection</h3>
         <a href="{{ route('add.book',$books[0]->library_id) }}" class="btn btn-success">
             <i class="bi bi-plus-circle me-1"></i> Add Book
         </a>
@@ -35,17 +35,17 @@
     {{-- Book Cards  --}}
     <div class="row" id="bookGrid">
         @foreach($books as $book)
-        <div class="col-md-4 mb-4 book-card" data-category="{{ Str::slug($book->category_name) }}">
+        <div class="col-md-4 mb-4 book-card" data-category="{{ Str::slug($book->category->name) }}">
             <div class="card shadow-sm h-100">
                 @if($book->image)
                     <img src="{{ asset('storage/'.$book->image) }}" class="card-img-top" alt="Book Image" style="height: 250px; object-fit: cover;">
                 @endif
                 <div class="card-body d-flex flex-column">
                     <h5 class="card-title text-primary">{{ $book->title }}</h5>
-                    <p class="card-text mb-1"><strong>Author:</strong> {{ $book->author_name }}</p>
-                    <p class="card-text mb-1"><strong>Library:</strong> {{ $book->library_name ?? 'N/A' }}</p>
+                    <p class="card-text mb-1"><strong>Author:</strong> {{ $book->author->name }}</p>
+                    <p class="card-text mb-1"><strong>Available:</strong> {{ $book->total_copies}}</p>
                     <div class="mb-1 d-flex justify-content-between">
-                        <span class="card-text"><strong>Category:</strong> {{ $book->category_name}}</span>
+                        <span class="card-text"><strong>Category:</strong> {{ $book->category->name}}</span>
                         <span class="card-text"><strong>Edition:</strong> {{ $book->edition }}</span>
                     </div>
                     <div class="mb-1 d-flex justify-content-between">

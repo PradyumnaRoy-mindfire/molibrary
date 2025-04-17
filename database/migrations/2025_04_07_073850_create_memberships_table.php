@@ -17,8 +17,8 @@ return new class extends Migration
             $table->unsignedBigInteger('plan_id');
             $table->unsignedBigInteger('user_id');
             $table->boolean('has_access')->default(false);
-            $table->date('start_date')->nullable();
-            $table->date('end_date')->nullable();
+            $table->dateTime('start_date')->nullable();
+            $table->dateTime('end_date')->nullable();
             $table->timestamp('renewed_at')->nullable(); 
             $table->timestamps();
 

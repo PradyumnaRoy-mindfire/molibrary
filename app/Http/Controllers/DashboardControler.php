@@ -18,7 +18,7 @@ class DashboardControler extends Controller
             case 'member':
                 return view('member.dashboard');
             case 'librarian':
-                return view('member.dashboard');
+                return view('librarian.dashboard');
             default:
                 abort(403, 'Unknown user role');
         }

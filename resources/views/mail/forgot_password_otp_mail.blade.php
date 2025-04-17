@@ -20,7 +20,7 @@
                                 Your OTP is:
                             </p>
                             <p style="font-size: 32px; font-weight: bold; color: #007bff; letter-spacing: 4px;">
-                                {{ $msg }}
+                                {{ $otp }}
                             </p>
                             <p style="font-size: 14px; color: #888;">
                                 This OTP is valid for a limited time. Please do not share it with anyone.

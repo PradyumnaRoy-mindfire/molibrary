@@ -3,6 +3,7 @@
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
+use Yajra\DataTables\Facades\DataTables;
 
 return Application::configure(basePath: dirname(__DIR__))
     ->withRouting(
@@ -12,11 +13,10 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         
-        // $middleware->getMiddlewareAliases([
-        //     'authenticate' => \App\Http\Middleware\Authenticate::class,
-        // ]);
+       
         
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
-    })->create();
+    })
+   ->create();

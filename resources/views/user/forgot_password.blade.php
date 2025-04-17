@@ -114,7 +114,7 @@
                             startTimer();
                         }, 1000);
 
-                        // If OTP is already handled by another endpoint/mail logic
+                        
 
                     } else {
                         showAlert('User not found with the given email and role.', 'danger');
@@ -214,6 +214,7 @@
                     }
                 });
         }
+        
     </script>
 </body>
 

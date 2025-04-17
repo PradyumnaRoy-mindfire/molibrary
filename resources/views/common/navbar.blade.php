@@ -200,12 +200,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('manage.library') }}"><i class="bi bi-gear-wide-connected me-2 fs-4 fw-bold"></i><span>Manage Library</span></a>
             </li>
-            <!-- <li class="nav-item">
-                <a class="nav-link" href="{{ route('restricted.libraries') }}">
-                    <i class="bi bi-shield-lock me-2 fs-4 fw-bold"></i>
-                    <span>Restricted Libraries</span>
-                </a>
-            </li> -->
+
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('library.admins') }}"><i class="bi bi-person-badge me-2 fs-4 fw-bold"></i><span>Library Admins</span></a>
             </li>
@@ -215,9 +210,7 @@
 
             <!-- library admin nav item -->
             @elseif(Auth::user()->role === 'library_admin')
-            <!-- <li class="nav-item mb-2">
-                <a class="nav-link " href="{{-- route('libraryadmin.dashboard') --}}"><i class="bi bi-house-door me-2 fs-4 fw-bold "></i><span>Dashboard</span></a>
-            </li> -->
+
 
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('manage.books') }}"><i class="bi bi-book-half me-2 fs-4 fw-bold"></i><span>Book Management</span></a>
@@ -228,14 +221,11 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="approve.librarians"><i class="bi bi-person-check me-2 fs-4 fw-bold"></i><span>Approve Librarian</span></a>
+                <a class="nav-link" href="{{ route('approve.librarians') }}"><i class="bi bi-person-check me-2 fs-4 fw-bold"></i><span>Approve Librarian</span></a>
             </li>
 
             <!-- Librarian nav -->
             @elseif(Auth::user()->role === 'librarian')
-            <!-- <li class="nav-item mb-2">
-                <a class="nav-link " href="{{-- route('superadmin.dashboard') --}}"><i class="bi bi-house-door me-2 fs-4 fw-bold "></i><span>Dashboard</span></a>
-            </li> -->
             <li class="nav-item">
                 <a class="nav-link" href="#"><i class="bi bi-book me-2 fs-4 fw-bold"></i><span>Book Management</span></a>
             </li>
@@ -255,6 +245,10 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('reserved.books') }}"><i class="bi bi-book-half me-3 fs-3 fw-bold"></i></i><span>Reserved Books</span></a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('memberships') }}"><i class="bi bi-people me-3 fs-3 fw-bold"></i><span>Membership</span></a>
+            </li>
+
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('books') }}"><i class="bi bi-file-earmark-pdf me-3 fs-3 fw-bold"></i><span>e-Books</span></a>
             </li>

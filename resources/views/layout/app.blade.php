@@ -13,7 +13,7 @@
     @stack('styles')
 </head>
 <body>
-    @include('layout.navbar')
+    @include('common.navbar')
 
     <!-- Main content wrapper (for 'section' yeild --'will be used ) -->
     <div id="mainContent" class="main-content pt-4">

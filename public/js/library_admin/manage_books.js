@@ -28,6 +28,7 @@ const buttons = document.querySelectorAll('.category-filter');
 
 buttons.forEach(button => {
     button.addEventListener('click', () => {
+        
         const category = button.getAttribute('data-category');
 
         // Handle "All"

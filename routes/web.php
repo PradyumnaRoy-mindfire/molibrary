@@ -8,6 +8,7 @@ use App\Http\Controllers\LibraryAdminController;
 use App\Http\Controllers\LibraryController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\SuperAdminController;
+use App\Http\Middleware\Membership;
 use App\Http\Middleware\RoleMiddleware;
 use Illuminate\Auth\Middleware\Authenticate;
 use Illuminate\Support\Facades\Route;
@@ -23,7 +24,6 @@ Route::controller(AuthController::class)->group(function () {
 
     Route::get('/login', 'showLoginForm')->name('login.form');
     Route::post('/login', 'loginUser')->name('login');
-
 
 
     Route::middleware(Authenticate::class)->group(function () {
@@ -53,14 +53,19 @@ Route::controller(ForgotPasswordController::class)->group(function () {
         //member all features 
 Route::controller(MemberController::class)->group(function () {
     Route::middleware(Authenticate::class,RoleMiddleware::class.':member')->group(function () {
-        // Route::get('/dashboard', 'showDashboard')->name('member.dashboard');
-        // Route::get('books', 'books')->name('books');
-
-        Route::get('/browse-books', 'books')->name('browse.books');
-        Route::get('/borrowing-history',  'books')->name('borrowing.history');
+        Route::get('/browse-books', 'browseBooks')->name('browse.books');
+        Route::get('/borrowing-history',  'showBorrowHistory')->name('borrowing.history');
         Route::get('/reserved-books', 'books')->name('reserved.books');
         Route::get('/books',  'books')->name('books'); // e-Books
-        Route::get('/settings',  'books')->name('settings'); // e-Books
+        Route::get('/settings',  'books')->name('settings'); 
+        Route::get('/memberships',  'showMembershipAndPlans')->name('memberships'); 
+            //search in books dynamically
+        Route::post('/books/search','bookSearch')->name('books.search');
+
+        Route::middleware(Membership::class)->group(function () {
+            Route::get('/borrow-books', 'bookSearch')->name('borrow.books');
+            // Other routes that need membership checks...
+        });
     });
 });
 
@@ -71,6 +76,8 @@ Route::controller(LibraryAdminController::class)->group(function(){
         Route::get('/manage-books','showLibrarybooks')->name('manage.books');
         
         Route::get('/approve-librarians','approveLibrarians')->name('approve.librarians');
+        // Route for handling the Accept and Reject actions
+        // Route::get('librarians/{id}/{action}', 'acceptOrReject')->name('librarians.accept_or_reject');
 
     });
 });
@@ -80,7 +87,8 @@ Route::controller(BookController::class)->group(function(){
         Route::get('/manage-books/{library}/add-book','addBookForm')->name('add.book');
         Route::post('/manage-books/{library}/store-book','storeBook')->name('book.store');
 
-        Route::get('/manage-books/{book}/edit-book','editBook')->name('edit.book');
+        Route::get('/manage-books/{book}/edit-book','editBookForm')->name('edit.book');
+        Route::put('/manage-books/{book}/edit-book','editBook')->name('edit.book');
     });
 });
 
@@ -88,7 +96,6 @@ Route::controller(BookController::class)->group(function(){
         //super admin controller (sidebar features)
 Route::controller(SuperAdminController::class)->group(function () {
     Route::middleware([Authenticate::class, RoleMiddleware::class.':super_admin'])->group(function () {
-        // Route::get('/dashboard', 'showDashboard')->name('superadmin.dashboard');
         Route::get('/manage-library/{library}/assign-admin', 'assignAdminForm')->name('assign.admin');
         Route::post('/manage-library/{library}/assign-admin', 'assignAdminToLibrary')->name('assign.admin');
         Route::get('/members', 'showAllMembers')->name('all.members');

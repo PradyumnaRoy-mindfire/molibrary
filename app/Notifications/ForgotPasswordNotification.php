@@ -7,14 +7,14 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class WelcomeNotification extends Notification
+class ForgotPasswordNotification extends Notification
 {
     use Queueable;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct(public $mailData)
+    public function __construct(public $otp)
     {
         //
     }
@@ -35,9 +35,8 @@ class WelcomeNotification extends Notification
     public function toMail(object $notifiable): MailMessage
     {
         return (new MailMessage)
-            ->line('The introduction to the notification.')
-            ->action('Notification Action', url('/'))
-            ->line('Thank you for using our application!');
+            ->view('mail.forgot_password_otp_mail', ['otp' => $this->otp['otp']])
+            ->subject('Your Password Reset OTP');
     }
 
     /**
@@ -49,7 +48,6 @@ class WelcomeNotification extends Notification
     {
         return [
             //
-
         ];
     }
 }

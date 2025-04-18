@@ -1,14 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\library_admin;
 
+use App\Http\Controllers\Controller;
 use App\Models\Book;
 use App\Models\Category;
 use App\Models\Library;
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB;
 
 class LibraryAdminController extends Controller
 {
@@ -50,7 +49,6 @@ class LibraryAdminController extends Controller
         $categories = Category::all();
 
         return view('library_admin.manage_books', compact('books', 'categories'));
-
     }
 
     public function approveLibrarians()
@@ -75,4 +73,6 @@ class LibraryAdminController extends Controller
             ->select(['id', 'name', 'email', 'created_at'])->get();
         return view('library_admin.approve_librarians', compact('librarians'));
     }
+
+   
 }

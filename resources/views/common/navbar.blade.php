@@ -217,7 +217,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="#"><i class="bi bi-tags me-2 fs-4 fw-bold"></i><span>Manage Genres</span> </a>
+                <a class="nav-link" href="{{ route('manage.genres') }}"><i class="bi bi-tags me-2 fs-4 fw-bold"></i><span>Manage Genres</span> </a>
             </li>
 
             <li class="nav-item">

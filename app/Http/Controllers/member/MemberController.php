@@ -1,9 +1,11 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\member;
 
+use App\Http\Controllers\Controller;
 use App\Models\Book;
 use App\Models\Category;
+use App\Models\Plan;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -64,7 +66,8 @@ class MemberController extends Controller
     }
 
     public function showMembershipAndPlans(){
-        return view('member.membership_plans');
+        $plans = Plan::all();
+        return view('member.membership_plans',compact('plans'));
     }
 
     public function showBorrowHistory(Request $request, DataTables $dataTables){

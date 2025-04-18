@@ -1,7 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\library_admin;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\BookRequest;
 use App\Models\Author;
 use App\Models\Book;

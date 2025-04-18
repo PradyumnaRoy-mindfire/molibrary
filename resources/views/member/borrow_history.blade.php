@@ -1,6 +1,6 @@
 @extends('layout.app')
 
-@section('title' ,'borrow_history')
+@section('title' ,'Borrow history')
 
 @push('styles')
 <link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.css" />

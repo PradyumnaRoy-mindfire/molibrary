@@ -1,0 +1,240 @@
+.category-card {
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+    margin-bottom: 25px;
+    background-color: #fff;
+    height: 100%;
+}
+
+.category-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.category-header {
+    padding: 15px 20px;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.category-body {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    height: calc(100% - 58px);
+}
+
+.description-container {
+    max-height: 80px;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+    position: relative;
+}
+
+.description-container.expanded {
+    max-height: 1000px;
+}
+
+.see-more-btn {
+    color: #6c5ce7;
+    background: none;
+    border: none;
+    padding: 0;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-top: 5px;
+    display: none;
+}
+
+.see-more-btn:hover {
+    color: #5649c0;
+    text-decoration: underline;
+}
+
+.edit-btn {
+    background: rgba(255, 255, 255, 0.2);
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.edit-btn:hover {
+    background: rgba(255, 255, 255, 0.4);
+}
+
+.stats-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+    margin-top: 20px;
+    margin-bottom: auto;
+}
+
+.stat-box {
+    padding: 15px;
+    text-align: center;
+    border-radius: 8px;
+}
+
+.available-box {
+    background-color: #e3f2fd;
+}
+
+.borrowed-box {
+    background-color: #f3e5f5;
+}
+
+.stat-value {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.available-value {
+    color: #1976d2;
+}
+
+.borrowed-value {
+    color: #9c27b0;
+}
+
+.stat-label {
+    font-size: 0.85rem;
+    color: #6c757d;
+}
+
+.progress {
+    height: 8px;
+    margin-top: 5px;
+}
+
+.edit-form {
+    display: none;
+    margin-bottom: 15px;
+}
+
+.edit-form.active {
+    display: block;
+}
+
+.edit-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.category-name-input {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    color: white;
+    border-radius: 4px;
+    padding: 6px 10px;
+    font-size: 1.25rem;
+    width: 100%;
+    max-width: calc(100% - 40px);
+}
+
+.category-name-input:focus {
+    outline: none;
+    border-color: rgba(255, 255, 255, 0.5);
+}
+
+.edit-name-form {
+    flex-grow: 1;
+    margin-right: 10px;
+    display: none;
+}
+
+.header-content {
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+}
+
+.name-edit-buttons {
+    display: none;
+    position: absolute;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 4px;
+    padding: 5px;
+}
+
+
+.error-message {
+    color: #dc3545;
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    display: none;
+}
+
+.availability-section {
+    margin-top: auto;
+}
+
+.card-color-1 {
+    background-color: #6c5ce7;
+}
+
+.card-color-2 {
+    background-color: #2ecc71;
+}
+
+.card-color-3 {
+    background-color: #e74c3c;
+}
+
+.card-color-4 {
+    background-color: #3498db;
+}
+
+.card-color-5 {
+    background-color: #f39c12;
+}
+
+.card-color-6 {
+    background-color: #9b59b6;
+}
+.btn-cancel {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f08893;
+    transition: all 0.3s ease;
+    border-radius: 6px;
+    padding: 6px 14px;
+    font-weight: 500;
+}
+
+.btn-cancel:hover {
+    background-color: #f5c6cb;
+    color: #fff;
+    border-color: #f1aeb5;
+}
+
+.btn-save {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+    transition: all 0.3s ease;
+    border-radius: 6px;
+    padding: 6px 14px;
+    font-weight: 500;
+    margin-left: 10px;
+}
+
+.btn-save:hover {
+    background-color: #c3e6cb;
+    color: #73ff00;
+    border-color: #a9d8b4;
+}

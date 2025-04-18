@@ -13,39 +13,46 @@
     <!-- Membership Plans Section -->
     <h2 class="section-title text-center mb-5 text-white">Choose Your Membership Plan</h2>
     
-    <div class="row">
+    <div class="row d-flex justify-content-center">
         <!-- Basic Plan Card -->
-        <div class="col-md-6">
+        @foreach ($plans as $plan)
+        <div class="col-md-5">
             <div class="card plan-card basic-plan">
                 <div class="card-header">
-                    <h3 class="mb-0">Basic Membership</h3>
+                    <h3 class="mb-0">{{ $plan->name }}</h3>
                 </div>
                 <div class="card-body">
                     <div class="text-center mb-4">
-                        <span class="plan-price">₹49</span>
+                        <span class="plan-price">₹{{ $plan->amount }}</span>
                         <span class="plan-duration">/month</span>
                     </div>
                     
                     <ul class="plan-features">
                         <li>
                             <i class="fas fa-book feature-icon"></i>
-                            <strong>Book Limit:</strong> 5 books per month
+                            <strong>Book Limit:</strong> {{ $plan->max_books_limit }} books per month
                         </li>
                         <li>
                             <i class="fas fa-tablet-alt feature-icon"></i>
                             <strong>E-Book Access:</strong>
-                            <span class="text-danger">No</span>
+                            
+                                @if($plan->ebook_access == 1)
+                                    <span class="text-success"> Yes </span>
+                                @else
+                                    <span class="text-danger"> No </span>
+                                @endif
+                            
                         </li>
                         <li>
                             <i class="fas fa-clock feature-icon"></i>
-                            <strong>Duration:</strong> 30 days
+                            <strong>Duration:</strong> {{ $plan->duration }} days
                         </li>
                         <li>
                             <i class="fas fa-info-circle feature-icon"></i>
                             <strong>Description:</strong> 
                             <div class="description-container">
                                 <div class="description-text">
-                                    Perfect for casual readers with access to our physical collection of popular books. Enjoy the latest bestsellers and classics without any hassle. Borrow up to 5 books a month from our extensive library catalog.
+                                    {{ $plan->description }}
                                 </div>
                                 <span class="toggle-description">
                                     <span class="more-text">See More <i class="fas fa-chevron-down"></i></span>
@@ -56,13 +63,13 @@
                     </ul>
                 </div>
                 <div class="card-footer bg-transparent text-center border-0 pb-4">
-                    <button class="btn btn-primary btn-continue btn-basic">Continue with Basic</button>
+                    <a class="btn btn-primary btn-continue btn-basic" href="">Continue with this</a>
                 </div>
             </div>
         </div>
-        
+        @endforeach
         <!-- Pro Plan Card -->
-        <div class="col-md-6">
+        <!-- <div class="col-md-6">
             <div class="card plan-card pro-plan">
                 <div class="card-header">
                     <h3 class="mb-0">Pro Membership</h3>
@@ -107,7 +114,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> -->
     
     <!-- Membership History Section -->
     <h2 class="section-title text-center mt-5 mb-4 text-white">Your Membership History</h2>

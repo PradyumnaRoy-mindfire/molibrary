@@ -1,0 +1,224 @@
+body {
+    background-color: #f8f9fa;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* overflow: hidden; */
+}
+
+.book-confirm-container {
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+.book-image-container {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.book-image {
+    max-height: calc(80vw - 200px);
+    object-fit: contain;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+}
+
+.book-details {
+    padding: 25px;
+}
+
+.book-title {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: #2c3e50;
+}
+
+.library-name {
+    color: #7f8c8d;
+    margin-bottom: 20px;
+    font-style: italic;
+}
+
+.book-metadata {
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+}
+
+.metadata-item {
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+}
+
+.metadata-icon {
+    color: #3498db;
+    margin-right: 10px;
+    width: 20px;
+    text-align: center;
+    font-size: 1.2rem;
+}
+
+.metadata-label {
+    font-weight: 600;
+    min-width: 95px;
+    color: #34495e;
+}
+
+.metadata-value {
+    flex-grow: 1;
+}
+
+.availability-tag {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-left: 10px;
+}
+
+.in-stock {
+    background-color: #d5f5e3;
+    color: #1e8449;
+}
+
+.low-stock {
+    background-color: #fdebd0;
+    color: #d35400;
+}
+
+.no-stock {
+    background-color: #f5b7b1;
+    color: #922b21;
+}
+
+.reserved-badge {
+    background-color: #ebdef0;
+    color: #8e44ad;
+}
+
+.book-description {
+    margin-top: 25px;
+    line-height: 1.6;
+    color: #2c3e50;
+    font-size: 1.1rem;
+}
+
+.collapsed-description {
+    max-height: 70px;
+    overflow: hidden;
+    position: relative;
+}
+
+
+
+.read-more-btn {
+    color: #3498db;
+    font-weight: 600;
+    cursor: pointer;
+    display: inline-block;
+    margin-top: 10px;
+    font-size: 1.1rem;
+}
+
+.read-more-btn:hover {
+    color: #2980b9;
+    text-decoration: underline;
+}
+
+.action-buttons {
+    margin-top: 30px;
+}
+
+.btn {
+    font-size: 1.1rem;
+}
+
+.btn-borrow {
+    background-color: #3498db;
+    border: none;
+    padding: 10px 25px;
+    font-weight: 600;
+}
+
+.btn-borrow:hover {
+    background-color: #2980b9;
+}
+
+.btn-preview {
+    background-color: white;
+    color: #3498db;
+    border: 1px solid #3498db;
+    padding: 10px 25px;
+    font-weight: 600;
+}
+
+.btn-preview:hover {
+    background-color: #f4f9fd;
+}
+
+.btn-back {
+    color: rgb(255, 255, 255);
+    padding: 10px 25px;
+    font-weight: 600;
+}
+
+.ebook-badge {
+    padding: 3px 8px;
+    background-color: #e8f4fd;
+    color: #3498db;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-left: 10px;
+}
+
+.no-ebook-badge {
+    padding: 3px 8px;
+    background-color: #f2f4f6;
+    color: #7f8c8d;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-left: 10px;
+}
+
+@media (max-width: 767px) {
+    .book-image-container {
+        padding: 15px;
+    }
+    
+    .book-image {
+        max-height: 300px;
+    }
+    
+    .book-details {
+        padding: 15px;
+    }
+    
+    .book-title {
+        font-size: 1.5rem;
+    }
+    
+    .metadata-label {
+        min-width: 80px;
+    }
+    
+    .metadata-columns .col-6 {
+        margin-bottom: 8px;
+    }
+    
+    .book-metadata {
+        font-size: 1rem;
+    }
+    
+    .book-description {
+        font-size: 1rem;
+    }
+}

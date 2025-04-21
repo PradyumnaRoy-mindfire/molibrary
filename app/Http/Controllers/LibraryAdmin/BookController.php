@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\library_admin;
+namespace App\Http\Controllers\LibraryAdmin;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BookRequest;

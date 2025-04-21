@@ -13,8 +13,11 @@
     @stack('styles')
 </head>
 <body>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @include('common.navbar')
 
+    
     <!-- Main content wrapper (for 'section' yeild --'will be used ) -->
     <div id="mainContent" class="main-content pt-4">
         @yield('content')

@@ -1,13 +1,15 @@
 <?php
 
-namespace App\Http\Controllers\member;
+namespace App\Http\Controllers\Member;
 
 use App\Http\Controllers\Controller;
 use App\Models\Book;
 use App\Models\Category;
+use App\Models\Membership;
 use App\Models\Plan;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 // use Yajra\DataTables\Facades\DataTables;
 use Yajra\DataTables\DataTables;
@@ -67,7 +69,8 @@ class MemberController extends Controller
 
     public function showMembershipAndPlans(){
         $plans = Plan::all();
-        return view('member.membership_plans',compact('plans'));
+        $memberships = Membership::with('plan')->where('user_id', Auth::user()->id)->get();
+        return view('member.membership_plans',compact('plans','memberships'));
     }
 
     public function showBorrowHistory(Request $request, DataTables $dataTables){

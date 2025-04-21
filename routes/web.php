@@ -3,15 +3,17 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardControler;
 use App\Http\Controllers\ForgotPasswordController;
-use App\Http\Controllers\library_admin\BookController;
-use App\Http\Controllers\library_admin\LibraryAdminController;
-use App\Http\Controllers\library_admin\ManageGenreController;
-use App\Http\Controllers\member\MemberController;
-use App\Http\Controllers\member\PaymentController;
-use App\Http\Controllers\super_admin\LibraryController;
-use App\Http\Controllers\super_admin\SuperAdminController;
+use App\Http\Controllers\LibraryAdmin\BookController;
+use App\Http\Controllers\LibraryAdmin\LibraryAdminController;
+use App\Http\Controllers\LibraryAdmin\ManageGenreController;
+use App\Http\Controllers\Member\BorrowController;
+use App\Http\Controllers\Member\MemberController;
+use App\Http\Controllers\Member\PaymentController;
+use App\Http\Controllers\SuperAdmin\LibraryController;
+use App\Http\Controllers\SuperAdmin\SuperAdminController;
 use App\Http\Middleware\Membership;
 use App\Http\Middleware\RoleMiddleware;
+use App\Models\Borrow;
 use Illuminate\Auth\Middleware\Authenticate;
 use Illuminate\Support\Facades\Route;
 
@@ -64,18 +66,23 @@ Route::controller(MemberController::class)->group(function () {
         Route::get('/memberships',  'showMembershipAndPlans')->name('memberships');
         //search in books dynamically
         Route::post('/books/search', 'bookSearch')->name('books.search');
-
-        Route::middleware(Membership::class)->group(function () {
-            Route::get('/borrow-books', 'bookSearch')->name('borrow.books');
-            // Other routes that need membership checks...
-        });
     });
 });
 
-    //payment controller
+    //borrowcontroller handled by member
+Route::controller(BorrowController::class)->group(function () {
+    Route::middleware(Authenticate::class, RoleMiddleware::class . ':member',Membership::class)->group(function () {
+        Route::get('/browse-books/borrow-confirmation/{book}', 'borrowConfirmation')->name('borrow.confirmation');
+        Route::get('/borrow-books/{book}', 'borrowBooks')->name('borrow.books');
+    });
+});
+
+
+    //payment controller for member 
 Route::controller(PaymentController::class)->group(function () {
     Route::middleware(Authenticate::class, RoleMiddleware::class . ':member')->group(function () {
-       
+       Route::get('/checkout/{plan}', 'showCheckoutForm')->name('checkout');
+       Route::post('/checkout/{plan}', 'processCheckout')->name('checkout.process');
     });
 });
 
@@ -83,9 +90,7 @@ Route::controller(PaymentController::class)->group(function () {
 Route::controller(LibraryAdminController::class)->group(function () {
     Route::middleware([Authenticate::class, RoleMiddleware::class . ':library_admin'])->group(function () {
         Route::get('/manage-books', 'showLibrarybooks')->name('manage.books');
-
         Route::get('/approve-librarians', 'approveLibrarians')->name('approve.librarians');
-
         
         // Route for handling the Accept and Reject actions
         // Route::get('librarians/{id}/{action}', 'acceptOrReject')->name('librarians.accept_or_reject');

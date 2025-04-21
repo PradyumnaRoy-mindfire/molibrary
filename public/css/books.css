@@ -15,3 +15,9 @@
 .book-card .badge {
     font-size: 0.8rem;
 }
+
+@media (min-width: 576px) {
+    .book-thumbnail {
+        max-width: 385px;
+    }
+}

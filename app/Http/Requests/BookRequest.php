@@ -29,7 +29,7 @@ class BookRequest extends FormRequest
             'total_copies' => 'required|integer|min:0',
             'has_ebook' => 'required|boolean',
             'has_paperbook' => 'required|boolean',
-            'description' => 'required|string',
+            'description' => 'required|string|max:500',
             'category_id' => 'required|exists:categories,id',
             'ebook_path' => 'nullable|file|mimes:pdf,epub,mobi|max:10240',
             'preview_content_path' => 'nullable|file|mimes:pdf|max:5120',

@@ -233,18 +233,15 @@
                 <a class="nav-link" href="#"><i class="bi bi-person-lines-fill me-2 fs-4 fw-bold"></i><span>Member Manage</span></a>
             </li>
             @elseif(Auth::user()->role === 'member')
-            <!-- <li class="nav-item mb-2">
-                <a class="nav-link " href="{{-- route('member.dashboard') --}}"><i class="bi bi-house-door me-2 fs-4 fw-bold "></i><span>Dashboard</span></a>
-            </li> -->
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('browse.books') }}"><i class="bi bi-search me-3 fs-3 fw-bold"></i><span>Browse Books</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('borrowing.history') }}"><i class="bi bi-clock-history me-3 fs-3 fw-bold"></i><span>Borrowing History</span></a>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link" href="{{ route('reserved.books') }}"><i class="bi bi-book-half me-3 fs-3 fw-bold"></i></i><span>Reserved Books</span></a>
-            </li>
+            </li> -->
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('memberships') }}"><i class="bi bi-people me-3 fs-3 fw-bold"></i><span>Membership</span></a>
             </li>
@@ -258,20 +255,21 @@
                 <a class="nav-link" href="{{ route('settings') }}"><i class="bi bi-gear me-2 fs-4 fw-bold"></i><span>Settings</span></a>
             </li>
 
-            <form method="get" action="{{ route('logout') }}">
-                @csrf
-                <button type="submit" class="nav-link text-danger w-100 text-start">
-                    <i class="bi bi-box-arrow-left me-2 fs-5"></i><span>Logout</span>
-                </button>
-            </form>
+
+            <button class="nav-link text-danger w-100 text-start logout">
+                <i class="bi bi-box-arrow-left me-2 fs-5"></i><span>Logout</span>
+            </button>
         </ul>
     </div>
 
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="{{ url('js/navbar.js') }}"></script>
 
+    <script>
+        let logoutUrl = "{{ route('logout') }}";
+    </script>
+    <script src="{{ url('js/navbar.js') }}"></script>
 
 </body>
 

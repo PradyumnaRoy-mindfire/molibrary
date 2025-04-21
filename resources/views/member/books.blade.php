@@ -29,12 +29,12 @@
     </div>
 
     {{-- Book Cards  --}}
-    <div class="row" id="bookGrid">
+    <div class="row d-flex flex" id="bookGrid">
         @foreach($books as $book)
         <div class="col-md-4 mb-4 book-card" data-category="{{ Str::slug($book->category->name) }}">
             <div class="card h-100 border-0 shadow-sm">
                 @if($book->image)
-                <img src="{{ asset('storage/'.$book->image) }}" class="card-img-top" alt="Book Image" style="object-fit: cover;">
+                    <img src="{{ asset('storage/'.$book->image) }}" class="card-img-top " alt="Book Image" style="height:250px; object-fit: cover; object-position: center;width: 100%;" >
                 @endif
 
                 <div class="card-body d-flex flex-column">
@@ -68,7 +68,7 @@
 
                     <div class="d-flex justify-content-center gap-2">
                         @if($book->total_copies > 0)
-                        <a href="#" class="btn btn-sm btn-outline-success px-3 fw-bold">
+                        <a href="{{ route('borrow.confirmation', $book->id )}}" class="btn btn-sm btn-outline-success px-3 fw-bold">
                             <i class="bi bi-book-half me-1 fs-6"></i> Borrow
                         </a>
                         @else
@@ -95,6 +95,20 @@
 
 
 @push('scripts')
+@if(session('success'))
+    <script> 
+    Swal.fire({
+                title: "Congrats!",
+                text: "You have successfully borrowed the book.",
+                imageUrl: "{{ asset('images/borrowPopup.png') }}",
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: "Custom image"
+            });
+        
+    </script>
+
+@endif
 <script src=" {{ url('js/library_admin/manage_books.js') }} "></script>
 <script>
     let csrf = '{{ csrf_token() }}';

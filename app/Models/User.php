@@ -40,6 +40,15 @@ class User extends Authenticatable
     {
         return $this->hasOne(Librarian::class);
     }
+    public function libraries()
+    {
+        return $this->hasMany(Library::class, 'admin_id');
+    }
+    public function borrows()
+    {
+        return $this->hasMany(Borrow::class, 'users_id');
+    }
+
     /**
      * Get the attributes that should be cast.
      *

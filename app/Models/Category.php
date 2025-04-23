@@ -12,6 +12,6 @@ class Category extends Model
      // A category has many books
      public function books()
      {
-         return $this->hasMany(Book::class);
+         return $this->hasMany(Book::class)->withTrashed();;
      }
 }

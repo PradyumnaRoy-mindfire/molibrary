@@ -89,3 +89,28 @@ function filterBooks() {
 // Initialize as "All" selected
 selectedCategories.add('all');
 updateButtons();
+
+$(document).on("click", ".btnDelete", function() {
+    var deleteUrl = $(this).data('url'); 
+
+    Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, Delete!"
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                title: "Deleted!",
+                text: "Book has been deleted.",
+                icon: "success"
+            });
+            setTimeout(function() {
+                window.location.href = deleteUrl;
+            }, 1000);
+        }
+    });
+});

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Member;
 
 use App\Http\Controllers\Controller;
 use App\Models\Book;
+use App\Models\Borrow;
 use App\Models\Category;
 use App\Models\Membership;
 use App\Models\Plan;
@@ -74,12 +75,33 @@ class MemberController extends Controller
     }
 
     public function showBorrowHistory(Request $request, DataTables $dataTables){
-        if($request->ajax()){
-            $users = User::query();
-            return $dataTables->eloquent($users)->make(true);
-        }
-        return view('member.borrow_history');
+        $userId = Auth::id();
+        
+        $borrowings = Borrow::with(['book', 'library', 'fine'])
+            ->where('users_id', $userId)
+            ->select(
+                'borrows.id',
+                'borrows.borrow_date as issued_date',
+                'borrows.due_date',
+                'borrows.return_date',
+                'borrows.status',
+                'books.title',
+                'books.isbn',
+                'libraries.name as library'
+            )
+            ->join('books', 'borrows.book_id', '=', 'books.id')
+            ->join('libraries', 'borrows.library_id', '=', 'libraries.id')
+            ->leftJoin('fines', 'borrows.id', '=', 'fines.borrow_id')
+            ->selectRaw('COALESCE(fines.amount, 0) as fine')
+            ->selectRaw('COALESCE(fines.status, "none") as fine_status')
+            ->selectRaw('CASE WHEN borrows.return_date IS NOT NULL THEN true ELSE false END as returned')
+            ->orderBy('borrows.borrow_date', 'desc')
+            ->get();
+        
+        return view('member.borrow_history', compact('borrowings'));
+    
     }
     
+
 
 }

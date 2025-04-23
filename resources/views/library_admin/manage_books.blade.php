@@ -57,9 +57,9 @@
                         <a href="{{ route('edit.book', $book->id) }}" class="btn btn-sm btn-outline-warning">
                             <i class="bi bi-pencil-square"></i> Edit
                         </a>
-                        <a href="{{-- route('book.delete', $book->id) --}}" class="btn btn-sm btn-outline-danger">
+                        <button  data-url="{{ route('delete.book', $book->id) }}" class="btn btn-sm btn-outline-danger btnDelete">
                             <i class="bi bi-trash"></i> Delete
-                        </a>
+                        </button>
                     </div>
                 </div>
             </div>

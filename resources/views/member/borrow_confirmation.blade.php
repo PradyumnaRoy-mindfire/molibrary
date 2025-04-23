@@ -131,7 +131,7 @@
         Swal.fire({
             title: "Congrats!",
             text: "You have successfully borrowed the book.",
-            imageUrl: "{{ asset('images/borrowPopup.png') }}",
+            imageUrl: "{{ asset('storage/borrowPopup.png') }}",
             imageWidth: 400,
             imageHeight: 200,
             imageAlt: "Custom image"

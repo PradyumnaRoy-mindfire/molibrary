@@ -109,6 +109,25 @@
     </script>
 
 @endif
+
+@if(session('no_membership'))
+<script>
+    Swal.fire({
+        icon: 'warning',
+        title: 'No Active Membership',
+        text: 'You must have an active membership to borrow books.',
+        showCancelButton: true,
+        confirmButtonText: 'Go to Membership Page',
+        cancelButtonText: 'Close',
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.href = "{{ route('memberships') }}";
+        }
+    });
+</script>
+
+@endif
+
 <script src=" {{ url('js/library_admin/manage_books.js') }} "></script>
 <script>
     let csrf = '{{ csrf_token() }}';

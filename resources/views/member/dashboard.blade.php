@@ -76,11 +76,12 @@
 
 @section('content')
 <div class="container-fluid py-4">
-    <h2 class="mb-4">Welcome Back, {{ Auth::user()->name }}</h2>
-
+    <h2 class=" text-white">Hello, {{ Auth::user()->name }}</h2>
+    <h4 class=" text-white mb-4"> {{ now()->format('M d, Y | l, h:iA') }}</h4>
     <div class="row g-4">
         <!-- Account Status Card -->
-        <div class="col-12 col-md-6 col-xl-3" data-type="status" data-route="">
+        @if($membership !== null)
+        <div class="col-12 col-md-6 col-xl-3 membership-card" data-type="status" data-route="{{ route('membership.details') }}">
             <div class="member-card bg-success p-4 shadow">
                 <div class="membership-badge">
                     Base
@@ -94,13 +95,28 @@
                 </div>
             </div>
         </div>
-
+        @else
+        <div class="col-12 col-md-6 col-xl-3 inactive-card" data-type="status" data-route="{{route('membership.features')}}">
+            <div class="member-card bg-warning p-4 shadow">
+                <div class="membership-badge">
+                    None
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <h5 class="mb-0">Inactive</h5>
+                        <p class="mb-0">No Active Membership</p>
+                    </div>
+                    <i class="bi bi-exclamation-triangle card-icon"></i>
+                </div>
+            </div>
+        </div>
+        @endif
         <!-- Remaining Limits Card -->
         <div class="col-12 col-md-6 col-xl-3" data-type="limits" data-route="">
             <div class="member-card bg-dark p-4 shadow">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
-                        <h5 class="mb-0">25</h5>
+                        <h5 class="mb-0">{{ $membership->plan->max_books_limit ?? '0' }}</h5>
                         <p class="mb-0">Remaining Books Limit</p>
                     </div>
                     <i class="bi bi-journal-check card-icon"></i>
@@ -109,11 +125,11 @@
         </div>
 
         <!-- Active Libraries Card -->
-        <div class="col-12 col-md-6 col-xl-3" data-type="libraries" data-route="">
+        <div class="col-12 col-md-6 col-xl-3 activeLibrary-card" data-type="libraries" data-route="{{ route('active.library') }}">
             <div class="member-card bg-primary p-4 shadow">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
-                        <h5 class="mb-0">28</h5>
+                        <h5 class="mb-0"> {{ $library ??'0'}}</h5>
                         <p class="mb-0">Active Libraries</p>
                     </div>
                     <i class="bi bi-building card-icon"></i>
@@ -126,7 +142,7 @@
             <div class="member-card bg-danger p-4 shadow">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
-                        <h5 class="mb-0">₹2000.50</h5>
+                        <h5 class="mb-0">₹{{ $fines ?? '0' }}</h5>
                         <p class="mb-0">Outstanding Fines</p>
                     </div>
                     <i class="bi bi-cash-coin card-icon"></i>
@@ -136,13 +152,12 @@
     </div>
 
     <!-- Dynamic Content Section -->
-    <div id="dynamic-content" class="dynamic-content"></div>
+    <div id="dynamic-content" class="d-flex align-items-center justify-content-center mt-5"></div>
 
 
     @endsection
 
     @push('scripts')
-    <!-- <script>
-
-    </script> -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{{ url('js/member/dashboard.js') }}"></script>
     @endpush

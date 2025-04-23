@@ -4,9 +4,10 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class Membership
+class CheckMembership
 {
     /**
      * Handle an incoming request.
@@ -15,7 +16,15 @@ class Membership
      */
     public function handle(Request $request, Closure $next): Response
     {
-        
+        $user = Auth::user();
+
+        // dd($user->membership);
+
+        if (!$user->membership || now()->gt($user->membership->end_date)) {
+            session()->flash('no_membership', true);
+            return redirect()->route('browse.books');
+        }
+
         return $next($request);
     }
 }

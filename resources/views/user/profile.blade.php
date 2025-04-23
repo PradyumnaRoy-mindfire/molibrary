@@ -1,18 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
+@extends('layout.app')
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Profile</title>
+@section('title', 'User Profile')
+@push('styles')
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link rel="stylesheet" href="{{ url('css/profile.css') }}">
+@endpush
 
-</head>
+@section('content')
 
-
-<body class="d-flex justify-content-center align-items-center p-3">
+<div class="d-flex justify-content-center align-items-center p-3">
     <div class="container">
 
         <div class="row justify-content-center">
@@ -173,6 +170,7 @@
             </div>
         </div>
     </div>
+    </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
@@ -192,6 +190,5 @@
             });
         });
     </script>
-</body>
 
-</html>
+@endsection

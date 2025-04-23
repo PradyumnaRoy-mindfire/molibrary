@@ -16,8 +16,12 @@ class Library extends Model
         return $this->hasMany(Librarian::class);
     }
 
-    public function library()
+    // public function library()
+    // {
+    //     return $this->belongsTo(Library::class);
+    // }
+    public function books()
     {
-        return $this->belongsTo(Library::class);
+        return $this->hasMany(Book::class)->withTrashed();;
     }
 }

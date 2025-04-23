@@ -3,6 +3,7 @@
 @section('title', 'Approve Librarians')
 
 @push('styles')
+<meta name="csrf-token" content="{{ csrf_token() }}">
 <link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.css" />
 
 
@@ -35,16 +36,16 @@
                             </td>
                             <td class="text-center">
                                 <div class="btn-group" role="group" aria-label="Accept or reject">
-                                    <a href="{{-- route('librarians.accept_or_reject', ['id' => $librarian['id'], 'action' => 'accept']) --}}"
+                                    <button data-url="{{ route('librarians.accept_or_reject', ['id' => $librarian->librarian->id, 'action' => 'accept']) }}"
                                         class="btn btn-sm btn-success rounded-start"
                                         title="Accept">
                                         <i class="fas fa-check-circle me-1"></i> Accept
-                                    </a>
-                                    <a href="{{-- route('librarians.accept_or_reject', ['id' => $librarian['id'], 'action' => 'reject']) --}}"
+                                    </button>
+                                    <button data-url="{{ route('librarians.accept_or_reject', ['id' => $librarian->librarian->id, 'action' => 'reject']) }}"
                                         class="btn btn-sm btn-danger rounded-end"
                                         title="Reject">
                                         <i class="fas fa-times-circle me-1"></i> Reject
-                                    </a>
+                                    </button>
                                 </div>
                             </td>
                         </tr>
@@ -68,7 +69,6 @@
 @section('styles')
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
-    /* Responsive table adjustments */
     @media (max-width: 768px) {
         .table-responsive {
             border: 0;
@@ -108,9 +108,6 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script src="https://cdn.datatables.net/2.2.2/js/dataTables.js"></script>
-<script>
-    $(document).ready(function() {
-        $('.table').DataTable();
-    });
-</script>
+
+<script src="{{ url('js/library_admin/approve_librarian.js') }}"></script>
 @endpush

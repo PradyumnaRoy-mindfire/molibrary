@@ -48,6 +48,17 @@ class User extends Authenticatable
     {
         return $this->hasMany(Borrow::class, 'users_id');
     }
+    public function membership()
+    {
+        return $this->hasOne(Membership::class, 'user_id')->latestOfMany();
+    }
+    public function fines()
+    {
+        return $this->hasManyThrough(Fine::class,Borrow::class,'users_id','borrow_id');
+    }
+    
+
+
 
     /**
      * Get the attributes that should be cast.

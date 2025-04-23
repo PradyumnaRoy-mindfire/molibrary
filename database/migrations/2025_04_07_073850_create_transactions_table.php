@@ -17,8 +17,8 @@ return new class extends Migration
             $table->enum('type', ['membership','fine']);
             $table->double('amount');
             $table->unsignedBigInteger('user_id');
-            $table->enum('status', ['pending','paid','failed']);
-            $table->enum('mehtod', ['cash','upi']);
+            $table->enum('status', ['pending','succeeded','failed']);
+            $table->enum('mehtod', ['cash','upi','card','netbanking']);
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

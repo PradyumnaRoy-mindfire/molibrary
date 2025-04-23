@@ -143,4 +143,10 @@ class BookController extends Controller
         
         return redirect()->route('manage.books')->with('bookUpdate', 'Book updated Successfully!!');
     }
+
+    public function deleteBook(Book $book)
+    {
+        $book->delete();
+        return redirect()->back()->with('bookDelete', 'Book deleted Successfully!!');
+    }
 }

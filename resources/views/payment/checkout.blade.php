@@ -3,17 +3,20 @@
 @section('title', 'Checkout')
 
 @push('styles')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="{{ url('css/payment/checkout.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<link rel="stylesheet" href="{{ url('css/payment/checkout.css') }}">
+<style>
+    
+</style>
 @endpush
 
 @section('content')
 <div class="container py-5">
     <div class="row justify-content-center">
         @if(session('payment_success'))
-            <div class="alert alert-success">
-                {{ session('payment_success') }}
-            </div>
+        <div class="alert alert-success">
+            {{ session('payment_success') }}
+        </div>
         @endif
         <div class="col-lg-8 col-md-10">
             <div class="card shadow">
@@ -55,10 +58,44 @@
 
                         <div class="mb-4">
                             <label class="fw-bold mb-2"><i class="far fa-credit-card me-2"></i>Card Details</label>
-                            <div id="card-element" class="form-control p-3" style="height: 45px;"></div>
-                            <div id="card-errors" class="text-danger mt-2" role="alert"></div>
-                        </div>
 
+                            <div class="card-fields-container mb-3">
+                                <div class="form-floating mb-3">
+                                    <input type="text" name="card_number" id="card_number" class="form-control" placeholder="1234 5678 9012 3456" maxlength="19" autocomplete="cc-number">
+                                    <label for="card_number"><i class="far fa-credit-card me-2"></i>Card Number</label>
+                                    <div class="text-danger small mt-1 d-none" id="card-number-error">Please enter a valid card number.</div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-floating mb-3">
+                                            <input type="text" name="card_expiry" id="card_expiry" class="form-control" placeholder="MM/YY" maxlength="5" autocomplete="cc-exp">
+                                            <label for="card_expiry"><i class="far fa-calendar-alt me-2"></i>Expiry (MM/YY)</label>
+                                            <div class="text-danger small mt-1 d-none" id="card-expiry-error">Enter a valid expiration date.</div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-floating mb-3">
+                                            <input type="text" name="card_cvc" id="card_cvc" class="form-control" placeholder="CVC" maxlength="4" autocomplete="cc-csc">
+                                            <label for="card_cvc"><i class="fas fa-lock me-2"></i>CVC</label>
+                                            <div class="text-danger small mt-1 d-none" id="card-cvc-error">Enter a valid CVC code.</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-flex align-items-center mb-2">
+                                <div class="d-flex align-items-center me-4">
+                                    <img src="{{ asset('storage/visa.svg') }}" alt="Visa" class="payment-icon">
+                                    <img src="{{ asset('storage/mastercard.svg') }}" alt="Mastercard" class="payment-icon">
+                                    <img src="{{ asset('storage/amex.svg') }}" alt="American Express" class="payment-icon">
+                                </div>
+                                <small class="text-muted">
+                                    <i class="fas fa-lock me-1"></i> Your card details are secure
+                                </small>
+                            </div>
+                        </div>
                         <div class="row mt-4">
                             <div class="col-md-6 mb-3 mb-md-0">
                                 <a href="{{ route('memberships') }}" class="btn btn-outline-secondary btn-lg w-100">
@@ -92,12 +129,11 @@
 @endsection
 
 @push('scripts')
-    <script src="https://js.stripe.com/v3/"></script>
-    <script>
-        const stripe = Stripe("{{ config('services.stripe.key') }}");
-    </script>
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+    // const stripe = Stripe("{{-- config('services.stripe.key') --}}");
+</script>
 
-    <script src=" {{ url('js/payment/checkout.js') }} "></script>
+<script src=" {{ url('js/payment/checkout.js') }} "></script>
 
 @endpush
-

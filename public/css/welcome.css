@@ -1,0 +1,211 @@
+h1{padding-top:20px;
+    text-align: center;
+    font-size: 50px;
+    font-family: "Sofia", sans-serif;
+    border:solid black;
+  }
+  h2{
+    text-align: center;
+    font-size:30px;
+    font-family: "Lucida Console", "Courier New", monospace;
+  }
+  h3{
+    text-align:center;
+    font-size:20px;
+    font-family: "Lucida Console", "Courier New", monospace;
+  }
+  #leftmost{
+    text-align: center;
+    font-size:30pt;
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
+    color:#333333;
+    width:60%;
+    margin: auto;
+    height:55px;
+    
+   }
+  body{
+     background-image:url("https://i.pinimg.com/originals/a8/06/44/a806447ecbabad71ae43a40e0a3ea181.jpg");
+    background-size: cover;
+    /* border-style: solid;
+    border-color:black;*/
+  }
+  .butn{
+    border: 2px solid #4CAF50;
+    transition-duration: 0.4s;
+    padding: 12px 40px;
+    border-radius: 12px;
+    display: block;
+    width: 20%;
+    font-size:20pt;
+  }
+  .butn:hover {
+    background-color: #4CAF50; /* Green */
+    color: white;
+  }
+  .carousel{
+    /*padding: 50px 60px;
+    border-radius:30px;*/
+    width:70%;
+    margin: 0px auto;
+  }
+  .wrapper{
+    width:100%;
+    padding-bottom:10%;
+    text-align:center;
+  }
+  .slick-slide{
+    margin:10px;
+  }
+  .slick-slide img{
+    width:100%;
+    border: 2px solid #fff;
+  }
+  .wrapper .slick-dots li button:before {
+    font-size:20px;
+    color:black;
+  }
+  #bottom{
+    color:black;
+    font-size:20px;
+    text-align: center;
+    column-gap: 80px;
+  }
+  #imgdiv{
+    width:100%;
+    height:555px;
+  }
+  #imgdiv2{
+    width:90%;
+    height:500px;
+    background-color:#003366;/*#00CC99;*/
+    margin:auto;
+    /*padding-left: 80px; #4CAF50;*/
+  }
+  #imgdiv3{
+    width:50%;
+    float:left;
+    height:500px;
+    background-color:	#003366;
+  }
+  #imgdiv4{
+    float:right;
+    width:50%;
+    height:500px;
+  }
+  #imgdiv5{
+    margin: auto;
+    width: 50%;
+    padding: 40px;
+  }
+  h4{
+    font-size:60px;
+    color:white;
+  }
+  #bottombef{
+    width:100%;
+    height:300px;
+    background-color:#006666;
+  }
+  p{
+    font-size:20px;
+    color:#C8C8C8;
+  }
+  .main{
+    max-width: 1200px;
+    margin: 0 auto;
+    height:1200px;
+  }
+  .card_image{
+    height:auto;
+    max-width: 100%;
+    vertical-align: middle;
+  }
+  .btn {
+    color: #ffffff;
+    padding: 0.8rem;
+    font-size: 14px;
+    text-transform: uppercase;
+    border-radius: 4px;
+    font-weight: 400;
+    display: block;
+    width: 100%;
+    cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: transparent;
+  }
+  .btn:hover {
+    background-color: rgba(255, 255, 255, 0.12);
+  }
+  .cards {
+    display: flex;
+    flex-wrap: wrap;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  .cards_item {
+    display: flex;
+    padding: 1rem;
+  }
+  
+  @media (min-width: 40rem) {
+    .cards_item {
+      width: 50%;
+    }
+  }
+  
+  @media (min-width: 56rem) {
+    .cards_item {
+      width: 33.3333%;
+    }
+  }
+  .card {
+    background-color: white;
+    border-radius: 0.25rem;
+    box-shadow: 0 20px 40px -14px rgba(0, 0, 0, 0.25);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  .card_content {
+    padding: 1rem;
+    background: linear-gradient(to bottom left, #EF8D9C 40%, #FFC39E 100%);
+  }
+  .card_title {
+    color: #ffffff;
+    font-size: 1.1rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: capitalize;
+    margin: 0px;
+  }
+  .card_text {
+    color: #ffffff;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    margin-bottom: 1.25rem;    
+    font-weight: 40;
+  }
+  #search{
+      background-color: white;
+      font-size: 17px;
+      width: 205px;
+      border: 2px solid white;
+      border-radius: 4px;
+      box-sizing: border-box;
+    }
+    #search:hover{
+      background-color: rgb(228, 228, 228);
+    }
+    .icon{
+      color: gray;
+      position:relative;
+      left:200px;
+      top:-2px;
+      /* z-index:999; */
+    }
+   .nav-searchbar{
+      text-align: right;
+      width: 70%;
+    }

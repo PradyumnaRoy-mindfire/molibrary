@@ -1,0 +1,70 @@
+:root {
+    --primary-color: #3498db;
+    --secondary-color: #2c3e50;
+    --light-bg: #f8f9fa;
+    --dark-text: #343a40;
+    --danger: #e74c3c;
+    --success: #2ecc71;
+    --warning: #f39c12;
+}
+
+body {
+    background-color: var(--light-bg);
+    color: var(--dark-text);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.header {
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    color: white;
+    padding: 2rem 0;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.table-container {
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.05);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.due-date-ok {
+    background-color: rgba(46, 204, 113, 0.2);
+    color: darkgreen;
+}
+
+.due-date-overdue {
+    background-color: rgba(231, 76, 60, 0.2);
+    color: darkred;
+}
+
+
+
+.status-badge {
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+}
+
+.status-paid {
+    background-color: var(--success);
+    color: black;
+}
+.status-na{
+    background-color: var(--warning);
+    /* color: rgb(243, 43, 43); */
+}
+
+.status-pending {
+    background-color: var(--danger);
+    color: black;
+}
+
+@media (max-width: 768px) {
+    .action-buttons .btn {
+        font-size: 0.75rem;
+        padding: 0.25rem 0.5rem;
+    }
+}

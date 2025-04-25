@@ -3,7 +3,7 @@
 <link href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.bootstrap5.min.css" rel="stylesheet">
 
 <div class="container mt-3">
-    <h4 class="text-center text-white">Top Chosen Books</h4>
+<h4 class="text-center text-white">Overdue Books</h4>
     <div class="card">
         <div class="card-body">
             <table id="users-table" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
@@ -11,24 +11,22 @@
                     <tr>
                         <th class="text-center">Book Name</th>
                         <th class="text-center">ISBN</th>
-                        <th class="text-center">Author</th>
-                        <th class="text-center">Category</th>
-                        <th class="text-center">Times Borrowed</th>
+                        <th class="text-center">Borrowed By</th>
+                        <th class="text-center">Issued Date</th>
+                        <th class="text-center">Return Date</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($books as $book)
+                    @forelse ($overdueBooks as $borrow)
                     <tr>
-                        <td class="text-center">{{ $book->title }}</td>
-                        <td class="text-center">{{ $book->isbn }}</td>
-                        <td class="text-center">{{ $book->author->name }}</td>
-                        <td class="text-center">{{ $book->category->name }}</td>
-                        <td class="text-center"> {{ $book->borrows_count }} </td>
+                        <td class="text-center">{{ $borrow->book->title }}</td>
+                        <td class="text-center">{{ $borrow->book->isbn }}</td>
+                        <td class="text-center">{{ $borrow->user->name }}</td>
+                        <td class="text-center">{{ $borrow->borrow_date }}</td>
+                        <td class="text-center"> {{ $borrow->due_date }} </td>
                     </tr>
                     @empty
-                    <tr>
-                        <td colspan="5">No book found....</td>
-                    </tr>
+                    
                     @endforelse
                 </tbody>
             </table>

@@ -3,32 +3,28 @@
 <link href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.bootstrap5.min.css" rel="stylesheet">
 
 <div class="container mt-3">
-    <h4 class="text-center text-white">Total Revenue</h4>
+    <h4 class="text-center text-white">Low Stock Books</h4>
     <div class="card">
         <div class="card-body">
             <table id="users-table" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
                 <thead>
                     <tr>
-                        <th>User Name</th>
-                        <th>Email</th>
-                        <th>Library</th>
-                        <th>Amount</th>
-                        <th>Status</th>
+                        <th class="text-center">Book</th>
+                        <th class="text-center">ISBN</th>
+                        <th class="text-center">Current Stock</th>
+                        <th class="text-center">Borrow Frequency</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($payments as $payment)
+                    @forelse ($lowStockBooks as $book)
                     <tr>
-                        <td>{{ $payment->borrow->user->name }}</td>
-                        <td>{{ $payment->borrow->user->email }}</td>
-                        <td>{{ $payment->borrow->library->name }}</td>
-                        <td>{{ $payment->amount }}</td>
-                        <td>{{ $payment->status }}</td>
+                        <td class="text-center">{{ $book->title }}</td>
+                        <td class="text-center">{{ $book->isbn }}</td>
+                        <td class="text-center">{{ $book->total_copies }}</td>
+                        <td class="text-center">{{ $book->borrows_count }}</td>
                     </tr>
                     @empty
-                    <tr>
-                        <td colspan="5">No payments found.</td>
-                    </tr>
+                    
                     @endforelse
                 </tbody>
             </table>

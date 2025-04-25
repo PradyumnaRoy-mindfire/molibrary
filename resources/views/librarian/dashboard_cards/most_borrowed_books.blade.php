@@ -3,7 +3,7 @@
 <link href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.bootstrap5.min.css" rel="stylesheet">
 
 <div class="container mt-3">
-    <h4 class="text-center text-white">Top Chosen Books</h4>
+    <h4 class="text-center text-white">Most Borrowed Books</h4>
     <div class="card">
         <div class="card-body">
             <table id="users-table" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
@@ -17,7 +17,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($books as $book)
+                    @foreach ($books as $book)
                     <tr>
                         <td class="text-center">{{ $book->title }}</td>
                         <td class="text-center">{{ $book->isbn }}</td>
@@ -25,11 +25,7 @@
                         <td class="text-center">{{ $book->category->name }}</td>
                         <td class="text-center"> {{ $book->borrows_count }} </td>
                     </tr>
-                    @empty
-                    <tr>
-                        <td colspan="5">No book found....</td>
-                    </tr>
-                    @endforelse
+                    @endforeach
                 </tbody>
             </table>
         </div>

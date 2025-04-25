@@ -18,15 +18,16 @@ class BorrowController extends Controller
         return view('member.borrow_confirmation',compact('book','library','borrowCount'));
     }
 
-    public function borrowBooks(Book $book ){  
+    public function borrowBooks(Book $book ){
+        $user = Auth::user();  
         $book->borrows()->create([
             'library_id' => $book->library_id,
-            'users_id' => Auth::user()->id,
+            'users_id' => $user->id,
             'type' => 'borrow',
             'status' => 'pending',
-            'borrow_date' => now(),
-            'due_date' => now()->addMinutes(120),
         ]);
-        return redirect()->route('browse.books');
+        $user->book_limit -= 1;
+        $user->save();
+        return redirect()->route('borrowing.history')->with('success', 'Borrow Request sent Successfully!!');
     }
 }

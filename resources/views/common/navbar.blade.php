@@ -8,6 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    
     <link rel="stylesheet" href="{{ url('css/navbar.css') }}">
 </head>
 
@@ -102,9 +103,9 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('book.management') }}"><i class="bi bi-book me-2 fs-4 fw-bold"></i><span>Book Management</span></a>
             </li>
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link" href="#"><i class="bi bi-person-lines-fill me-2 fs-4 fw-bold"></i><span>Member Manage</span></a>
-            </li>
+            </li> -->
             @elseif(Auth::user()->role === 'member')
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('browse.books') }}"><i class="bi bi-search me-3 fs-3 fw-bold"></i><span>Browse Books</span></a>
@@ -124,9 +125,9 @@
             </li> -->
             @endif
 
-            <li class="nav-item">
+            <!-- <li class="nav-item">
                 <a class="nav-link" href="{{ route('settings') }}"><i class="bi bi-gear me-2 fs-4 fw-bold"></i><span>Settings</span></a>
-            </li>
+            </li> -->
 
 
             <button class="nav-link text-danger w-100 text-start logout">

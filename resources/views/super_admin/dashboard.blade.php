@@ -1,6 +1,6 @@
 @extends('layout.app')
 
-@section('title', 'Super Admin Dashboard')
+@section('title', 'Dashboard')
 
 @push('styles')
 <link rel="stylesheet" href=" {{ url('css/super_admin_dashboard.css') }}">
@@ -8,7 +8,19 @@
 
 @section('content')
 <div class="container-fluid py-4 text-center">
-    <h2 class=" text-white">Hello, {{ Auth::user()->name }}</h2>
+    <h2 class=" text-white">
+        @php
+        $hour = now()->hour;
+        $greeting = "Good Morning";
+
+        if ($hour >= 12 && $hour < 18) {
+            $greeting="Good Afternoon" ;
+        } elseif ($hour>= 18) {
+            $greeting = "Good Evening";
+        }
+        @endphp
+            {{$greeting}} , {{ Auth::user()->name }}
+    </h2>
     <h4 class=" text-white mb-4"> {{ now()->format('M d, Y | l, h:iA') }}</h4>
 
     <div class="row g-4">
@@ -18,7 +30,7 @@
                 <div class="member-card bg-purple p-4 shadow" style="background: #6f42c1;">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
-                            <h5 class="mb-0">See Rank</h5>
+                            <h5 class="mb-0">{{$topBookCount}}</h5>
                             <p class="mb-0">Top Choices Books</p>
                         </div>
                         <i class="bi bi-fire card-icon"></i>
@@ -61,13 +73,6 @@
 @endsection
 
 @push('scripts')
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-<!-- DataTables JS -->
-<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
-<!-- Responsive DataTables JS -->
-<script src="https://cdn.datatables.net/responsive/2.4.1/js/dataTables.responsive.min.js"></script>
-<script src="https://cdn.datatables.net/responsive/2.4.1/js/responsive.bootstrap5.min.js"></script>
+
 <script src="{{ url('js/super_admin/dashboard.js') }}"></script>
 @endpush

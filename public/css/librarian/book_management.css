@@ -77,8 +77,12 @@ tbody tr:hover {
     color: #92400e;
 }
 .approved {
-    background-color: #dbeafe;
-    color: #1e40af;
+    color: #a16203;
+    background-color: #fdc378;
+}
+.returned{
+    background-color: #86f37c;
+    color: #126301;
 }
 .btn {
     padding: 8px 12px;

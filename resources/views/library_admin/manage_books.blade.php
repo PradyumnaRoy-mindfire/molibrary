@@ -35,7 +35,7 @@
     {{-- Book Cards  --}}
     <div class="row" id="bookGrid">
         @foreach($books as $book)
-        <div class="col-md-4 mb-4 book-card" data-category="{{ Str::slug($book->category->name) }}">
+        <div class="col-md-3 mb-4 book-card" data-category="{{ Str::slug($book->category->name) }}">
             <div class="card shadow-sm h-100">
                 @if($book->image)
                     <img src="{{ asset('storage/'.$book->image) }}" class="card-img-top" alt="Book Image" style="height: 250px; object-fit: cover;">

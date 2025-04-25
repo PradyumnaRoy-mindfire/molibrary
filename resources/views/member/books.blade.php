@@ -31,7 +31,7 @@
     {{-- Book Cards  --}}
     <div class="row d-flex flex" id="bookGrid">
         @foreach($books as $book)
-        <div class="col-md-4 mb-4 book-card" data-category="{{ Str::slug($book->category->name) }}">
+        <div class="col-md-3 mb-4 book-card" data-category="{{ Str::slug($book->category->name) }}">
             <div class="card h-100 border-0 shadow-sm">
                 @if($book->image)
                     <img src="{{ asset('storage/'.$book->image) }}" class="card-img-top " alt="Book Image" style="height:250px; object-fit: cover; object-position: center;width: 100%;" >
@@ -44,12 +44,8 @@
                         <i class="bi bi-person-fill me-1 text-muted"></i><strong>Author:</strong> {{ $book->author->name }}
                     </p>
                     <p class="card-text mb-1">
-                        <i class="bi bi-box-seam me-1 text-muted"></i><strong>Available:</strong> 
-                        @if($book->total_copies > 0)
-                            {{ $book->total_copies }} 
-                        @else 
-                            <span class="text-danger fw-semibold">Out of Stock</span> 
-                        @endif
+                        <i class="bi bi-box-seam me-1 text-muted"></i><strong>Library:</strong> {{ $book->library->name }}
+                        
                     </p>
 
                     <div class="mb-2 d-flex justify-content-between">
@@ -58,7 +54,14 @@
                     </div>
 
                     <div class="mb-2 d-flex justify-content-between small text-muted">
-                        <span><i class="bi bi-calendar2-week me-1"></i><strong>Year:</strong> {{ $book->published_year }}</span>
+                        <span><i class="bi bi-calendar2-week me-1"></i><strong>
+                            @if($book->total_copies == 0)
+                            <span class="text-danger fw-semibold">Out of Stock</span> 
+                            @elseif($book->total_copies < 6)
+                             <span class="text-warning fw-semibold">Only {{ $book->total_copies }} Left</span> 
+                            @else 
+                            <span class="text-success fw-semibold">{{ $book->total_copies }} Available</span> 
+                            @endif</strong> </span>
                         <span><i class="bi bi-upc-scan me-1"></i><strong>ISBN:</strong> {{ $book->isbn }}</span>
                     </div>
 
@@ -72,14 +75,14 @@
                             <i class="bi bi-book-half me-1 fs-6"></i> Borrow
                         </a>
                         @else
-                        <a href="#" class="btn btn-sm btn-outline-danger px-3 fw-bold">
+                        <!-- <a href="#" class="btn btn-sm btn-outline-danger px-3 fw-bold">
                             <i class="bi bi-calendar-check me-1 fs-6"></i>
                             Reserve
-                        </a>
+                        </a> -->
                         @endif 
-                        <a href="#" class="btn btn-sm btn-outline-warning px-3 fw-bold  ">
+                        <!-- <a href="#" class="btn btn-sm btn-outline-warning px-3 fw-bold  ">
                             <i class="bi bi-eye me-1 fs-6"></i> Preview
-                        </a> 
+                        </a>  -->
                     </div>
                 </div>
             </div>
@@ -95,20 +98,6 @@
 
 
 @push('scripts')
-@if(session('success'))
-    <script> 
-    Swal.fire({
-                title: "Congrats!",
-                text: "You have successfully borrowed the book.",
-                imageUrl: "{{ asset('images/borrowPopup.png') }}",
-                imageWidth: 400,
-                imageHeight: 200,
-                imageAlt: "Custom image"
-            });
-        
-    </script>
-
-@endif
 
 @if(session('no_membership'))
 <script>

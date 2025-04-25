@@ -9,7 +9,7 @@ if (localStorage.getItem("sidebar-collapsed") === "true") {
 }
 
 toggleBtn.addEventListener("click", () => {
-    sidebar.classList.toggle("collapsed");
+    // sidebar.classList.toggle("collapsed");
     mainContent?.classList.toggle("full");
 
     const isCollapsed = sidebar.classList.contains("collapsed");

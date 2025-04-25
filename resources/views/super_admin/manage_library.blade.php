@@ -19,7 +19,7 @@
                     <h5 class="card-title d-flex justify-content-between align-items-center">
                         {{ $library->name }}
                         <span class="badge {{ $library->status == 'open' ? 'bg-success' : 'bg-danger' }}">
-                            {{ ucfirst($library->status) }}
+                            {{ ucfirst($library->status == 'open' ? 'active' : 'inactive') }}
                         </span>
                     </h5>
                     <p class="card-text mb-2">

@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $('.membership-card').on('click', function() {
+    $('.totalRevenue').on('click', function() {
         const route = $(this).data('route');
 
         $('#dynamic-content').html('<p>Loading details...</p>');
@@ -9,14 +9,24 @@ $(document).ready(function() {
             type: 'GET',
             success: function(response) {
                 $('#dynamic-content').html(response);
+                $('#users-table').DataTable({
+                    order: [
+                        [3, 'desc']
+                    ],
+                    language: {
+                        search: "Search payments:",
+                        zeroRecords: "No borrowing records found"
+                    },
+                    responsive: true
+                });
             },
             error: function() {
-                $('#dynamic-content').html('<p class="text-danger">Failed to load details.</p>');
+                $('#dynamic-content').html('<p class="text-danger mt-5">Failed to load details.</p>');
             }
         });
     });
 
-    $('.activeLibrary-card').on('click', function() {
+    $('.overdue-books').on('click', function() {
         const route = $(this).data('route');
 
         $('#dynamic-content').html('<p>Loading details...</p>');
@@ -26,7 +36,10 @@ $(document).ready(function() {
             type: 'GET',
             success: function(response) {
                 $('#dynamic-content').html(response);
-                $('#library-table').DataTable({
+                $('#users-table').DataTable({
+                    order: [
+                        [3, 'desc']
+                    ],
                     language: {
                         search: "Search Library:",
                         zeroRecords: "No borrowing records found"
@@ -40,24 +53,7 @@ $(document).ready(function() {
         });
     });
 
-    $('.inactive-card').on('click', function() {
-        const route = $(this).data('route');
-
-        $('#dynamic-content').html('<p>Loading details...</p>');
-
-        $.ajax({
-            url: route,
-            type: 'GET',
-            success: function(response) {
-                $('#dynamic-content').html(response);
-            },
-            error: function() {
-                $('#dynamic-content').html('<p class="text-danger">Failed to load details.</p>');
-            }
-        });
-    });
-
-    $('.fines-card').on('click', function() {
+    $('.popular-libraries').on('click', function() {
         const route = $(this).data('route');
 
         $('#dynamic-content').html('<p>Loading details...</p>');
@@ -69,10 +65,10 @@ $(document).ready(function() {
                 $('#dynamic-content').html(response);
                 $('#users-table').DataTable({
                     order: [
-                        [4, 'desc']
+                        [3, 'desc']
                     ],
                     language: {
-                        search: "Search Fines:",
+                        search: "Search Library:",
                         zeroRecords: "No borrowing records found"
                     },
                     responsive: true

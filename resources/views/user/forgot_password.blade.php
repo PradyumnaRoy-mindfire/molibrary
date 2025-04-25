@@ -39,7 +39,6 @@
                         <label for="role" class="form-label fw-bold">Select Role</label>
                         <select class="form-select form-select-lg" id="role" name="role" required>
                             <option value="" selected disabled>Choose role</option>
-                            <option value="super_admin">Super Admin</option>
                             <option value="library_admin">Library Admin</option>
                             <option value="librarian">Librarian</option>
                             <option value="member">Member</option>
@@ -47,6 +46,8 @@
                     </div>
 
                     <button type="button" class="btn btn-primary w-100 fw-bold" onclick="sendOTP()">Send OTP</button>
+
+                    <a href="{{ route('login') }}" class="btn btn-secondary w-100 mt-3 fw-bold"> <i class="bi-arrow-left me-2"> </i> Back to Login</a>
                 </form>
 
                 {{-- Step 2: OTP --}}
@@ -58,17 +59,25 @@
                         <button type="button" class="btn btn-link p-0" onclick="resendOTP()" id="resendBtn" disabled>Resend OTP</button>
                     </div>
                     <button type="button" class="btn btn-success w-100 mt-3 fw-bold" onclick="verifyOTP()">Verify OTP</button>
+                    <a href="{{ route('login') }}" class="btn btn-secondary w-100 mt-3 fw-bold"> <i class="bi-arrow-left me-2"> </i> Back to Login</a>
                 </form>
 
                 {{-- Step 3: Reset Password --}}
-                <form id="step3-form" class="mt-4 d-none">
+               
+
+                <form id="step3-form" class="mt-4 d-none  resetPasswordForm">
                     <label for="password" class="form-label fw-bold">New Password</label>
-                    <input type="password" name="password" id="password" class="form-control form-control-lg mb-3" required>
+                    <input type="password" name="password" id="password" class="form-control form-control-lg mb-1">
+                    <span id="passwordError" class="text-danger d-block mb-2" style="display: none;"></span>
 
                     <label for="password_confirmation" class="form-label fw-bold">Confirm New Password</label>
-                    <input type="password" name="password_confirmation" id="password_confirmation" class="form-control form-control-lg mb-3" required>
+                    <input type="password" name="password_confirmation" id="password_confirmation" class="form-control form-control-lg mb-1">
+                    <span id="confirmError" class="text-danger d-block mb-3" style="display: none;"></span>
 
-                    <button type="submit" class="btn btn-dark w-100 fw-bold" >Reset Password</button>
+                    <button type="submit" class="btn btn-dark w-100 fw-bold">Reset Password</button>
+                    <a href="{{ route('login') }}" class="btn btn-secondary w-100 mt-3 fw-bold">
+                        <i class="bi-arrow-left me-2"></i> Back to Login
+                    </a>
                 </form>
             </div>
         </div>
@@ -114,7 +123,7 @@
                             startTimer();
                         }, 1000);
 
-                        
+
 
                     } else {
                         showAlert('User not found with the given email and role.', 'danger');
@@ -181,15 +190,60 @@
             </div>
         `;
         }
-        
+
+        const passwordInput = document.getElementById("password");
+        const confirmInput = document.getElementById("password_confirmation");
+        const passwordError = document.getElementById("passwordError");
+        const confirmError = document.getElementById("confirmError");
+        const form = document.getElementsByClassName("resetPasswordForm");
+
+        function validatePassword(password) {
+            const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+            return regex.test(password);
+        }
+
+        function clearErrors() {
+            passwordError.style.display = "none";
+            confirmError.style.display = "none";
+        }
+
+        passwordInput.addEventListener("input", clearErrors);
+        confirmInput.addEventListener("input", clearErrors);
+
         document.getElementById("step3-form").addEventListener("submit", function(e) {
             e.preventDefault();
-            resetPassword();
+            let valid = true;
+            clearErrors();
+
+            const password = passwordInput.value.trim();
+            const confirm = confirmInput.value.trim();
+
+            if (!password) {
+                passwordError.textContent = "New password is required.";
+                passwordError.style.display = "block";
+                valid = false;
+            } else if (!validatePassword(password)) {
+                passwordError.textContent = "Password must be at least 6 characters and include a capital letter, a lowercase letter, a digit, and a special character.";
+                passwordError.style.display = "block";
+                valid = false;
+            }
+
+            if (!confirm) {
+                confirmError.textContent = "Please confirm your password.";
+                confirmError.style.display = "block";
+                valid = false;
+            } else if (password !== confirm) {
+                confirmError.textContent = "Passwords do not match.";
+                confirmError.style.display = "block";
+                valid = false;
+            }
+            if (valid) {
+                resetPassword(password,confirm);
+            }
         });
 
-        function resetPassword() {
-            const password = document.getElementById('password').value;
-            const password_confirmation = document.getElementById('password_confirmation').value;
+        function resetPassword(password,confirm) {
+            let password_confirmation = confirm;
             fetch("{{ route('reset.password') }}", {
                     method: "POST",
                     headers: {
@@ -214,7 +268,6 @@
                     }
                 });
         }
-        
     </script>
 </body>
 

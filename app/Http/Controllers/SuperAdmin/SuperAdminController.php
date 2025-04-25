@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\SuperAdmin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\AssignAdminRequest;
+use App\Http\Requests\EditAdminRequest;
 use App\Models\Library;
 use App\Models\User;
 use Illuminate\Validation\Rule;
@@ -24,20 +26,9 @@ class SuperAdminController extends Controller
     }
 
     //assigning admin to a library
-    public function assignAdminToLibrary(Request $request, Library $library)
+    public function assignAdminToLibrary(AssignAdminRequest $request, Library $library)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => [
-                'required',
-                'email',
-                Rule::unique('users')->where(function ($query) use ($request) {
-                    return $query->where('role', $request->role);
-                })
-            ],
-            'phone' => 'required|max:10|min:10',
-            'password' => 'required|min:6',
-        ]);
+        $request->validated();
 
         $user = User::create([
             'name' => $request->name,
@@ -116,4 +107,22 @@ class SuperAdminController extends Controller
     
         return view('super_admin.all_members');
     }
+
+    public function editLibraryAdminDetails(User $admin) {
+        return view('super_admin.edit_library_admin',compact('admin'));
+    }
+
+    public function updateLibraryAdminDetails(EditAdminRequest $request, User $admin) {
+        $request->validated();
+        $admin->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'address' => $request->address
+        ]);
+
+        return redirect()->route('library.admins')->with('editAdminSuccess', 'Admin details updated successfully!');
+    }
+
+    
 }

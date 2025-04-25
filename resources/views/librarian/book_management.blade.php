@@ -58,7 +58,7 @@
                                 </span>
                             </td>
                             <td class="text-center">{{ ucfirst($requestType) }}</td>
-                            <td class="action-cell text-center">
+                            <td class="action-cell text-center ">
                                 @if($request->status === 'pending')
                                     <div class="">
                                         <button class="btn btn-approve "  style=" background-color: #10b981;
@@ -73,7 +73,7 @@
                                             data-action="reject">Reject</button>
                                     </div>
                                 @else
-                                    <span class="status {{ $request->status === 'borrowed' ? 'approved' : 'unavailable' }}">
+                                    <span class="status {{ $request->status === 'borrowed' ? 'approved' : 'unavailable' }} {{$request->status}}">
                                         {{ ucfirst($request->status) }}
                                     </span>
                                 @endif
@@ -206,7 +206,7 @@
                 .then(response => response.json())
                 .then(data => {
                     if (data.success) {
-                        // Show success message
+                        // Showing a success message
                         Swal.fire({
                             title: 'Success!',
                             text: data.message || `Request ${action}d successfully!`,
@@ -214,7 +214,7 @@
                             confirmButtonColor: '#10b981'
                         });
                         
-                        // Update UI
+                        // Updating the status in the UI
                         const actionCell = buttonElement.closest('.action-cell');
                         const statusClass = action === 'approve' ? 'approved' : 'unavailable';
                         const statusText = action === 'approve' ? 'Approved' : 'Rejected';

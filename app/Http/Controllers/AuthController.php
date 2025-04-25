@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
+use App\Http\Requests\ProfileUpdateRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Models\Library;
 use App\Models\Librarian;
@@ -62,6 +63,12 @@ class AuthController extends Controller
         
         if (Auth::attempt($loginData)) {
             $user = Auth::user();
+            
+            if($user->role == 'librarian' && $user->librarian->status == 'pending' ) {
+                Auth::logout();
+                $request->session()->invalidate();
+                return back()->with('loginFailed', 'You are not approved by library admin,wait for approval!!');
+            }
             return redirect()->route('dashboard');
         }
         else {
@@ -69,11 +76,10 @@ class AuthController extends Controller
         } 
     }
 
-    public function profileUpdate(Request $request) {
-        $updatedData = $request->validate([
-            'name' => 'required|string|max:255',
-            'phone' => 'required|max:10|min:10',
-        ]);
+
+    public function profileUpdate(ProfileUpdateRequest $request) {
+        $updatedData = $request->validated();
+
         $User = User::where('id',Auth::id())->Update([
             'name' => $updatedData['name'],
             'phone' => $updatedData['phone'],
@@ -103,8 +109,6 @@ class AuthController extends Controller
         // Update the new password
         $user->password = $request->new_password;
         
-        // $user->save();
-    
         return back()->with('success', 'Password updated successfully!');
     }
 

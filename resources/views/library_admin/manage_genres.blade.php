@@ -62,7 +62,7 @@
                         </div>
                         <div class="stat-box borrowed-box">
                             <div class="stat-value borrowed-value">{{ $category['borrowed_books'] }}</div>
-                            <div class="stat-label">Borrowed Books</div>
+                            <div class="stat-label">Times Borrowed</div>
                         </div>
                     </div>
 
@@ -70,7 +70,7 @@
                     <div class="availability-section">
 
                         <div class="d-flex justify-content-between align-items-center small text-secondary mb-1">
-                            <span>Preference</span>
+                            <span>Borrow Preference</span>
                             <span>{{ $category['preferencePercentage']  }}%</span>
                         </div>
                         <div class="progress">

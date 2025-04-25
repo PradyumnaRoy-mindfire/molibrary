@@ -22,11 +22,10 @@ let currentPage = 1;
                     })
                     .then(response => response.json())
                     .then(data => {
-                        // First clear the container
                         const contentContainer = document.getElementById('bookGrid');
                         contentContainer.innerHTML = '';
 
-                        // then append the new card of results
+                        // appending the new card of results
                         displaySearchResults(data.books);
                     })
                     .catch(error => console.error('Error performing search:', error));
@@ -78,21 +77,21 @@ let currentPage = 1;
 
         div.innerHTML = `
     <div class="card h-100 border-0 shadow-sm">
-      ${book.image ? `<img src="${book.image_url}" class="card-img-top" alt="Book Image" style="object-fit: cover;">` : ''}
+      ${book.image ? `<img src="${book.image_url}" class="card-img-top" alt="Book Image" style="height:250px; object-fit: cover; object-position: center;width: 100%;">` : ''}
       <div class="card-body d-flex flex-column">
         <h5 class="card-title text-primary fw-semibold">${book.title}</h5>
         <p class="card-text mb-1">
           <i class="bi bi-person-fill me-1 text-muted"></i><strong>Author:</strong> ${book.author_name}
         </p>
         <p class="card-text mb-1">
-          <i class="bi bi-box-seam me-1 text-muted"></i><strong>Available:</strong> ${book.total_copies}
+          <i class="bi bi-box-seam me-1 text-muted"></i><strong>Library:</strong> ${book.library}
         </p>
         <div class="mb-2 d-flex justify-content-between">
           <span class="badge bg-info text-dark"><i class="bi bi-tags-fill me-1"></i>${book.category_name}</span>
           <span class="badge bg-secondary"><i class="bi bi-journal-code me-1"></i>${book.edition} Ed.</span>
         </div>
         <div class="mb-2 d-flex justify-content-between small text-muted">
-          <span><i class="bi bi-calendar2-week me-1"></i><strong>Year:</strong> ${book.published_year}</span>
+          <span><i class="bi bi-calendar2-week me-1"></i><strong>${book.total_copies} Available</strong> </span>
           <span><i class="bi bi-upc-scan me-1"></i><strong>ISBN:</strong> ${book.isbn}</span>
         </div>
         <marquee behavior="scroll" direction="left" scrollamount="3" class="text-danger mt-auto mb-2">
@@ -102,9 +101,7 @@ let currentPage = 1;
           <a href="#" class="btn btn-sm btn-outline-success px-3">
             <i class="bi bi-book-half me-1"></i> Borrow
           </a>
-          <a href="#" class="btn btn-sm btn-outline-danger px-3">
-            <i class="bi bi-calendar-check me-1"></i> Reserve
-          </a>
+          
         </div>
       </div>
     </div>

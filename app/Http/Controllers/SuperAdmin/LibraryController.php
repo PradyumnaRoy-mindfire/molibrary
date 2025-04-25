@@ -5,7 +5,9 @@ namespace App\Http\Controllers\SuperAdmin;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LibraryRequest;
 use App\Models\Library;
+use App\Models\User;
 use Illuminate\Support\Facades\DB;
+use PhpParser\Node\Expr\Assign;
 
 class LibraryController extends Controller
 {
@@ -45,6 +47,7 @@ class LibraryController extends Controller
         ->select(
             'users.id as admin_id',
             'users.name as admin_name',
+            'users.phone as admin_phone',
             'libraries.name as library_name',
             DB::raw('COUNT(librarians.id) as librarian_count')
         )
@@ -56,5 +59,5 @@ class LibraryController extends Controller
     }
 
     //edit a library admin
-    public function editLibraryAdminDetails() {}
+   
 }

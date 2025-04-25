@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\Storage;
 
 class BookController extends Controller
 {
-    //
 
     public function addBookForm(Library $library)
     {
@@ -27,7 +26,7 @@ class BookController extends Controller
     
         // Handle author - either existing or new
         if ($request->author_id === 'new-author' && $request->filled('new_author_name')) {
-            // Create new author
+            // Creating new author
             $author = Author::create([
                 'name' => $request->new_author_name
             ]);
@@ -36,7 +35,7 @@ class BookController extends Controller
             $authorId = $request->author_id;
         }
     
-        // Handle file uploads
+        // Handling file uploads
         $imagePath = null;
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('book_covers', 'public');
@@ -52,7 +51,7 @@ class BookController extends Controller
             $previewPath = $request->file('preview_content_path')->store('book_previews', 'public');
         }
     
-        // Create the book record
+        // Creatiing a book  new record
         $book = Book::create([
             'title' => $request->title,
             'author_id' => $authorId,
@@ -68,7 +67,7 @@ class BookController extends Controller
             'image' => $imagePath,
             'ebook_path' => $ebookPath,
             'preview_content_path' => $previewPath,
-            'total_copies' => $request->total_copies, // Assuming all copies are available initially
+            'total_copies' => $request->total_copies, 
         ]);
     
         if($book) {
@@ -90,7 +89,7 @@ class BookController extends Controller
     {
         $validated = $request->validated();
         
-        // Handle author
+        // for author
         if ($request->author_id === 'new-author' && $request->filled('new_author_name')) {
             $author = Author::create([
                 'name' => $request->new_author_name
@@ -100,7 +99,7 @@ class BookController extends Controller
             $authorId = $request->author_id;
         }
         
-        $imagePath = $book->image; // Keep existing path by default
+        $imagePath = $book->image; // Keep existing path 
         if ($request->hasFile('image')) {
             // Delete old file if exists
             if ($book->image && Storage::disk('public')->exists($book->image)) {

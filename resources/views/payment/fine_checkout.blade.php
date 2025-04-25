@@ -3,32 +3,34 @@
 @section('title', 'Checkout')
 
 @push('styles')
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="{{ url('css/payment/checkout.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+<link rel="stylesheet" href="{{ url('css/payment/checkout.css') }}">
 @endpush
 
 @section('content')
 <div class="container py-5">
     <div class="row justify-content-center">
+
         <div class="col-lg-8 col-md-10">
             <div class="card shadow">
                 <div class="card-header bg-primary text-white">
-                    <h2 class="h4 mb-0 py-2 text-center">Checkout - {{ ucfirst($plan->type) }} Plan</h2>
+                    <h2 class="h4 mb-0 py-2 text-center">Pay - Fine For Overdue</h2>
+                    
                 </div>
                 <div class="card-body p-4">
                     <div class="mb-4">
                         <div class="alert alert-info">
                             <div class="d-flex align-items-center">
                                 <i class="fas fa-info-circle me-3 fs-4"></i>
-                                <div>You're purchasing the <strong>{{ ucfirst($plan->type) }}</strong> plan for <strong>₹{{ $plan->amount }}</strong></div>
+                                <div>You're paying <strong>₹{{ $amount }}</strong> for the overdue book <strong>{{$book}}</strong>  borrowed from <strong>{{ $library }}</strong> </div>
                             </div>
                         </div>
                     </div>
 
-                    <form action="{{ route('checkout.process', $plan->id) }}" method="POST" id="payment-form">
+                    <form action="{{ route('pay.fine', $borrow->id) }}"  method="POST" id="payment-form">
                         @csrf
-                        <input type="hidden" name="plan" value="{{ $plan->type }}">
-                        <input type="hidden" name="amount" value="{{ $plan->amount }}">
+                        <input type="hidden" name="checkout" value="{{ session('checkout') }}">
+                        <input type="hidden" name="amount" value="{{ $amount }}">
 
                         <div class="row g-3">
                             <div class="col-md-6">
@@ -67,7 +69,7 @@
                                 <button type="submit" class="btn btn-primary btn-lg w-100">
                                     <div class="d-flex align-items-center justify-content-center">
                                         <i class="fas fa-lock me-2"></i>
-                                        <span>Pay ₹{{ $plan->amount }}</span>
+                                        <span>Pay ₹ {{ $amount }} </span>
                                     </div>
                                 </button>
                             </div>
@@ -87,13 +89,13 @@
 @endsection
 
 @push('scripts')
-    <script src="https://js.stripe.com/v3/"></script>
-    <script>
-        const stripe = Stripe("{{ config('services.stripe.key') }}");
-    </script>
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+    const stripe = Stripe("{{ config('services.stripe.key') }}");
+</script>
 
-    <script src=" {{ url('js/payment/checkout.js') }} "></script>
-    @if(session('payment_success'))
+<script src=" {{ url('js/payment/checkout.js') }} "></script>
+@if(session('payment_success'))
 <script>
     Swal.fire({
         title: "Successful!!",
@@ -103,10 +105,9 @@
         confirmButtonText: "Okay!"
     }).then((result) => {
         if (result.isConfirmed) {
-            window.location.href = "{{ route('memberships') }}";
+            window.location.href = "{{ route('borrowing.history') }}";
         }
     });
 </script>
 @endif
-
 @endpush

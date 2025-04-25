@@ -27,7 +27,7 @@ class LibraryAdminController extends Controller
             })
             ->select('books.*')
             ->orderBy('created_at', 'desc')
-            ->paginate(3);
+            ->paginate(4);
 
         $categories = Category::all();
 

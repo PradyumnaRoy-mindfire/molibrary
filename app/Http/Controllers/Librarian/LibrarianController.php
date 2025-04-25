@@ -22,23 +22,41 @@ class LibrarianController extends Controller
         return view('librarian.book_management', compact('borrowRequests'));
     }
 
+        //accept or reject borrow or return request
     public function processRequest(Request $request, $id)
     {
         $action = $request->input('action'); // 'approve' or 'reject'
-        $borrowRequest = Borrow::findOrFail($id);
+        $userRequest = Borrow::findOrFail($id);
 
         if ($action === 'approve') {
-            $borrowRequest->status = 'borrowed';
+            if ($userRequest->type === 'return') {
+                $userRequest->return_date = now();
+                $userRequest->status = 'returned';
+                
+                //update book total_copies
+                $userRequest->book->total_copies += 1;
+                $userRequest->user->book_limit += 1;
+            }else {
+                $userRequest->borrow_date = now();
+                $userRequest->due_date = now()->addMinutes(120);
+                $userRequest->status = 'borrowed';
+                $userRequest->book->total_copies -= 1;
+            }
         } else if ($action === 'reject') {
-            $borrowRequest->status = 'rejected';
+            $userRequest->status = 'rejected';
+            if ($userRequest->type === 'borrow') {
+                $userRequest->user->book_limit += 1;
+            }
         }
 
-        $borrowRequest->save();
+        $userRequest->save();
+        $userRequest->book->save();
+        $userRequest->user->save();
 
         return response()->json([
             'success' => true,
             'message' => ucfirst($action) . ' successful',
-            'status' => $borrowRequest->status === 'borrowed' ? 'approved' : 'rejected'
+            'status' => $userRequest->status === 'borrowed' ? 'approved' : 'rejected'
         ]);
     }
 }

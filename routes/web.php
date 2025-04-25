@@ -25,6 +25,7 @@ Route::get('/', function () {
 });
 
 
+
 //auth controller(register,login,logout,profile)
 Route::controller(AuthController::class)->group(function () {
     Route::get('/register', 'showRegisterForm')->name('register.form');
@@ -57,18 +58,26 @@ Route::controller(DashboardControler::class)->group(function () {
     Route::middleware(Authenticate::class)->group(function () {
         Route::get('/dashboard', 'showDashboard')->name('dashboard');
 
-            //member
+            //member dashboard cards
         Route::get('/membership/details', 'showMembershipDetails')->name('membership.details');
         Route::get('/membership/features', 'showMembershipFeatures')->name('membership.features');
         Route::get('/active/library', 'activeLibrary')->name('active.library');
+        Route::get('/outstanding-fines', 'outstandingFines')->name('outstanding.fines');
         
-            //super admin
+            //super admin dashboard cards
         Route::get('/top-books', 'topChoicesBooks')->name('top.books');
         Route::get('/total-revenue', 'totalRevenue')->name('total.revenue');
         Route::get('/popular-libraries', 'popularLibraries')->name('popular.libraries');
         
-            //library admin
-        
+            //library admin dashboard cards
+        Route::get('/overdue-books','overdueBooks')->name('overdue.books');
+        Route::get('/low-stock','lowStock')->name('low.stock');
+        Route::get('/total-fine','totalFine')->name('total.fine');
+
+            //librarian dashboard cards
+        Route::get('/most-borrowed-books/{library}', 'mostBorrowedBooks')->name('most.borrowed.books');
+        Route::get('/library-low-stock/{library}', 'libraryLowStock')->name('library.low.stock');
+        Route::get('/total-library-fine/{library}', 'totalLibraryFine')->name('total.library.fine');
     });
 });
 
@@ -85,6 +94,10 @@ Route::controller(MemberController::class)->group(function () {
         Route::get('/memberships',  'showMembershipAndPlans')->name('memberships');
         //search in books dynamically
         Route::post('/books/search', 'bookSearch')->name('books.search');
+
+        //for returning a book user don;t need a membership
+        Route::post('return-book/{borrow}', 'returnBook')->name('return.book');
+
     });
 });
 
@@ -102,12 +115,11 @@ Route::controller(BorrowController::class)->group(function () {
 Route::controller(PaymentController::class)->group(function () {
 
     Route::middleware(Authenticate::class, RoleMiddleware::class . ':member')->group(function () {
-           Route::get('/checkout/{plan}', 'showCheckoutForm')->name('checkout');
-           Route::post('/checkout/{plan}', 'processCheckout')->name('checkout.process');
+        Route::get('/checkout/{plan}', 'showCheckoutForm')->name('checkout');
+        Route::post('/checkout/{plan}', 'processCheckout')->name('checkout.process');
 
-        // In routes/web.php
-
-       
+        Route::get('/borrowing-history/pay-fine/{borrow}', 'payFine')->name('pay.fine');
+        Route::post('/borrowing-history/pay-fine/{borrow}', 'processFine')->name('pay.fine');
     });
 });
 
@@ -170,6 +182,9 @@ Route::controller(SuperAdminController::class)->group(function () {
         Route::get('/manage-library/{library}/assign-admin', 'assignAdminForm')->name('assign.admin');
         Route::post('/manage-library/{library}/assign-admin', 'assignAdminToLibrary')->name('assign.admin');
         Route::get('/members', 'showAllMembers')->name('all.members');
+
+        Route::get('/library-admins/{admin}/edit', 'editLibraryAdminDetails')->name('library.admin.edit');
+        Route::post('/library-admins/{admin}/edit', 'updateLibraryAdminDetails')->name('library.admin.update');
     });
 });
 
@@ -184,6 +199,5 @@ Route::controller(LibraryController::class)->group(function () {
         Route::get('/restricted-libraries', 'restricted')->name('restricted.libraries');
 
         Route::get('/library-admins', 'showLibraryAdmins')->name('library.admins');
-        Route::get('/library-admin-edit/{admin_id}', 'editLibraryAdminDetails')->name('library.admin.edit');
     });
 });

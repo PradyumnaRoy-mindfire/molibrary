@@ -11,7 +11,6 @@
         perspective: 1000px;
         width: 100%;
         max-width: 800px;
-        /* Increased from 500px */
     }
 
     .card {
@@ -146,8 +145,8 @@
         position: absolute;
         top: 0;
         right: 0;
-        width: 250px;
-        height: 250px;
+        width: 160px;
+        height: 190px;
         background-color: #edf2ff;
         border-radius: 0 0 0 100%;
         z-index: 0;

@@ -8,11 +8,9 @@ use App\Models\Borrow;
 use App\Models\Category;
 use App\Models\Membership;
 use App\Models\Plan;
-use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
-// use Yajra\DataTables\Facades\DataTables;
 use Yajra\DataTables\DataTables;
 
 
@@ -23,7 +21,7 @@ class MemberController extends Controller
         $books = Book::with(['author', 'category', 'library'])
             ->select('books.*')
             ->orderBy('created_at', 'desc')
-            ->paginate(3);
+            ->paginate(4);
 
         $categories = Category::all();
 
@@ -52,6 +50,7 @@ class MemberController extends Controller
                     'id' => $book->id,
                     'title' => $book->title,
                     'isbn' => $book->isbn,
+                    'library'=> $book->library->name,
                     'edition' => $book->edition,
                     'published_year' => $book->published_year,
                     'total_copies' => $book->total_copies,
@@ -80,6 +79,7 @@ class MemberController extends Controller
         $borrowings = Borrow::with(['book', 'library', 'fine'])
             ->where('users_id', $userId)
             ->select(
+                'borrows.*',
                 'borrows.id',
                 'borrows.borrow_date as issued_date',
                 'borrows.due_date',
@@ -102,6 +102,15 @@ class MemberController extends Controller
     
     }
     
+    public function returnBook(Borrow $borrow){
+        $borrowId = $borrow->update(['type' => 'return','status'=>'pending']);
+       
+        if($borrowId){
+            return response()->json(['success' => true]);
+        }else {
+            return response()->json(['success' => false, 'message' => 'Failed to return book']);
+        }
+    }
 
-
+   
 }

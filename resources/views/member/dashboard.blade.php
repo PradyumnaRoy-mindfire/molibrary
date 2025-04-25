@@ -75,9 +75,20 @@
 @endpush
 
 @section('content')
-<div class="container-fluid py-4">
-    <h2 class=" text-white">Hello, {{ Auth::user()->name }}</h2>
-    <h4 class=" text-white mb-4"> {{ now()->format('M d, Y | l, h:iA') }}</h4>
+<div class="container-fluid py-1">
+    <h2 class=" text-white text-center">
+    @php
+        $hour = now()->hour;
+        $greeting = "Good Morning";
+        
+        if ($hour >= 12 && $hour < 18) {
+            $greeting = "Good Afternoon";
+        } elseif ($hour >= 18) {
+            $greeting = "Good Evening";
+        }
+    @endphp
+         {{$greeting}} , {{ Auth::user()->name }}</h2>
+    <h4 class=" text-white mb-3 text-center"> {{ now()->format('M d, Y | l, h:iA') }}</h4>
     <div class="row g-4">
         <!-- Account Status Card -->
         @if($membership !== null)
@@ -116,7 +127,7 @@
             <div class="member-card bg-dark p-4 shadow">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
-                        <h5 class="mb-0">{{ $membership->plan->max_books_limit ?? '0' }}</h5>
+                        <h5 class="mb-0">{{ $book_limit }}</h5>
                         <p class="mb-0">Remaining Books Limit</p>
                     </div>
                     <i class="bi bi-journal-check card-icon"></i>
@@ -138,7 +149,7 @@
         </div>
 
         <!-- Outstanding Fines Card -->
-        <div class="col-12 col-md-6 col-xl-3" data-type="fines" data-route="">
+        <div class="col-12 col-md-6 col-xl-3 fines-card" data-type="fines" data-route=" {{ route('outstanding.fines') }}">
             <div class="member-card bg-danger p-4 shadow">
                 <div class="d-flex justify-content-between align-items-center">
                     <div>
@@ -155,9 +166,15 @@
     <div id="dynamic-content" class="d-flex align-items-center justify-content-center mt-5"></div>
 
 
-    @endsection
+@endsection
 
-    @push('scripts')
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="{{ url('js/member/dashboard.js') }}"></script>
-    @endpush
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- DataTables JS -->
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+<!-- Responsive DataTables JS -->
+<script src="https://cdn.datatables.net/responsive/2.4.1/js/dataTables.responsive.min.js"></script>
+<script src="https://cdn.datatables.net/responsive/2.4.1/js/responsive.bootstrap5.min.js"></script>
+<script src="{{ url('js/member/dashboard.js') }}"></script>
+@endpush

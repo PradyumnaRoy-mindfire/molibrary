@@ -87,6 +87,11 @@
             </thead>
             <tbody>
                 @forelse ($memberships as $membership)
+                @php
+                 if(now()->gt($membership->end_date)){
+                    $membership->has_access = 0;
+                 }
+                 @endphp
                 <tr>
                     <td class="text-center">{{ $membership->payments_method_id }}</td>
                     <td class="text-center">{{ ucwords($membership->plan->type,' ') }}</td>
@@ -95,9 +100,7 @@
                     <td class="text-center">@if($membership->has_access == 1) <span class="badge badge-active">Active</span> @else <span class="badge badge-expired">Expired</span> @endif</td>
                 </tr>
                 @empty
-                <tr>
-                    <td colspan="5" class="text-center">No membership history found.</td>
-                </tr>
+                
                 @endforelse
 
             </tbody>
@@ -132,6 +135,7 @@
 <script>
     $(document).ready(function() {
         $('#membershipTable').DataTable({
+            order: [[4, 'asc']], // Order by 2nd column (0-indexed) descending
             language: {
                 searchPlaceholder: "Search membership...",
                 search: "",

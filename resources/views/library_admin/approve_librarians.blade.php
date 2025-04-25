@@ -13,7 +13,7 @@
 <div class="container-fluid py-4">
     <div class="card shadow">
         <div class="card-header bg-primary text-white">
-            <h5 class="mb-0">Librarian Management</h5>
+            <h5 class="mb-0 text-center">Librarian Management</h5>
         </div>
         <div class="card-body">
             <div class="table-responsive">

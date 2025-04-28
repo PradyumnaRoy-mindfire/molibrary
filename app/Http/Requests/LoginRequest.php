@@ -25,7 +25,7 @@ class LoginRequest extends FormRequest
             //
             'email' => 'required|email',
             'password' => 'required|min:6',
-            'role' => 'required|in:librarian,member,library_admin,super_admin',
+            'role' => 'nullable|in:librarian,member,library_admin,super_admin',
         ];
     }
 }

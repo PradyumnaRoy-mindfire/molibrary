@@ -105,7 +105,7 @@
     <script> 
     Swal.fire({
                 title: "Congrats!",
-                text: "Borrow request sent successfully!!!",
+                text: '{{ session("success") }}',
                 imageUrl: "{{ asset('storage/borrowPopup.png') }}",
                 imageWidth: 400,
                 imageHeight: 200,

@@ -71,18 +71,18 @@
 
                     <div class="d-flex justify-content-center gap-2">
                         @if($book->total_copies > 0)
-                        <a href="{{ route('borrow.confirmation', $book->id )}}" class="btn btn-sm btn-outline-success px-3 fw-bold">
+                        <a href="{{ route('borrow.confirmation',['action' => 'borrow', 'book' => $book->id] )}}" class="btn btn-sm btn-outline-success px-3 fw-bold">
                             <i class="bi bi-book-half me-1 fs-6"></i> Borrow
                         </a>
                         @else
-                        <button class="btn btn-sm btn-outline-danger px-3 fw-bold" disabled>
+                        <!-- <button class="btn btn-sm btn-outline-danger px-3 fw-bold" disabled>
                             <i class="bi bi-calendar-check me-1 fs-6"></i>
                             Coming Soon
-                        </button>
-                        <!-- <a href="#" class="btn btn-sm btn-outline-danger px-3 fw-bold">
+                        </button> -->
+                        <a href="{{ route('borrow.confirmation',['action' => 'reserve', 'book' => $book->id] )}}" class="btn btn-sm btn-outline-danger px-3 fw-bold">
                             <i class="bi bi-calendar-check me-1 fs-6"></i>
                             Reserve
-                        </a> -->
+                        </a>
                         @endif 
                         <!-- <a href="#" class="btn btn-sm btn-outline-warning px-3 fw-bold  ">
                             <i class="bi bi-eye me-1 fs-6"></i> Preview

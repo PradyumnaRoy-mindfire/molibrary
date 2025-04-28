@@ -61,11 +61,13 @@
                             <td class="action-cell text-center ">
                                 @if($request->status === 'pending')
                                     <div class="">
+                                        @if($isAvailable)
                                         <button class="btn btn-approve "  style=" background-color: #10b981;
             color: white;"
                                             data-url="{{ route('library.process-request', ['id' => $request->id]) }}" 
                                             data-request-id="{{ $request->id }}" 
                                             data-action="approve">Approve</button>
+                                        @endif
                                         <button class="btn btn-reject " style="background-color: #ef4444;
             color: white;" 
                                             data-url="{{ route('library.process-request', ['id' => $request->id]) }}" 

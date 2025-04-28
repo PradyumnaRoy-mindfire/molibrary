@@ -43,7 +43,7 @@ class LibrarianController extends Controller
                 if ($returnDate->gt($dueDate)) {
                     $minutesLate = $dueDate->diffInMinutes($returnDate);
 
-                    $finePerMinute = 20;     //fine amount is 3 rupees per minute
+                    $finePerMinute = 1;     //fine amount is 3 rupees per minute
                     $fineAmount = round($minutesLate * $finePerMinute, 2);
                     $userRequest->fine()->create([
                         'amount' => $fineAmount,

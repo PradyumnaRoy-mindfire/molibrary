@@ -112,9 +112,15 @@
                     <i class="fas fa-book-open me-2"></i>Preview
                 </a>
 
+                @if($action == 'borrow')
                 <a href=" {{ route('borrow.books',$book->id) }}" class="btn btn-success btn-borrow ms-2">
                     <i class="fas fa-check-circle me-2"></i>Confirm Borrow
                 </a>
+                @else 
+                <a href=" {{ route('reserve.books',$book->id) }}" class="btn btn-warning btn-borrow ms-2">
+                    <i class="fas fa-check-circle me-2"></i>Confirm Reserve
+                </a>
+                @endif
             </div>
         </div>
     </div>
@@ -126,18 +132,18 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    $(document).ready(function() {
-    $('.btn-borrow').click(function() {
-        Swal.fire({
-            title: "Congrats!",
-            text: "You have successfully borrowed the book.",
-            imageUrl: "{{ asset('storage/borrowPopup.png') }}",
-            imageWidth: 400,
-            imageHeight: 200,
-            imageAlt: "Custom image"
-          });
-    });
-});
+//     $(document).ready(function() {
+//     $('.btn-borrow').click(function() {
+//         Swal.fire({
+//             title: "Congrats!",
+//             text: "You have successfully borrowed the book.",
+//             imageUrl: "{{ asset('storage/borrowPopup.png') }}",
+//             imageWidth: 400,
+//             imageHeight: 200,
+//             imageAlt: "Custom image"
+//           });
+//     });
+// });
 </script>
 <script src="{{ url('js/member/borrow_confirmation.js') }}"> </script>
 @endpush

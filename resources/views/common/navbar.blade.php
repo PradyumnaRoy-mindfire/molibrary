@@ -113,9 +113,9 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('borrowing.history') }}"><i class="bi bi-clock-history me-3 fs-3 fw-bold"></i><span>Borrowing History</span></a>
             </li>
-            <!-- <li class="nav-item">
-                <a class="nav-link" href="{{ route('reserved.books') }}"><i class="bi bi-book-half me-3 fs-3 fw-bold"></i></i><span>Reserved Books</span></a>
-            </li> -->
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('show.reserve.books') }}"><i class="bi bi-book-half me-3 fs-3 fw-bold"></i></i><span>Reserved Books</span></a>
+            </li>
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('memberships') }}"><i class="bi bi-people me-3 fs-3 fw-bold"></i><span>Membership</span></a>
             </li>

@@ -78,6 +78,7 @@ class MemberController extends Controller
         
         $borrowings = Borrow::with(['book', 'library', 'fine'])
             ->where('users_id', $userId)
+            ->whereIn('type', ['borrow', 'return'])
             ->select(
                 'borrows.*',
                 'borrows.id',

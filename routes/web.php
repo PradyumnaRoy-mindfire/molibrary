@@ -36,6 +36,7 @@ Route::controller(AuthController::class)->group(function () {
     Route::post('/register', 'registerUser')->name('register');
 
     Route::get('/login', 'showLoginForm')->name('login.form');
+    Route::post('/check-email-roles', 'checkEmailRoles')->name('check.email.roles');
     Route::post('/login', 'loginUser')->name('login');
 
 
@@ -92,7 +93,7 @@ Route::controller(MemberController::class)->group(function () {
     Route::middleware(Authenticate::class, RoleMiddleware::class . ':member')->group(function () {
         Route::get('/browse-books', 'browseBooks')->name('browse.books');
         Route::get('/borrowing-history',  'showBorrowHistory')->name('borrowing.history');
-        Route::get('/reserved-books', 'reservedbooks')->name('reserved.books');
+        
         Route::get('/books',  'books')->name('books'); // e-Books
         Route::get('/settings',  'books')->name('settings');
         Route::get('/memberships',  'showMembershipAndPlans')->name('memberships');
@@ -109,8 +110,14 @@ Route::controller(MemberController::class)->group(function () {
 Route::controller(BorrowController::class)->group(function () {
 
     Route::middleware(Authenticate::class, RoleMiddleware::class . ':member', CheckMembership::class)->group(function () {
-        Route::get('/browse-books/borrow-confirmation/{book}', 'borrowConfirmation')->name('borrow.confirmation');
+        Route::get('/browse-books/{action}/confirmation/{book}', 'borrowConfirmation')->name('borrow.confirmation');
         Route::get('/borrow-books/{book}', 'borrowBooks')->name('borrow.books');
+        
+        Route::get('/reserved-books', 'showReservedBooks')->name('show.reserve.books');
+        Route::get('/reserved-books/{book}', 'reservedBooks')->name('reserve.books');
+        
+        Route::post('/borrow-reserved-books/{borrow}', 'borrowReservedBooks')->name('reserved.book.borrow');
+
     });
 });
 
@@ -174,7 +181,7 @@ Route::controller(ManageGenreController::class)->group(function () {
         Route::get('/manage-genres/add-genre', 'addGenre')->name('add.genre');
         Route::post('/manage-genres/add-genre', 'storeGenre')->name('store.genre');
 
-        Route::put('/manage-genres/update-genre/{category}', 'updateGenre')->name('update.genre');
+        Route::put('/manage-genres/{category}/update-genre', 'updateGenre')->name('update.genre');
     });
 });
 

@@ -100,7 +100,8 @@ $(document).on("click", ".btnDelete", function() {
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, Delete!"
+        confirmButtonText: "Yes, Delete!",
+        reverseButtons: true
     }).then((result) => {
         if (result.isConfirmed) {
             Swal.fire({

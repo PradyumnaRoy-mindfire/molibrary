@@ -9,17 +9,17 @@
             <div class="card-body">
                 <table id="users-table" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
                     <thead>
-                        <tr>
-                            <th>Book</th>
-                            <th>ISBN</th>
-                            <th>Library</th>
-                            <th>Due Date</th>
-                            <th>Amount</th>
+                        <tr class="text-center align-middle">
+                            <th class="text-center align-middle">Book</th>
+                            <th class="text-center align-middle">ISBN</th>
+                            <th class="text-center align-middle">Library</th>
+                            <th class="text-center align-middle">Due Date</th>
+                            <th class="text-center align-middle">Amount</th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse ($books as $book)
-                            <tr>
+                            <tr class="text-center align-middle">
                                 <td>{{ $book->borrow->book->title }}</td>
                                 <td>{{ $book->borrow->book->isbn  }}</td>
                                 <td>{{ $book->borrow->library->name }}</td>
@@ -27,9 +27,7 @@
                                 <td>{{ $book->amount }}</td>
                             </tr>
                         @empty
-                            <tr> 
-                                <td colspan="5">No payments found.</td>
-                            </tr>
+                            
                         @endforelse
                     </tbody>
                 </table>

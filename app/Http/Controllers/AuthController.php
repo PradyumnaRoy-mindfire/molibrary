@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\LoginRequest;
+use App\Http\Requests\PasswordUpdateRequest;
 use App\Http\Requests\ProfileUpdateRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Models\Library;
@@ -13,6 +14,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Validation\Rule;
+use Mockery\Generator\StringManipulation\Pass\Pass;
 
 class AuthController extends Controller
 {
@@ -93,11 +95,8 @@ class AuthController extends Controller
         return back()->with('profileUpdateSuccess', 'Profile updated successfully!');
     }
 
-    public function passwordUpdate(Request $request) {
-        $request->validate([
-            'current_password' => ['required'],
-            'new_password' => ['required', 'min:8', 'confirmed'],
-        ]);
+    public function passwordUpdate(PasswordUpdateRequest $request) {
+        $request->validated();
     
         $user = Auth::user();
     
@@ -134,8 +133,6 @@ class AuthController extends Controller
 
     public function sendOtp(Request $request)
     {
-        
-
         $otp = $request->otp;
 
         return response()->json([

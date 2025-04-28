@@ -5,8 +5,6 @@
 @push('styles')
 <meta name="csrf-token" content="{{ csrf_token() }}">
 <link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.css" />
-
-
 @endpush
 
 @section('content')
@@ -35,6 +33,7 @@
                                 <span class="badge bg-warning text-dark">{{ $librarian['created_at'] }}</span>
                             </td>
                             <td class="text-center">
+                                @if($librarian->librarian->status == 'pending')
                                 <div class="btn-group" role="group" aria-label="Accept or reject">
                                     <button data-url="{{ route('librarians.accept_or_reject', ['id' => $librarian->librarian->id, 'action' => 'accept']) }}"
                                         class="btn btn-sm btn-success rounded-start"
@@ -47,6 +46,11 @@
                                         <i class="fas fa-times-circle me-1"></i> Reject
                                     </button>
                                 </div>
+                                @elseif($librarian->librarian->status == 'approved')
+                                <span class=" text-success fs-6 fw-bold">Approved</span>
+                                @else
+                                <span class=" text-danger fs-6 fw-bold">Rejected</span>
+                                @endif
                             </td>
                         </tr>
                         @empty
@@ -67,41 +71,7 @@
 @endsection
 
 @section('styles')
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<style>
-    @media (max-width: 768px) {
-        .table-responsive {
-            border: 0;
-        }
-
-        .table thead {
-            display: none;
-        }
-
-        .table tr {
-            display: block;
-            margin-bottom: 1rem;
-            border: 1px solid #dee2e6;
-        }
-
-        .table td {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px dotted #ddd;
-        }
-
-        .table td::before {
-            content: attr(data-label);
-            font-weight: bold;
-            padding-right: 1rem;
-        }
-
-        .table td.text-center {
-            justify-content: space-between;
-        }
-    }
-</style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 @endsection
 
 @push('scripts')

@@ -34,12 +34,12 @@ class DashboardControler extends Controller
                     ->where('library_id', $library->id)
                     ->where('due_date', '<', now())
                     ->with(['book', 'user'])
-                    ->get()->count();
+                    ->count();
 
                 $lowStockBookCount = Book::where('library_id', $library->id)
                     ->where('total_copies', '<', 6)
                     ->withCount('borrows')
-                    ->get()->count();
+                    ->count();
 
                 //library total fine 
                 $borrows = Borrow::where('library_id', $library->id)->get();
@@ -68,13 +68,7 @@ class DashboardControler extends Controller
             case 'librarian':
                 $librarian = Librarian::where('user_id', Auth::id())->first();
 
-                $mostBorrowedBooksCount = Book::with(['author', 'category'])
-                    ->withTrashed()
-                    ->where('library_id', $librarian->library->id)
-                    ->withCount('borrows')
-                    ->having('borrows_count', '>', 1)
-                    ->orderBy('borrows_count', 'desc')
-                    ->get()->count();
+                $mostBorrowedBooksCount = $librarian->library->mostBorrowedBooks()->count();
 
                 $lowStockBooksCount = Book::where('library_id', $librarian->library->id)
                     ->where('total_copies', '<', 6)
@@ -82,6 +76,7 @@ class DashboardControler extends Controller
                     ->get()->count();
 
                 $borrows = Borrow::where('library_id', $librarian->library->id)->get();
+                
                 $totalFine = $borrows->sum(function ($borrow) {
                     $fine = $borrow->fine;
                     return $fine ? $fine->amount : 0;
@@ -199,14 +194,7 @@ class DashboardControler extends Controller
     //librarian
     public function mostBorrowedBooks(Library $library)
     {
-        $books = Book::with(['author', 'category'])
-            ->withTrashed()
-            ->where('library_id', $library->id)
-            ->withCount('borrows')
-            ->having('borrows_count', '>', 1)
-            ->orderBy('borrows_count', 'desc')
-            // ->limit(5)  
-            ->get();
+        $books = $library->mostBorrowedBooks()->with(['author', 'category'])->get();
 
         return view('librarian.dashboard_cards.most_borrowed_books', compact('books'));
     }

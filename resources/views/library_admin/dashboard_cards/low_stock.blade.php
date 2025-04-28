@@ -8,20 +8,20 @@
         <div class="card-body">
             <table id="users-table" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
                 <thead>
-                    <tr>
-                        <th class="text-center">Book</th>
-                        <th class="text-center">ISBN</th>
-                        <th class="text-center">Current Stock</th>
-                        <th class="text-center">Borrow Frequency</th>
+                    <tr class="text-center align-middle">
+                        <th class="text-center align-middle">Book</th>
+                        <th class="text-center align-middle">ISBN</th>
+                        <th class="text-center align-middle">Current Stock</th>
+                        <th class="text-center align-middle">Borrow Frequency</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse ($lowStockBooks as $book)
-                    <tr>
-                        <td class="text-center">{{ $book->title }}</td>
-                        <td class="text-center">{{ $book->isbn }}</td>
-                        <td class="text-center">{{ $book->total_copies }}</td>
-                        <td class="text-center">{{ $book->borrows_count }}</td>
+                    <tr class="text-center align-middle">
+                        <td>{{ $book->title }}</td>
+                        <td>{{ $book->isbn }}</td>
+                        <td>{{ $book->total_copies }}</td>
+                        <td>{{ $book->borrows_count }}</td>
                     </tr>
                     @empty
                     

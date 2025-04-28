@@ -65,7 +65,7 @@
 
 <div><img  class="img1" src="https://m.media-amazon.com/images/G/01/prime/primeinsider2/prnewesttitles/nov18/watching_you._CB480611966_.jpg" alt="Book" width="200" height="300"></div>
 
-<div><img class="img1" src="https://offtheshelf.com/app/uploads/2014/07/All-the-Light-We-Cannot-See.jpg" alt="Book" width="200" height="300"></div>
+<div><img class="img1" src="https://www.creatopy.com/blog/wp-content/uploads/2020/08/Jaws-Book-Cover-400x600.jpg" alt="Book" width="200" height="300"></div>
 <div><img class="img1" src="https://www.gannett-cdn.com/-mm-/3ce393aec430712acd545d8979b88674af8b6fa5/c=0-147-1605-2287/local/-/media/2018/04/13/USATODAY/USATODAY/636592352838445588-AP-Obit-Harper-Lee.1.jpg" alt="Book" width="200" height="300"></div>
 <div><img class="img1" src="https://img.buzzfeed.com/buzzfeed-static/static/2021-01/15/4/asset/0308066dc00f/sub-buzz-11116-1610686502-8.jpg" alt="Book" width="200" height="300"></div>
 </div>

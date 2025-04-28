@@ -24,7 +24,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// Route::get('/custom-card', function() {
+//     return view('payment.customcard');
+// });
 
+Route::post('/custom-card',[PaymentController::class,'processPayment'])->name('custom.card');
 
 //auth controller(register,login,logout,profile)
 Route::controller(AuthController::class)->group(function () {
@@ -88,7 +92,7 @@ Route::controller(MemberController::class)->group(function () {
     Route::middleware(Authenticate::class, RoleMiddleware::class . ':member')->group(function () {
         Route::get('/browse-books', 'browseBooks')->name('browse.books');
         Route::get('/borrowing-history',  'showBorrowHistory')->name('borrowing.history');
-        Route::get('/reserved-books', 'books')->name('reserved.books');
+        Route::get('/reserved-books', 'reservedbooks')->name('reserved.books');
         Route::get('/books',  'books')->name('books'); // e-Books
         Route::get('/settings',  'books')->name('settings');
         Route::get('/memberships',  'showMembershipAndPlans')->name('memberships');

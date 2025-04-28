@@ -7,14 +7,14 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class ForgotPasswordNotification extends Notification implements ShouldQueue
+class FineNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct(public $otp)
+    public function __construct(public $userRequest)
     {
         //
     }
@@ -33,10 +33,11 @@ class ForgotPasswordNotification extends Notification implements ShouldQueue
      * Get the mail representation of the notification.
      */
     public function toMail(object $notifiable): MailMessage
-    {
+    {   
+        $borrowRequest = $this->userRequest;
         return (new MailMessage)
-            ->view('mail.forgot_password_otp_mail', ['otp' => $this->otp['otp']])
-            ->subject('Your Password Reset OTP');
+            ->view('mail.fine_alert_mail', compact('borrowRequest'))
+            ->subject('Fine Notification');
     }
 
     /**

@@ -16,12 +16,22 @@ class Library extends Model
         return $this->hasMany(Librarian::class);
     }
 
-    // public function library()
-    // {
-    //     return $this->belongsTo(Library::class);
-    // }
+    public function borrows()
+    {
+        return $this->hasMany(Borrow::class,User::class,'users_id','library_id');
+    }
+
     public function books()
     {
         return $this->hasMany(Book::class)->withTrashed();;
+    }
+
+    public function mostBorrowedBooks()
+    {
+        return $this->books()
+            ->withTrashed()
+            ->withCount('borrows')
+            ->having('borrows_count', '>', 1)
+            ->orderBy('borrows_count', 'desc');
     }
 }

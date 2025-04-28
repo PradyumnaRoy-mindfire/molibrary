@@ -9,7 +9,7 @@
 @section('content')
 <div class="container-fluid py-4 text-center">
     <h2 class=" text-white">Hello, {{ Auth::user()->name }}</h2>
-    <h4 class=" text-white mb-4"> {{ now()->format('M d, Y | l, h:iA')}},{{$library->name}}</h4>
+    <h4 class=" text-white mb-4"> {{ now()->format('M d, Y | l, h:iA')}} , {{$library->name}}</h4>
 
     <div class="row g-4">
         <div class="col-12 d-flex justify-content-center flex-wrap gap-5">

@@ -9,19 +9,19 @@
         <div class="card-body">
             <table class="table table-striped table-bordered dt-responsive nowrap" id="library-table">
                 <thead class="table-primary">
-                    <tr>
-                        <th scope="col" class="text-center">Library Name</th>
-                        <th scope="col" class="text-center">No. of Books</th>
-                        <th scope="col" class="text-center">Location</th>
+                    <tr >
+                        <th scope="col" class="text-center align-middle">Library Name</th>
+                        <th scope="col" class="text-center align-middle">No. of Books</th>
+                        <th scope="col" class="text-center align-middle">Location</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse($libraries as $library)
-                    <tr>
-                        <td class="text-center">{{ $library->name }}</td>
-                        <td class="text-center">{{ $library->books_count }}</td>
+                    <tr class="text-center align-middle">
+                        <td>{{ $library->name }}</td>
+                        <td>{{ $library->books_count }}</td>
                         </td>
-                        <td class="text-center">{{ $library->location }}</td>
+                        <td>{{ $library->location }}</td>
                     </tr>
                     @empty
                     <tr>

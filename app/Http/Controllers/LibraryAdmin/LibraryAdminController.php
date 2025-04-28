@@ -12,7 +12,6 @@ use Illuminate\Support\Facades\Auth;
 
 class LibraryAdminController extends Controller
 {
-    //
     public function showDashboard()
     {
         return view('library_admin.dashboard');

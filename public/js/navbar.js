@@ -55,7 +55,8 @@ $(document).on("click", ".logout", function() {
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Yes, Logout !"
+        confirmButtonText: "Yes, Logout !",
+        reverseButtons: true
     }).then((result) => {
         if (result.isConfirmed) {
             window.location.href = logoutUrl;

@@ -9,21 +9,21 @@
             <table id="users-table" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
                 <thead>
                     <tr>
-                        <th class="text-center">Book Name</th>
-                        <th class="text-center">ISBN</th>
-                        <th class="text-center">Borrowed By</th>
-                        <th class="text-center">Issued Date</th>
-                        <th class="text-center">Return Date</th>
+                        <th class="text-center align-middle">Book Name</th>
+                        <th class="text-center align-middle">ISBN</th>
+                        <th class="text-center align-middle">Borrowed By</th>
+                        <th class="text-center align-middle">Return Date</th>
+                        <th class="text-center align-middle">Issued Date</th>
                     </tr>
                 </thead>
                 <tbody>
                     @forelse ($overdueBooks as $borrow)
-                    <tr>
-                        <td class="text-center">{{ $borrow->book->title }}</td>
-                        <td class="text-center">{{ $borrow->book->isbn }}</td>
-                        <td class="text-center">{{ $borrow->user->name }}</td>
-                        <td class="text-center">{{ $borrow->borrow_date }}</td>
-                        <td class="text-center"> {{ $borrow->due_date }} </td>
+                    <tr class="text-center align-middle">
+                        <td>{{ $borrow->book->title }}</td>
+                        <td>{{ $borrow->book->isbn }}</td>
+                        <td>{{ $borrow->user->name }}</td>
+                        <td>{{ $borrow->borrow_date }}</td>
+                        <td> {{ $borrow->due_date }} </td>
                     </tr>
                     @empty
                     

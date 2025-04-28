@@ -7,14 +7,14 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class ForgotPasswordNotification extends Notification implements ShouldQueue
+class BorrowRequestApprovedNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
     /**
      * Create a new notification instance.
      */
-    public function __construct(public $otp)
+    public function __construct(public $borrowRequest)
     {
         //
     }
@@ -34,9 +34,10 @@ class ForgotPasswordNotification extends Notification implements ShouldQueue
      */
     public function toMail(object $notifiable): MailMessage
     {
+        $borrowRequest = $this->borrowRequest;
         return (new MailMessage)
-            ->view('mail.forgot_password_otp_mail', ['otp' => $this->otp['otp']])
-            ->subject('Your Password Reset OTP');
+        ->view('mail.borrow_request', compact('borrowRequest'))
+        ->subject('Your Borrow Request Has Been Approved');
     }
 
     /**

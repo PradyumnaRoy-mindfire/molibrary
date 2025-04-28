@@ -22,7 +22,7 @@
                     <i class="bi bi-list" style="font-size: 1.5rem;"></i>
                 </button>
                 <div class="logo-bar d-flex align-items-center">
-                    <img src="https://cdn-icons-png.flaticon.com/512/2892/2892206.png" alt="Logo">
+                    <img src="{{ asset('storage/logo.png') }}" alt="Logo" class="rounded">
                     <span class="logo-title">MoLibrary</span>
                 </div>
             </div>
@@ -95,7 +95,7 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('approve.librarians') }}"><i class="bi bi-person-check me-2 fs-4 fw-bold"></i><span>Approve Librarian</span></a>
+                <a class="nav-link" href="{{ route('approve.librarians') }}"><i class="bi bi-person-check me-2 fs-4 fw-bold"></i><span>Librarians</span></a>
             </li>
 
             <!-- Librarian nav -->
@@ -143,6 +143,7 @@
     <script>
         let logoutUrl = "{{ route('logout') }}";
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ url('js/navbar.js') }}"></script>
 
 </body>

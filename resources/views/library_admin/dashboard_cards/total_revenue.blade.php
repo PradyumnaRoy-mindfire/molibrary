@@ -9,16 +9,16 @@
                 <table id="users-table" class="table table-striped table-bordered dt-responsive nowrap" style="width:100%">
                     <thead>
                         <tr>
-                            <th class="text-center">User Name</th>
-                            <th class="text-center">Email</th>
-                            <th class="text-center">Book</th>
-                            <th class="text-center">Amount</th>
-                            <th class="text-center">Status</th>
+                            <th class="text-center align-middle">User Name</th>
+                            <th class="text-center align-middle">Email</th>
+                            <th class="text-center align-middle">Book</th>
+                            <th class="text-center align-middle">Amount</th>
+                            <th class="text-center align-middle">Status</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($fines as $fine)
-                            <tr>
+                            <tr class="text-center align-middle">
                                 <td>{{ $fine->borrow->user->name }}</td>
                                 <td>{{ $fine->borrow->user->email }}</td>
                                 <td>{{ $fine->borrow->book->title }}</td>

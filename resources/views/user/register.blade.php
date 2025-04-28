@@ -128,7 +128,7 @@
                                 @enderror
                             </div>
 
-                            <button type="submit" class="btn btn-primary btn-lg w-100 py-2 fw-bold mt-3">
+                            <button type="submit" class="btn btn-primary btn-lg w-100 py-2 fw-bold mt-3" id="register">
                                 <i class="bi bi-person-plus me-2"></i>Register
                             </button>
 
@@ -149,8 +149,10 @@
             function toggleLibrarySelect() {
                 if ($('#role').val() === 'librarian') {
                     $('#librarySelect').slideDown();
+                    $('#register').html('<i class="bi bi-person-plus me-2"></i>Apply');
                 } else {
                     $('#librarySelect').slideUp();
+                    $('#register').html('<i class="bi bi-person-plus me-2"></i>Register');
                 }
             }
 

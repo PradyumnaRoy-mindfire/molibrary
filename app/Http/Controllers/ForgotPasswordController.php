@@ -37,11 +37,11 @@ class ForgotPasswordController extends Controller
                     ->where('role', $data['role'])
                     ->first();
         if($user) {
-            // $otp = rand(10000,99999);
-            $otp = 12345;
+            $otp = rand(10000,99999);
+            // $otp = 12345;
             session(['otp' => $otp]);
             $data = ['otp' => $otp];
-            // $user->notify(new ForgotPasswordNotification($data));  //use this
+           $user->notify(new ForgotPasswordNotification($data));  //use this
 
 
 

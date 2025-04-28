@@ -18,7 +18,7 @@
 
 
 <div class="container">
-    <div class="row mb-4">
+    <div class="row mb-0">
         <div class="col-md-8">
             <h2 class="text-white">My Borrowing History</h2>
             <p class="text-white">View all books you've borrowed along with their details and status</p>
@@ -29,15 +29,15 @@
         <div class="table-responsive">
             <table class="table table-hover table-bordered " id="borrowingTable">
                 <thead class="table-primary">
-                    <tr>
-                        <th class="text-center">Book Title</th>
-                        <th class="text-center">ISBN</th>
-                        <th class="text-center">Library</th>
-                        <th class="text-center">Issued Date</th>
-                        <th class="text-center">Due Date</th>
-                        <th class="text-center">Total Fine</th>
-                        <th class="text-center">Fine Status</th>
-                        <th class="text-center">Action</th>
+                    <tr class="text-center align-middle">
+                        <th>Book Title</th>
+                        <th>ISBN</th>
+                        <th>Library</th>
+                        <th>Issued Date</th>
+                        <th>Due Date</th>
+                        <th>Total Fine</th>
+                        <th>Fine Status</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -45,16 +45,16 @@
                     @php
                     $isOverdue = strtotime($borrowing->due_date) < strtotime('now') && !$borrowing->returned;
                         @endphp
-                        <tr>
-                            <td class="text-center">{{ $borrowing->title }}</td>
-                            <td class="text-center">{{ $borrowing->isbn }}</td>
-                            <td class="text-center">{{ $borrowing->library }}</td>
-                            <td class="text-center">{{ $borrowing->issued_date ? date('M d, Y, h:iA', strtotime($borrowing->issued_date)) : 'Not Issued' ;}}</td>
-                            <td class="{{ $isOverdue ? 'due-date-overdue' : 'due-date-ok' }} text-center" >
+                        <tr class=" text-center align-middle">
+                            <td>{{ $borrowing->title }}</td>
+                            <td>{{ $borrowing->isbn }}</td>
+                            <td>{{ $borrowing->library }}</td>
+                            <td>{{ $borrowing->issued_date ? date('M d, Y, h:iA', strtotime($borrowing->issued_date)) : 'Not Issued' ;}}</td>
+                            <td class="{{ $isOverdue ? 'due-date-overdue' : 'due-date-ok' }} " >
                                 {{ $borrowing->due_date ? date('M d, Y, h:iA', strtotime($borrowing->due_date)) : 'Not Issued' ;}}
                             </td>
-                            <td class="text-center">Rs.{{ number_format($borrowing->fine, 2) }}</td>
-                            <td class="text-center">
+                            <td >Rs.{{ number_format($borrowing->fine, 2) }}</td>
+                            <td>
                                 @if( $borrowing->fine > 0)
                                 @if($borrowing->fine_status == 'paid')
                                 <span class="status-badge status-paid fw-bold text-white">Paid</span>
@@ -65,9 +65,9 @@
                                 <span class="status-badge status-na fw-bold text-white">N/A</span>
                                 @endif
                             </td>
-                            <td class="text-center">
+                            <td>
                                 @if($borrowing->returned)
-                                <span class="badge bg-secondary fs-6">Returned</span>
+                                <span class="badge bg-secondary fs-6 mb-1">Returned</span>
                                 @if( $borrowing->fine > 0 && $borrowing->fine_status == 'pending')
                                 <button class="btn btn-sm btn-pay btn-warning" data-url="{{ route('pay.fine', $borrowing->id) }}">Pay Now</button>
                                 @endif

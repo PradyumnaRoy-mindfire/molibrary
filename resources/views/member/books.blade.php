@@ -41,7 +41,7 @@
                     <h5 class="card-title text-primary fw-semibold">{{ $book->title }}</h5>
 
                     <p class="card-text mb-1">
-                        <i class="bi bi-person-fill me-1 text-muted"></i><strong>Author:</strong> {{ $book->author->name }}
+                        <i class="bi bi-person-fill me-1 text-muted"></i><strong>Author:</strong> {{ $book->author->name ?? 'Unknown' }}
                     </p>
                     <p class="card-text mb-1">
                         <i class="bi bi-box-seam me-1 text-muted"></i><strong>Library:</strong> {{ $book->library->name }}
@@ -75,6 +75,10 @@
                             <i class="bi bi-book-half me-1 fs-6"></i> Borrow
                         </a>
                         @else
+                        <button class="btn btn-sm btn-outline-danger px-3 fw-bold" disabled>
+                            <i class="bi bi-calendar-check me-1 fs-6"></i>
+                            Coming Soon
+                        </button>
                         <!-- <a href="#" class="btn btn-sm btn-outline-danger px-3 fw-bold">
                             <i class="bi bi-calendar-check me-1 fs-6"></i>
                             Reserve

@@ -10,9 +10,9 @@
 @endpush
 
 @section('content')
-<div class="container py-5">
+<div class="container py-0">
     <!-- Membership Plans  -->
-    <h2 class="section-title text-center mb-5 text-white">Choose Your Membership Plan</h2>
+    <h2 class="section-title text-center mb-4 text-white">Choose Your Membership Plan</h2>
 
     <div class="row d-flex justify-content-center">
         <!-- Plan Card s-->
@@ -72,7 +72,7 @@
     </div>
 
     <!-- Membership History Section -->
-    <h2 class="section-title text-center mt-5 mb-4 text-white">Your Membership History</h2>
+    <h2 class="section-title text-center mt-4 mb-4 text-white">Your Membership History</h2>
 
     <div class="table-responsive history-table">
         <table class="table table-hover mb-0" id="membershipTable">

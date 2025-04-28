@@ -42,7 +42,7 @@
                 @endif
                 <div class="card-body d-flex flex-column">
                     <h5 class="card-title text-primary">{{ $book->title }}</h5>
-                    <p class="card-text mb-1"><strong>Author:</strong> {{ $book->author->name }}</p>
+                    <p class="card-text mb-1"><strong>Author:</strong> {{ $book->author->name ?? 'Unknown'}}</p>
                     <p class="card-text mb-1"><strong>Available:</strong> {{ $book->total_copies}}</p>
                     <div class="mb-1 d-flex justify-content-between">
                         <span class="card-text"><strong>Category:</strong> {{ $book->category->name}}</span>

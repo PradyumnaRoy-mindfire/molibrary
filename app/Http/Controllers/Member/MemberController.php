@@ -113,5 +113,46 @@ class MemberController extends Controller
         }
     }
 
+    public function showReservedBooks()
+    {
+        $user = Auth::user();
+        $reservedBooks = $user->borrows()->where('type', 'reserve')->with('book')->get();
+
+        $reservedBooksWithAvailability = $reservedBooks->map(function ($reserve) {
+            // Finding the the latest active borrow of that book
+            $activeBorrow = Borrow::where('book_id', $reserve->book_id)
+                ->where('status', 'borrowed')
+                ->orderBy('due_date', 'asc') // nearest due first
+                ->first();
+            
+            if ($activeBorrow) {
+                $dueDate = $activeBorrow->due_date;
+
+                if (now()->gt($dueDate)) {  // Due date already passed but not returned
+                    $expectedAvailability = now()->addDay(); 
+                } else {
+                    // if the book is borrowed then its due date is available 
+                    $expectedAvailability = $dueDate;
+                }
+            } 
+
+            
+            $reserve->expected_availability = $expectedAvailability ?? null;
+
+            return $reserve;
+        });
+
+        $reservedBooks = $reservedBooksWithAvailability;
+
+        // dd($reservedBooks);
+
+        return view('member.reserved_books', compact('reservedBooks'));
+    }
+
+    public function cancelReservedBooks(Borrow $borrow) {
+        $user = Auth::user();
+        $user->borrows()->where('id', $borrow->id)->delete();
+        return response()->json(['success' => true]);
+    }
    
 }

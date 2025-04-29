@@ -45,10 +45,6 @@
                                     <input type="email" class="form-control form-control-lg" name="email" id="email" value="{{ old('email') }}" placeholder="Enter email" required>
                                 </div>
 
-                                <div id="emailCheckStatus" class="text-primary fw-bold mt-4 mb-5" style="display: none;">
-                                    <i class="spinner-border spinner-border-sm"></i> Checking email...
-                                </div>
-
                                 @error('email')
                                 <div class="text-danger mt-1">{{ $message }}</div>
                                 @enderror
@@ -57,7 +53,7 @@
                             <!-- Role Dropdown (Hidden by Default) -->
                             <div class="mb-4" id="roleDiv" style="display: none;">
                                 <select class="form-select form-select-lg" id="role" name="role">
-                                    <option value="" disabled selected>Select role</option>
+                                    <option value="" disabled selected>Login As</option>
                                     <!-- Roles will be dynamically populated -->
                                 </select>
                                 @error('role')

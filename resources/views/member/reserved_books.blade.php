@@ -51,10 +51,10 @@
                                 @endif
                             </td>
                             <td>
-                                @if( $borrowing->book->total_copies == 0)
-                                    <button class="btn btn-sm btn-cancel btn-danger text-white btn-cancel" data-url="{{-- route('reserved.cancel', $borrowing->id) --}}">Cancel Reservation</button>
+                                @if($borrowing->book->total_copies == 0)
+                                    <button class="btn btn-sm btn-cancel btn-outline-danger btn-cancel" data-url="{{ route('reservation.cancel', $borrowing->id) }}">Cancel Reservation</button>
                                 @else
-                                    <button class="btn btn-sm btn-borrow btn-success text-white btn-reserve" data-url="{{ route('reserved.book.borrow', $borrowing->id) }}"> Borrow Now</button>
+                                    <a class="btn btn-sm btn-borrow btn-outline-success  btn-borrow" href="{{ route('reserved.book.borrow', $borrowing->id) }}"> Borrow Now</a>
                                 @endif
                             </td>
                         </tr>
@@ -69,20 +69,23 @@
 
 @push('scripts')
 <script src="{{ url('js/member/reserved_books.js') }}"></script>
-@if(session('success'))
-    <script> 
-    // Swal.fire({
-    //             title: "Congrats!",
-    //             text: '{{ session("success") }}',
-    //             imageUrl: "{{ asset('storage/borrowPopup.png') }}",
-    //             imageWidth: 400,
-    //             imageHeight: 200,
-    //             imageAlt: "Custom image"
-    //         });
-        
-    // </script>
 
-@endif
+    @if(session('no_membership'))
+    <script>
+        Swal.fire({
+            icon: 'warning',
+            title: 'No Active Membership',
+            text: 'You must have an active membership to borrow books.',
+            showCancelButton: true,
+            confirmButtonText: 'Go to Membership Page',
+            cancelButtonText: 'Close',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                window.location.href = "{{ route('memberships') }}";
+            }
+        });
+    </script>
+    @endif
 @endpush
 
 

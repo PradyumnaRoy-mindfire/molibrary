@@ -103,6 +103,10 @@ Route::controller(MemberController::class)->group(function () {
         //for returning a book user don;t need a membership
         Route::post('return-book/{borrow}', 'returnBook')->name('return.book');
 
+        //for showing reserved books
+        Route::get('/reserved-books', 'showReservedBooks')->name('show.reserve.books');
+        Route::post('/cancel-reserved-books/{borrow}', 'cancelReservedBooks')->name('reservation.cancel');
+
     });
 });
 
@@ -113,11 +117,10 @@ Route::controller(BorrowController::class)->group(function () {
         Route::get('/browse-books/{action}/confirmation/{book}', 'borrowConfirmation')->name('borrow.confirmation');
         Route::get('/borrow-books/{book}', 'borrowBooks')->name('borrow.books');
         
-        Route::get('/reserved-books', 'showReservedBooks')->name('show.reserve.books');
         Route::get('/reserved-books/{book}', 'reservedBooks')->name('reserve.books');
         
-        Route::post('/borrow-reserved-books/{borrow}', 'borrowReservedBooks')->name('reserved.book.borrow');
-
+        Route::get('/borrow-reserved-books/{borrow}', 'borrowReservedBooks')->name('reserved.book.borrow');
+        
     });
 });
 

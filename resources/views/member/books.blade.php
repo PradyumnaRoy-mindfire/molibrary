@@ -34,7 +34,7 @@
         <div class="col-md-3 mb-4 book-card" data-category="{{ Str::slug($book->category->name) }}">
             <div class="card h-100 border-0 shadow-sm">
                 @if($book->image)
-                    <img src="{{ asset('storage/'.$book->image) }}" class="card-img-top " alt="Book Image" style="height:250px; object-fit: cover; object-position: center;width: 100%;" >
+                <img src="{{ asset('storage/'.$book->image) }}" class="card-img-top " alt="Book Image" style="height:250px; object-fit: cover; object-position: center;width: 100%;">
                 @endif
 
                 <div class="card-body d-flex flex-column">
@@ -45,7 +45,7 @@
                     </p>
                     <p class="card-text mb-1">
                         <i class="bi bi-box-seam me-1 text-muted"></i><strong>Library:</strong> {{ $book->library->name }}
-                        
+
                     </p>
 
                     <div class="mb-2 d-flex justify-content-between">
@@ -55,13 +55,13 @@
 
                     <div class="mb-2 d-flex justify-content-between small text-muted">
                         <span><i class="bi bi-calendar2-week me-1"></i><strong>
-                            @if($book->total_copies == 0)
-                            <span class="text-danger fw-semibold">Out of Stock</span> 
-                            @elseif($book->total_copies < 6)
-                             <span class="text-warning fw-semibold">Only {{ $book->total_copies }} Left</span> 
-                            @else 
-                            <span class="text-success fw-semibold">{{ $book->total_copies }} Available</span> 
-                            @endif</strong> </span>
+                                @if($book->total_copies == 0)
+                                <span class="text-danger fw-semibold">Out of Stock</span>
+                                @elseif($book->total_copies < 6)
+                                    <span class="text-warning fw-semibold">Only {{ $book->total_copies }} Left</span>
+                        @else
+                        <span class="text-success fw-semibold">{{ $book->total_copies }} Available</span>
+                        @endif</strong> </span>
                         <span><i class="bi bi-upc-scan me-1"></i><strong>ISBN:</strong> {{ $book->isbn }}</span>
                     </div>
 
@@ -83,7 +83,7 @@
                             <i class="bi bi-calendar-check me-1 fs-6"></i>
                             Reserve
                         </a>
-                        @endif 
+                        @endif
                         <!-- <a href="#" class="btn btn-sm btn-outline-warning px-3 fw-bold  ">
                             <i class="bi bi-eye me-1 fs-6"></i> Preview
                         </a>  -->
@@ -120,6 +120,22 @@
 </script>
 
 @endif
+
+@if(session('reserve_success'))
+<script>
+    Swal.fire({
+        title: "Congrats!",
+        text: '{{ session("reserve_success") }}',
+        imageUrl: "{{ asset('storage/borrowPopup.png') }}",
+        imageWidth: 400,
+        imageHeight: 200,
+        imageAlt: "Custom image"
+    });
+</script>
+
+@endif
+
+
 
 <script src=" {{ url('js/library_admin/manage_books.js') }} "></script>
 <script>

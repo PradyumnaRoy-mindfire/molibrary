@@ -72,17 +72,31 @@ class AuthController extends Controller
 
     public function loginUser(LoginRequest $request)
     {
-        $loginData = $request->validated();
+        $loginData = $request->validated(); 
 
-        if (Auth::attempt($loginData)) {
-            $user = Auth::user();
+            //to check the librarian is approved or not 
+        $user = User::where('email', $request->email)->get();
+        $roles = $user->pluck('role')->unique()->values();
+        $rolesCount = $roles->count();
 
-            if ($user->role == 'librarian' && $user->librarian->status == 'pending') {
-                Auth::logout();
-                $request->session()->invalidate();
+        if($rolesCount > 1 && $request->role == 'librarian' && $user[0]->librarian->status == 'pending') {
+
+            return back()->with('loginFailed', 'You are not approved by library admin,wait for approval!!');
+
+        } else {
+
+            if ($user[0]->role == 'librarian' && $user[0]->librarian->status == 'pending') {
+
                 return back()->with('loginFailed', 'You are not approved by library admin,wait for approval!!');
+
             }
+        }
+
+        
+        if (Auth::attempt($loginData)) {
+
             return redirect()->route('dashboard');
+
         } else {
             return back()->with('loginFailed', 'Invalid credentials, please try again.');
         }

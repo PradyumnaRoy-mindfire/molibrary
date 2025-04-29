@@ -22,7 +22,8 @@ class CheckMembership
 
         if (!$user->membership || now()->gt($user->membership->end_date)) {
             session()->flash('no_membership', true);
-            return redirect()->route('browse.books');
+            // return redirect()->route('browse.books');
+            return back();
         }
 
         return $next($request);

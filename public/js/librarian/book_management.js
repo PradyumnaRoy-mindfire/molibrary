@@ -58,6 +58,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 showCancelButton: true,
                 confirmButtonColor: '#10b981',
                 cancelButtonColor: '#6b7280',
+                reverseButtons: true,
                 confirmButtonText: 'Yes, approve it!',
                 cancelButtonText: 'Cancel'
             }).then((result) => {
@@ -84,6 +85,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 showCancelButton: true,
                 confirmButtonColor: '#ef4444',
                 cancelButtonColor: '#6b7280',
+                reverseButtons: true,
                 confirmButtonText: 'Yes, reject it!',
                 cancelButtonText: 'Cancel'
             }).then((result) => {

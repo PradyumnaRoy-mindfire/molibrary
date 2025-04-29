@@ -2,8 +2,7 @@ $('#email').on('keyup', function() {
     var email = $(this).val();
 
     if (email.length > 0) {
-        // Show checking spinner
-        $('#emailCheckStatus').show();
+        
 
         $.ajax({
             url: loginUrl,
@@ -13,9 +12,6 @@ $('#email').on('keyup', function() {
                 _token: csrf
             },
             success: function(response) {
-                //hiding the spinner
-                $('#emailCheckStatus').hide();
-
                 if (response.roles.length > 1) {
                     $('#roleDiv').show();
                     $('#role').empty();
@@ -29,13 +25,12 @@ $('#email').on('keyup', function() {
                 }
             },
             error: function() {
-                $('#emailCheckStatus').hide(); 
+                 
             }
         });
     } else {
         $('#roleDiv').hide();
         $('#role').empty();
-        $('#emailCheckStatus').hide();
     }
 });
 

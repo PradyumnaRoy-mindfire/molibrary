@@ -29,15 +29,15 @@
         <div class="table-responsive">
             <table class="table table-hover table-bordered " id="borrowingTable">
                 <thead class="table-primary">
-                    <tr class="text-center align-middle">
-                        <th>Book Title</th>
-                        <th>ISBN</th>
-                        <th>Library</th>
-                        <th>Issued Date</th>
-                        <th>Due Date</th>
-                        <th>Total Fine</th>
-                        <th>Fine Status</th>
-                        <th>Action</th>
+                    <tr>
+                        <th class="text-center align-middle">Book Title</th>
+                        <th class="text-center align-middle">ISBN</th>
+                        <th class="text-center align-middle">Library</th>
+                        <th class="text-center align-middle">Issued Date</th>
+                        <th class="text-center align-middle">Due Date</th>
+                        <th class="text-center align-middle">Total Fine</th>
+                        <th class="text-center align-middle">Fine Status</th>
+                        <th class="text-center align-middle">Action</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -46,19 +46,19 @@
                     $isOverdue = strtotime($borrowing->due_date) < strtotime('now') && !$borrowing->returned;
                         @endphp
                         <tr class=" text-center align-middle">
-                            <td>{{ $borrowing->title }}</td>
-                            <td>{{ $borrowing->isbn }}</td>
-                            <td>{{ $borrowing->library }}</td>
-                            <td>{{ $borrowing->issued_date ? date('M d, Y, h:iA', strtotime($borrowing->issued_date)) : 'Not Issued' ;}}</td>
-                            <td class="{{ $isOverdue ? 'due-date-overdue' : 'due-date-ok' }} " >
+                            <td>{{ $borrowing->book->title }}</td>
+                            <td>{{ $borrowing->book->isbn }}</td>
+                            <td>{{ $borrowing->library->name }}</td>
+                            <td>{{ $borrowing->borrow_date ? date('M d, Y, h:iA', strtotime($borrowing->borrow_date)) : 'Not Issued' ;}}</td>
+                            <td class="{{ $isOverdue ? 'due-date-overdue' : 'due-date-ok' }} ">
                                 {{ $borrowing->due_date ? date('M d, Y, h:iA', strtotime($borrowing->due_date)) : 'Not Issued' ;}}
                             </td>
-                            <td >Rs.{{ number_format($borrowing->fine, 2) }}</td>
+                            <td>Rs.{{ number_format(($borrowing->fine->amount ??0), 2) }}</td>
                             <td>
-                                @if( $borrowing->fine > 0)
-                                @if($borrowing->fine_status == 'paid')
+                                @if( ($borrowing->fine->amount ??0) > 0)
+                                @if($borrowing->fine->status == 'paid')
                                 <span class="status-badge status-paid fw-bold text-white">Paid</span>
-                                @elseif($borrowing->fine_status == 'pending')
+                                @elseif($borrowing->fine->status == 'pending')
                                 <span class="status-badge status-pending fw-bold text-white">Pending</span>
                                 @endif
                                 @else
@@ -66,14 +66,15 @@
                                 @endif
                             </td>
                             <td>
-                                @if($borrowing->returned)
-                                <span class="badge bg-secondary fs-6 mb-1">Returned</span>
-                                @if( $borrowing->fine > 0 && $borrowing->fine_status == 'pending')
-                                <button class="btn btn-sm btn-pay btn-warning" data-url="{{ route('pay.fine', $borrowing->id) }}">Pay Now</button>
-                                @endif
+                                @if($borrowing->status === 'returned')
+                                    <span class="badge bg-secondary fs-6 mb-1">Returned</span>
+                                    
+                                    @if( ($borrowing->fine->amount ?? 0) > 0 && $borrowing->fine->status == 'pending')
+                                        <button class="btn btn-sm btn-pay btn-warning" data-url="{{ route('pay.fine', $borrowing->id) }}">Pay Now</button>
+                                    @endif
                                 @else
                                 <div class="action-buttons">
-                                    @if($borrowing->borrow_date == null) 
+                                    @if($borrowing->borrow_date == null)
                                     <span class="badge bg-info fs-6"> Borrow Requested</span>
 
                                     @elseif($borrowing->type == 'return' )
@@ -81,7 +82,7 @@
                                     @else
                                     <button class="btn btn-sm btn-return me-1 btn-primary " data-url="{{ route('return.book', $borrowing->id) }}">Return</button>
                                     @endif
-                                    @if( $borrowing->fine > 0 && $borrowing->fine_status == 'pending')
+                                    @if( ($borrowing->fine->amount ??0) > 0 && $borrowing->fine->status == 'pending')
                                     <button class="btn btn-sm btn-pay btn-warning" data-url="{{ route('pay.fine', $borrowing->id) }}">Pay Now</button>
                                     @endif
                                 </div>
@@ -102,27 +103,26 @@
 @push('scripts')
 <script src="{{ url('js/member/borrow_history.js')}}"></script>
 @if(session('success'))
-    <script> 
+<script>
     Swal.fire({
-                title: "Congrats!",
-                text: '{{ session("success") }}',
-                imageUrl: "{{ asset('storage/borrowPopup.png') }}",
-                imageWidth: 400,
-                imageHeight: 200,
-                imageAlt: "Custom image"
-            });
-        
-    </script>
+        title: "Congrats!",
+        text: '{{ session("success") }}',
+        imageUrl: "{{ asset('storage/borrowPopup.png') }}",
+        imageWidth: 400,
+        imageHeight: 200,
+        imageAlt: "Custom image"
+    });
+</script>
 @endif
 
 @if(session('error'))
-    <script>
-        Swal.fire({
-            icon: "error",
-            title: "Oops...",
-            text: "{{ session('error') }}",
-        });
-    </script>
+<script>
+    Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "{{ session('error') }}",
+    });
+</script>
 @endif
 
 @endpush

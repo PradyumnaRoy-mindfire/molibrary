@@ -18,6 +18,7 @@ class MemberController extends Controller
 {
     //
     public function browseBooks()  {
+
         $books = Book::with(['author', 'category', 'library'])
             ->select('books.*')
             ->orderBy('created_at', 'desc')
@@ -28,7 +29,9 @@ class MemberController extends Controller
         return view('member.books', compact('books', 'categories'));
     }
     public function showDashboard()  {
+
         return view('member.dashboard');
+
     }
 
             //for search ajax
@@ -68,42 +71,24 @@ class MemberController extends Controller
     }
 
     public function showMembershipAndPlans(){
+
         $plans = Plan::all();
         $memberships = Membership::with('plan')->where('user_id', Auth::user()->id)->get();
+
         return view('member.membership_plans',compact('plans','memberships'));
     }
 
     public function showBorrowHistory(Request $request, DataTables $dataTables){
-        $userId = Auth::id();
-        
-        $borrowings = Borrow::with(['book', 'library', 'fine'])
-            ->where('users_id', $userId)
-            ->whereIn('type', ['borrow', 'return'])
-            ->select(
-                'borrows.*',
-                'borrows.id',
-                'borrows.borrow_date as issued_date',
-                'borrows.due_date',
-                'borrows.return_date',
-                'borrows.status',
-                'books.title',
-                'books.isbn',
-                'libraries.name as library'
-            )
-            ->join('books', 'borrows.book_id', '=', 'books.id')
-            ->join('libraries', 'borrows.library_id', '=', 'libraries.id')
-            ->leftJoin('fines', 'borrows.id', '=', 'fines.borrow_id')
-            ->selectRaw('COALESCE(fines.amount, 0) as fine')
-            ->selectRaw('COALESCE(fines.status, "none") as fine_status')
-            ->selectRaw('CASE WHEN borrows.return_date IS NOT NULL THEN true ELSE false END as returned')
-            ->orderBy('borrows.borrow_date', 'desc')
-            ->get();
-        
+
+        $user = Auth::user();
+        $borrowings = $user->borrows()->whereIn('type', ['borrow', 'return'])->get();
+       
         return view('member.borrow_history', compact('borrowings'));
     
     }
     
     public function returnBook(Borrow $borrow){
+
         $borrowId = $borrow->update(['type' => 'return','status'=>'pending']);
        
         if($borrowId){
@@ -150,8 +135,10 @@ class MemberController extends Controller
     }
 
     public function cancelReservedBooks(Borrow $borrow) {
+
         $user = Auth::user();
         $user->borrows()->where('id', $borrow->id)->delete();
+        
         return response()->json(['success' => true]);
     }
    

@@ -16,12 +16,17 @@ use App\Http\Middleware\CheckMembership;
 use App\Http\Middleware\RoleMiddleware;
 use Illuminate\Auth\Middleware\Authenticate;
 use Illuminate\Support\Facades\Route;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 Route::get('/', function () {
     return redirect()->route('login.form');
 });
 Route::get('/', function () {
     return view('welcome');
+});
+Route::get('/test-pdf', function () {
+    $pdf = PDF::loadView('welcome');
+    return $pdf->download('test.pdf');
 });
 
 // Route::get('/custom-card', function() {

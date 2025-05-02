@@ -108,9 +108,9 @@
                     <i class="fas fa-arrow-left me-2"></i>Back
                 </a>
 
-                <a class="btn btn-preview ms-2 btn-outline-primary">
+                <!-- <a class="btn btn-preview ms-2 btn-outline-primary">
                     <i class="fas fa-book-open me-2"></i>Preview
-                </a>
+                </a> -->
 
                 @if($action == 'borrow')
                 <a href=" {{ route('borrow.books',$book->id) }}" class="btn btn-success btn-borrow ms-2">

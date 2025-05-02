@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\Response;
 
-class CheckMembership
+class CheckEbookMembership
 {
     /**
      * Handle an incoming request.
@@ -18,9 +18,8 @@ class CheckMembership
     {
         $user = Auth::user();
 
-        // dd($user->membership);
 
-        if (!$user->membership || now()->gt($user->membership->end_date)) {
+        if (!$user->membership|| $user->membership->plan->ebook_access == 0 || now()->gt($user->membership->end_date)) {
             session()->flash('no_membership', true);
             
             return back();

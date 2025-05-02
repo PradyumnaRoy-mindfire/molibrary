@@ -67,7 +67,7 @@ let currentPage = 1;
     }
 
     function resetToNormalView() {
-        window.location.href = '/browse-books?page=' + currentPage;
+        window.location.href = '/e-books?page=' + currentPage;
     }
             //creating a card to show the result
     function createBookElement(book) {
@@ -91,23 +91,16 @@ let currentPage = 1;
           <span class="badge bg-secondary"><i class="bi bi-journal-code me-1"></i>${book.edition} Ed.</span>
         </div>
         <div class="mb-2 d-flex justify-content-between small text-muted">
-          <span><i class="bi bi-calendar2-week me-1"></i><strong>${book.total_copies} Available</strong> </span>
           <span><i class="bi bi-upc-scan me-1"></i><strong>ISBN:</strong> ${book.isbn}</span>
         </div>
         <marquee behavior="scroll" direction="left" scrollamount="3" class="text-danger mt-auto mb-2">
-          🔥 <strong>${Math.floor(Math.random() * 10) + 1}</strong> readers borrowed this book in the last hour!
+          🔥 <strong>${Math.floor(Math.random() * 10) + 1}</strong> readers checked out this book in the last hour!
         </marquee>
         <div class="d-flex justify-content-center">
-
-        ${book.total_copies > 0 ?
-           `<a href="/browse-books/borrow/confirmation/${book.id}" class="btn btn-sm btn-outline-success px-3">
-            <i class="bi bi-book-half me-1"></i> Borrow
-          </a>` 
-          :
-          `<a href="/browse-books/reserve/confirmation/${book.id}" class="btn btn-sm btn-outline-danger px-3">
-            <i class="bi bi-calendar-check me-1"></i> Reserve
-         </a>`
-        }   
+          <a href="#" class="btn btn-sm btn-outline-success px-3">
+            <i class="bi bi-book-half me-1"></i> Start Reading
+          </a>
+          
         </div>
       </div>
     </div>

@@ -50,13 +50,17 @@ class User extends Authenticatable
     }
     public function membership()
     {
-        return $this->hasOne(Membership::class, 'user_id')->latestOfMany();
+        return $this->hasOne(Membership::class, 'user_id')->latestOfMany('end_date');
     }
     public function fines()
     {
-        return $this->hasManyThrough(Fine::class,Borrow::class,'users_id','borrow_id');
+        return $this->hasManyThrough(Fine::class, Borrow::class, 'users_id', 'borrow_id');
     }
-    
+    public function ebooks()
+    {
+        return $this->hasMany(Ebook::class);
+    }
+
 
 
 

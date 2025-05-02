@@ -120,9 +120,9 @@
                 <a class="nav-link" href="{{ route('memberships') }}"><i class="bi bi-people me-3 fs-3 fw-bold"></i><span>Membership</span></a>
             </li>
 
-            <!-- <li class="nav-item">
-                <a class="nav-link" href="{{-- route('books') --}}"><i class="bi bi-file-earmark-pdf me-3 fs-3 fw-bold"></i><span>e-Books</span></a>
-            </li> -->
+            <li class="nav-item">
+                <a class="nav-link" href="{{ route('e-books') }}"><i class="bi bi-file-earmark-pdf me-3 fs-3 fw-bold"></i><span>e-Books</span></a>
+            </li>
             @endif
 
             <!-- <li class="nav-item">

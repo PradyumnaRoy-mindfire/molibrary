@@ -1,0 +1,217 @@
+body {
+    text-align: center;
+    background: #f5f5f5;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+#flipbook-container {
+    position: relative;
+    margin: 40px auto;
+    max-width: 1200px;
+}
+
+#flipbook-container.fullscreen {
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, 0.95);
+    overflow: hidden;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+}
+
+#flipbook-container.fullscreen #flipbook {
+    width: 95vw !important;
+    height: 85vh !important; 
+    margin: 0;
+    box-shadow: none;
+}
+
+#flipbook-container.fullscreen #flipbook .page {
+    width: 47.5vw !important;
+    height: 85vh !important;
+    border-radius: 0;
+}
+
+#flipbook {
+    width: 1200px; 
+    height: 800px; 
+    margin: auto;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+#flipbook .page {
+    width: 600px;
+    height: 800px; 
+    background: white;
+    overflow: hidden;
+    border-radius: 2px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+canvas {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+#controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+    transition: opacity 0.3s;
+}
+
+.nav-btn {
+    position: absolute;
+    z-index: 2000;
+    width: 50px;
+    height: 50px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.nav-btn:hover {
+    background-color: rgba(240, 240, 240, 1);
+}
+
+.nav-btn i {
+    font-size: 20px;
+    color: #333;
+}
+
+.nav-prev {
+    left: -60px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.nav-next {
+    right: -60px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* Bottom controls */
+#bottom-controls {
+    position: absolute;
+    bottom: -55px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 20px;
+    padding: 0px 20px;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    z-index: 2000;
+    transition: all 0.3s ease;
+}
+
+.control-btn {
+    background: none;
+    border: none;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    background-color: #f0f0f0;
+    transition: background-color 0.2s;
+}
+
+.control-btn:hover {
+    background-color: #e0e0e0;
+}
+
+#page-display {
+    margin: 0 10px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Loading indicator */
+#loading {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 1000;
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+}
+
+.loading-spinner {
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #3498db;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 20px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Error message */
+.error-message {
+    color: #e74c3c;
+    padding: 20px;
+    font-weight: bold;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 1300px) {
+    #flipbook-container {
+        max-width: 90vw;
+    }
+    
+    #flipbook {
+        width: 90vw;
+        height: calc(90vw * 0.667); 
+    }
+    
+    #flipbook .page {
+        width: 45vw;
+        height: calc(90vw * 0.667);
+    }
+    
+    .nav-prev {
+        left: 10px;
+    }
+    
+    .nav-next {
+        right: 10px;
+    }
+}

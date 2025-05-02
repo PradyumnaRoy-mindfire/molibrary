@@ -15,7 +15,7 @@ $('#email').on('keyup', function() {
                 if (response.roles.length > 1) {
                     $('#roleDiv').show();
                     $('#role').empty();
-                    $('#role').append('<option value="" disabled selected>Select role</option>');
+                    $('#role').append('<option value="" disabled selected>Login As</option>');
                     $.each(response.roles, function(index, role) {
                         $('#role').append('<option value="' + role + '">' + role.replace('_', ' ').toUpperCase() + '</option>');
                     });

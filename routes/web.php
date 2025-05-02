@@ -8,15 +8,18 @@ use App\Http\Controllers\LibraryAdmin\BookController;
 use App\Http\Controllers\LibraryAdmin\LibraryAdminController;
 use App\Http\Controllers\LibraryAdmin\ManageGenreController;
 use App\Http\Controllers\Member\BorrowController;
+use App\Http\Controllers\Member\EbookController;
 use App\Http\Controllers\Member\MemberController;
 use App\Http\Controllers\Member\PaymentController;
 use App\Http\Controllers\SuperAdmin\LibraryController;
 use App\Http\Controllers\SuperAdmin\SuperAdminController;
+use App\Http\Middleware\CheckEbookMembership;
 use App\Http\Middleware\CheckMembership;
 use App\Http\Middleware\RoleMiddleware;
+use App\Models\Ebook;
 use Illuminate\Auth\Middleware\Authenticate;
 use Illuminate\Support\Facades\Route;
-use Barryvdh\DomPDF\Facade\Pdf;
+
 
 Route::get('/', function () {
     return redirect()->route('login.form');
@@ -24,10 +27,7 @@ Route::get('/', function () {
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/test-pdf', function () {
-    $pdf = PDF::loadView('welcome');
-    return $pdf->download('test.pdf');
-});
+
 
 // Route::get('/custom-card', function() {
 //     return view('payment.customcard');
@@ -99,7 +99,6 @@ Route::controller(MemberController::class)->group(function () {
         Route::get('/browse-books', 'browseBooks')->name('browse.books');
         Route::get('/borrowing-history',  'showBorrowHistory')->name('borrowing.history');
         
-        Route::get('/books',  'books')->name('books'); // e-Books
         Route::get('/settings',  'books')->name('settings');
         Route::get('/memberships',  'showMembershipAndPlans')->name('memberships');
         //search in books dynamically
@@ -111,6 +110,9 @@ Route::controller(MemberController::class)->group(function () {
         //for showing reserved books
         Route::get('/reserved-books', 'showReservedBooks')->name('show.reserve.books');
         Route::post('/cancel-reserved-books/{borrow}', 'cancelReservedBooks')->name('reservation.cancel');
+
+        Route::get('/e-books',  'showEbooks')->name('e-books'); // e-Books
+        
 
     });
 });
@@ -126,6 +128,14 @@ Route::controller(BorrowController::class)->group(function () {
         
         Route::get('/borrow-reserved-books/{borrow}', 'borrowReservedBooks')->name('reserved.book.borrow');
         
+    });
+});
+
+Route::controller(EbookController::class)->group(function () {
+
+    Route::middleware(Authenticate::class, RoleMiddleware::class . ':member', CheckEbookMembership::class)->group(function () {
+        Route::get('/e-books/{book}/read', 'readEbook')->name('read.ebook');
+        Route::post('/e-books/{book}/reading-progress', 'ebookReadingProgress')->name('e-book.reading.progress');
     });
 });
 

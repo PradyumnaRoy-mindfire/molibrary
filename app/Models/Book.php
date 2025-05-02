@@ -9,7 +9,7 @@ class Book extends Model
 {
     //
     use SoftDeletes;
-    
+
     protected $fillable = [
         'title',
         'author_id',
@@ -39,14 +39,19 @@ class Book extends Model
     {
         return $this->belongsTo(Category::class);
     }
-        // A book belongs to a library
+    // A book belongs to a library
     public function library()
     {
         return $this->belongsTo(Library::class);
     }
-     // A book has many borrows
+    // A book has many borrows
     public function borrows()
     {
         return $this->hasMany(Borrow::class, 'book_id');
+    }
+
+    public function ebook()
+    {
+        return $this->hasOne(Ebook::class)->where('user_id', auth()->id());
     }
 }

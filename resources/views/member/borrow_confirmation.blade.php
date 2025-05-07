@@ -23,7 +23,7 @@
                         <div class="metadata-item">
                             <i class="fas fa-user-edit metadata-icon"></i>
                             <span class="metadata-label">Author:</span>
-                            <span class="metadata-value">{{$book->author->name}}</span>
+                            <span class="metadata-value">{{$book->author->name ?? 'Unknown'}}</span>
                         </div>
 
                         <div class="metadata-item">
@@ -132,18 +132,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-//     $(document).ready(function() {
-//     $('.btn-borrow').click(function() {
-//         Swal.fire({
-//             title: "Congrats!",
-//             text: "You have successfully borrowed the book.",
-//             imageUrl: "{{ asset('storage/borrowPopup.png') }}",
-//             imageWidth: 400,
-//             imageHeight: 200,
-//             imageAlt: "Custom image"
-//           });
-//     });
-// });
+
 </script>
 <script src="{{ url('js/member/borrow_confirmation.js') }}"> </script>
 @endpush

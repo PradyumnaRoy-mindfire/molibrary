@@ -64,7 +64,7 @@ class LibrarianController extends Controller
                 $userRequest->book->total_copies -= 1;
 
                 //sending mail to the user about borrow request
-                $userRequest->user->notify(new BorrowRequestApprovedNotification($userRequest)); 
+                //$userRequest->user->notify(new BorrowRequestApprovedNotification($userRequest)); 
             }
         } else if ($action === 'reject') {
             $userRequest->status = 'rejected';

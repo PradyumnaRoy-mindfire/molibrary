@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -24,7 +25,7 @@
                         <h1 class="card-title text-center mb-4 fs-2 fw-bold">
                             <i class="bi bi-person-plus-fill me-2"></i>Register
                         </h1>
-                        
+
                         <form action="{{ route('register') }}" method="POST">
                             @csrf
                             <div class="mb-4">
@@ -36,7 +37,7 @@
                                     <input type="text" class="form-control" name="name" id="name" value="{{ old('name') }}" placeholder="Enter your name">
                                 </div>
                                 @error('name')
-                                <div class="text-danger mt-1">{{ $message }}</div>
+                                <div class="text-danger mt-1 nameError">{{ $message }}</div>
                                 @enderror
                             </div>
 
@@ -49,7 +50,7 @@
                                     <input type="email" class="form-control" name="email" id="email" value="{{ old('email') }}" placeholder="Enter email">
                                 </div>
                                 @error('email')
-                                <div class="text-danger mt-1">{{ $message }}</div>
+                                <div class="text-danger mt-1 emailError">{{ $message }}</div>
                                 @enderror
                             </div>
 
@@ -62,7 +63,7 @@
                                     <input type="text" class="form-control" name="phone" id="phone" value="{{ old('phone') }}" placeholder="Enter phone number">
                                 </div>
                                 @error('phone')
-                                <div class="text-danger mt-1">{{ $message }}</div>
+                                <div class="text-danger mt-1 phoneError">{{ $message }}</div>
                                 @enderror
                             </div>
 
@@ -73,13 +74,14 @@
                                 <div class="input-group input-group-lg">
                                     <span class="input-group-text"><i class="bi bi-people"></i></span>
                                     <select class="form-select" id="role" name="role">
-                                        <option value="" disabled selected>--Select Role--</option>
-                                        <option value="librarian">Librarian</option>
-                                        <option value="member">Member</option>
+                                        <option value="" disabled {{ old('role') == '' ? 'selected' : '' }}>--Select Role--</option>
+                                        <option value="librarian" {{ old('role') == 'librarian' ? 'selected' : '' }}>Librarian</option>
+                                        <option value="member" {{ old('role') == 'member' ? 'selected' : '' }}>Member</option>
                                     </select>
+
                                 </div>
                                 @error('role')
-                                <div class="text-danger mt-1">{{ $message }}</div>
+                                <div class="text-danger mt-1 roleError">{{ $message }}</div>
                                 @enderror
                             </div>
 
@@ -108,7 +110,7 @@
                                     <input type="text" class="form-control" name="address" id="address" value="{{ old('address') }}" placeholder="Enter address">
                                 </div>
                                 @error('address')
-                                <div class="text-danger mt-1">{{ $message }}</div>
+                                <div class="text-danger mt-1 addressError">{{ $message }}</div>
                                 @enderror
                             </div>
 
@@ -124,7 +126,7 @@
                                     </button>
                                 </div>
                                 @error('password')
-                                <div class="text-danger mt-1">{{ $message }}</div>
+                                <div class="text-danger mt-1 passwordError">{{ $message }}</div>
                                 @enderror
                             </div>
 
@@ -144,37 +146,7 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            function toggleLibrarySelect() {
-                if ($('#role').val() === 'librarian') {
-                    $('#librarySelect').slideDown();
-                    $('#register').html('<i class="bi bi-person-plus me-2"></i>Apply');
-                } else {
-                    $('#librarySelect').slideUp();
-                    $('#register').html('<i class="bi bi-person-plus me-2"></i>Register');
-                }
-            }
-
-            $('#role').change(function() {
-                toggleLibrarySelect();
-            });
-
-            // Password visibility toggle
-            $('#togglePassword').click(function() {
-                const passwordField = $('#password');
-                const icon = $(this).find('i');
-                if (passwordField.attr('type') === 'password') {
-                    passwordField.attr('type', 'text');
-                    icon.removeClass('bi-eye-slash').addClass('bi-eye');
-                } else {
-                    passwordField.attr('type', 'password');
-                    icon.removeClass('bi-eye').addClass('bi-eye-slash');
-                }
-            });
-
-            toggleLibrarySelect();
-        });
-    </script>
+    <script src="{{ url('js/register.js') }}"></script>
 </body>
+
 </html>

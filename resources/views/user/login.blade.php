@@ -36,41 +36,42 @@
                         </x-alert>
                         @endif
 
-                        <form action="{{ route('login') }}" method="POST">
+                        <form action="{{ route('login') }}" method="POST" id="loginForm">
                             @csrf
 
                             <div class="mb-4">
                                 <div class="input-group input-group-lg">
                                     <span class="input-group-text"><i class="bi bi-envelope-fill fs-5"></i></span>
-                                    <input type="email" class="form-control form-control-lg" name="email" id="email" value="{{ old('email') }}" placeholder="Enter email" required>
+                                    <input type="email" class="form-control form-control-lg" name="email" id="email" value="{{ old('email') }}" placeholder="Enter email" >
                                 </div>
 
                                 @error('email')
-                                <div class="text-danger mt-1">{{ $message }}</div>
+                                <div class="text-danger mt-1 emailError">{{ $message }}</div>
                                 @enderror
                             </div>
 
                             <!-- Role Dropdown (Hidden by Default) -->
                             <div class="mb-4" id="roleDiv" style="display: none;">
-                                <select class="form-select form-select-lg" id="role" name="role">
+                                <select class="form-select form-select-lg mb-2" id="role" name="role">
                                     <option value="" disabled selected>Login As</option>
                                     <!-- Roles will be dynamically populated -->
                                 </select>
                                 @error('role')
-                                <div class="text-danger mt-1">{{ $message }}</div>
+                                <div class="text-danger mt-1 ">{{ $message }}</div>
                                 @enderror
+                                <span class="text-danger roleError"></span>
                             </div>
 
                             <div class="mb-4">
                                 <div class="input-group input-group-lg">
                                     <span class="input-group-text"><i class="bi bi-lock-fill fs-5"></i></span>
-                                    <input type="password" class="form-control form-control-lg" name="password" id="password" placeholder="Enter password" required>
+                                    <input type="password" class="form-control form-control-lg" name="password" id="password" placeholder="Enter password" >
                                     <button type="button" class="btn btn-outline-secondary" id="togglePassword">
                                         <i class="bi bi-eye-slash fs-5"></i>
                                     </button>
                                 </div>
                                 @error('password')
-                                <div class="text-danger mt-1">{{ $message }}</div>
+                                <div class="text-danger mt-1 passwordError">{{ $message }}</div>
                                 @enderror
                             </div>
 
@@ -97,9 +98,11 @@
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
         let loginUrl = "{{ route('check.email.roles') }}";
         let csrf = '{{ csrf_token() }}';
+        window.successMessage = @json(session('registerSuccess'));
     </script>
     <script src="{{ url('js/login.js') }}"></script>
 </body>

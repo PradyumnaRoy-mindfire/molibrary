@@ -18,7 +18,7 @@ class Library extends Model
 
     public function borrows()
     {
-        return $this->hasMany(Borrow::class,User::class,'users_id','library_id');
+        return $this->hasMany(Borrow::class, User::class, 'users_id', 'library_id');
     }
 
     public function books()
@@ -30,7 +30,9 @@ class Library extends Model
     {
         return $this->books()
             ->withTrashed()
-            ->withCount('borrows')
+            ->withCount(['borrows' => function ($query) {
+                $query->whereIn('type', ['borrow', 'return']);
+            }])
             ->having('borrows_count', '>', 1)
             ->orderBy('borrows_count', 'desc');
     }

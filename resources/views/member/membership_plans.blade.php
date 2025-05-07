@@ -78,7 +78,7 @@
         <table class="table table-hover mb-0" id="membershipTable">
             <thead>
                 <tr>
-                    <th class="text-center">Payment ID</th>
+                    <th class="text-center">Transaction ID</th>
                     <th class="text-center">Plan</th>
                     <th class="text-center">Start Date</th>
                     <th class="text-center">End Date</th>
@@ -88,8 +88,12 @@
             <tbody>
                 @forelse ($memberships as $membership)
                 @php
+                 $upcoming = false;
                  if(now()->gt($membership->end_date)){
                     $membership->has_access = 0;
+                 }
+                 elseif(now()->lt($membership->start_date)){
+                    $upcoming = true;
                  }
                  @endphp
                 <tr>
@@ -97,7 +101,7 @@
                     <td class="text-center">{{ ucwords($membership->plan->type,' ') }}</td>
                     <td class="text-center">{{ \Carbon\Carbon::parse($membership->start_date)->format('M d, Y h:i A') }}</td>
                     <td class="text-center">{{ \Carbon\Carbon::parse($membership->end_date)->format('M d, Y h:i A')}}</td>
-                    <td class="text-center">@if($membership->has_access == 1) <span class="badge badge-active">Active</span> @else <span class="badge badge-expired">Expired</span> @endif</td>
+                    <td class="text-center">@if($upcoming == true) <span class="badge badge-warning" style="background-color:rgb(247, 189, 16);">Upcoming</span> @elseif($membership->has_access == 1) <span class="badge badge-active">Active</span> @else <span class="badge badge-expired">Expired</span> @endif</td>
                 </tr>
                 @empty
                 
@@ -112,7 +116,7 @@
 @endsection
 
 @push('scripts')
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script> -->
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const toggleButtons = document.querySelectorAll('.toggle-description');
@@ -135,7 +139,7 @@
 <script>
     $(document).ready(function() {
         $('#membershipTable').DataTable({
-            order: [[4, 'asc']], // Order by 2nd column (0-indexed) descending
+            order: [[3, 'desc']], // Order by 4th column (0-indexed) descending
             language: {
                 searchPlaceholder: "Search membership...",
                 search: "",

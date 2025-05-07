@@ -25,18 +25,41 @@ class RegisterRequest extends FormRequest
     {
         return [
             //
-            'name' => 'required|string|max:255',
+            'name' => [
+                'required',
+                 'string', 
+                 'max:255', 
+                 'regex:/^[^\d]*$/'
+                ],
             'email' => [
                 'required',
                 'email',
-                Rule::unique('users')->where(function ($query)  {
+                'regex:/^[\w\.-]+@[\w\.-]+\.\w{2,4}$/',
+                Rule::unique('users')->where(function ($query) {
                     return $query->where('role', $this->role);
                 })
             ],
-            'phone' => 'required|max:10|min:10',
-            'password' => 'required|min:6',
+            'phone' => [
+                'required', 
+                'size:10',
+                'regex:/^\d{10}$/'
+            ],
+            'password' => [
+                'required',
+                'min:6',
+                'regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&^_-])[A-Za-z\d@$!%*#?&^_-]{6,}$/'
+            ],
             'role' => 'required|in:librarian,member',
             'library_id' => 'required_if:role,librarian|exists:libraries,id',
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'password.regex' => 'Password must include at least one uppercase letter, one lowercase letter, one digit, and one special character.',
+            'name.regex' => 'Digits are not allowed in the name.',
+            'email.regex' => 'Please enter a valid email address.',
+            'phone.regex' => 'Phone number must contain only digits.',
         ];
     }
 }

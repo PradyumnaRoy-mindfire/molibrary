@@ -77,10 +77,19 @@
                     </div>
 
                     <div class="d-flex justify-content-center gap-2">
-
+                        @if(($book->ebook->reading_progress ?? 0) == 100)
+                        <a href="{{ route('read.ebook', ['book' => $book->id]) }}" class="btn btn-sm btn-outline-info px-3 fw-bold">
+                            <i class="bi bi-book-half me-1 fs-6"></i> Completed Reading
+                        </a>
+                        @elseif(($book->ebook->reading_progress ?? 0) == 0)
                         <a href="{{ route('read.ebook',['book' => $book->id]) }}" class="btn btn-sm btn-outline-success px-3 fw-bold">
                             <i class="bi bi-book-half me-1 fs-6"></i> Start Reading
                         </a>
+                        @else
+                        <a href="{{ route('read.ebook', ['book' => $book->id]) }}" class="btn btn-sm btn-outline-warning px-3 fw-bold">
+                            <i class="bi bi-book-half me-1 fs-6"></i> Continue Reading
+                        </a>
+                        @endif
 
                     </div>
                 </div>

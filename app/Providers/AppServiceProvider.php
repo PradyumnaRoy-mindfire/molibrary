@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\Book;
+use App\Models\Borrow;
+use App\Observers\BookObserver;
+use App\Observers\BorrowObserver;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
 
@@ -22,5 +26,9 @@ class AppServiceProvider extends ServiceProvider
     {
         //
         Paginator::useBootstrap();
+
+        //for notication observer
+        Book::observe(BookObserver::class);
+        Borrow::observe(BorrowObserver::class);
     }
 }

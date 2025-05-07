@@ -73,6 +73,5 @@
 @endsection
 
 @push('scripts')
-
 <script src="{{ url('js/super_admin/dashboard.js') }}"></script>
 @endpush

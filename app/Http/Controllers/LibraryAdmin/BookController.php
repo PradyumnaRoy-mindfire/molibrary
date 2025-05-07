@@ -71,8 +71,10 @@ class BookController extends Controller
         ]);
     
         if($book) {
-            return redirect()->route('manage.books')->with('bookStoreSuccess', 'Book added successfully!');
+
+            return redirect()->route('manage.books')->with('book_added_success', 'Book added successfully!');
         } else {
+            
             return redirect()->back()->with('bookStoreError', 'Something went wrong!');
         }
 
@@ -140,7 +142,7 @@ class BookController extends Controller
             'preview_content_path' => $previewPath,
         ]);
         
-        return redirect()->route('manage.books')->with('bookUpdate', 'Book updated Successfully!!');
+        return redirect()->route('manage.books')->with('book_edited_success', 'Book updated Successfully!!');
     }
 
     public function deleteBook(Book $book)

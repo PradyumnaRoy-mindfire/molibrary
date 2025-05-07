@@ -75,10 +75,18 @@
                                 @else
                                 <div class="action-buttons">
                                     @if($borrowing->borrow_date == null)
-                                    <span class="badge bg-info fs-6"> Borrow Requested</span>
+                                         @if($borrowing->status == 'rejected')
+                                        <span class="badge bg-danger fs-6">Borrow Request Rejected</span>
+                                        @else
+                                        <span class="badge bg-info fs-6"> Borrow Requested</span>
+                                        @endif
 
                                     @elseif($borrowing->type == 'return' )
-                                    <span class="badge bg-info fs-6"> Return Requested</span>
+                                        @if($borrowing->status == 'rejected')
+                                        <span class="badge bg-danger fs-6">Return Request Rejected</span>
+                                        @else
+                                        <span class="badge bg-info fs-6"> Return Requested</span>
+                                        @endif
                                     @else
                                     <button class="btn btn-sm btn-return me-1 btn-primary " data-url="{{ route('return.book', $borrowing->id) }}">Return</button>
                                     @endif

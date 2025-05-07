@@ -7,9 +7,11 @@
     <title>MoLibrary</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    
+
     <link rel="stylesheet" href="{{ url('css/navbar.css') }}">
+    <style>
+
+    </style>
 </head>
 
 <body>
@@ -28,7 +30,7 @@
             </div>
 
             <div class="d-flex align-items-center gap-3">
-                <div class="position-relative">
+                <!-- <div class="position-relative">
                     <button class="btn text-white position-relative pe-0" id="notificationBtn">
                         <i class="bi bi-bell-fill" style="font-size: 1.5rem;"></i>
                         <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"> 3 </span>
@@ -44,7 +46,7 @@
                             <a href="#" class="text-primary">View all notifications</a>
                         </div>
                     </div>
-                </div>
+                </div> -->
 
                 <div class="text-white fw-bold">Welcome, {{ Auth::user()->name }}</div>
 
@@ -103,9 +105,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('book.management') }}"><i class="bi bi-book me-2 fs-4 fw-bold"></i><span>Book Management</span></a>
             </li>
-            <!-- <li class="nav-item">
-                <a class="nav-link" href="#"><i class="bi bi-person-lines-fill me-2 fs-4 fw-bold"></i><span>Member Manage</span></a>
-            </li> -->
+
             @elseif(Auth::user()->role === 'member')
             <li class="nav-item">
                 <a class="nav-link" href="{{ route('browse.books') }}"><i class="bi bi-search me-3 fs-3 fw-bold"></i><span>Browse Books</span></a>
@@ -125,9 +125,6 @@
             </li>
             @endif
 
-            <!-- <li class="nav-item">
-                <a class="nav-link" href="{{ route('settings') }}"><i class="bi bi-gear me-2 fs-4 fw-bold"></i><span>Settings</span></a>
-            </li> -->
 
 
             <button class="nav-link text-danger w-100 text-start logout">
@@ -138,13 +135,48 @@
 
 
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://js.pusher.com/8.4.0/pusher.min.js"></script>
     <script>
         let logoutUrl = "{{ route('logout') }}";
+
+        //for realtime notification
+        Pusher.logToConsole = false;
+        var pusher = new Pusher("{{ config('broadcasting.connections.pusher.key') }}", {
+            cluster: "{{ config('broadcasting.connections.pusher.options.cluster') }}"
+        });
+
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+  
     <script src="{{ url('js/navbar.js') }}"></script>
+
+
+    @if(session('logged_in_success'))
+    <script>
+        showLoginToast();
+    </script>
+    @endif
+
+    @if(auth()->user()->role === 'member')
+    <script>
+        bookAdded();
+    </script>
+    @endif
+
+    @if(auth()->user()->role === 'librarian')
+        <script>
+            newBorrowRequest();
+            newReturnRequest();
+        </script>
+    @endif
+
+    @if(auth()->user()->role === 'library_admin')
+        <script>
+            newLibrarianRegistered();
+        </script>
+    @endif
 
 </body>
 

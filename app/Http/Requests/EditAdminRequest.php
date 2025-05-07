@@ -22,17 +22,36 @@ class EditAdminRequest extends FormRequest
      */
     public function rules(): array
     {
+        $user = $this->route('admin');
         return [
             //
-            'name' => 'required|string|max:255',
+            'name' => [
+                'required',
+                 'string', 
+                 'max:255', 
+                 'regex:/^[^\d]*$/'
+                ],
             'email' => [
                 'required',
                 'email',
+                'regex:/^[\w\.-]+@[\w\.-]+\.\w{2,4}$/',
                 Rule::unique('users')->where(function ($query) {
-                    return $query->where('role', $this->role);
-                })
+                    return $query->where('role', 'library_admin');
+                })->ignore($user->id)
             ],
-            'phone' => 'required|size:10',
+            'phone' => [
+                'required', 
+                'size:10',
+                'regex:/^\d{10}$/'
+            ],
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'name.regex' => 'Digits are not allowed in the name.',
+            'email.regex' => 'Please enter a valid email address.',
+            'phone.regex' => 'Phone number must contain only digits.',
         ];
     }
 }

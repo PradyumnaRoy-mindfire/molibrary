@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\LibrarianRegistered;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\PasswordUpdateRequest;
 use App\Http\Requests\ProfileUpdateRequest;
@@ -13,8 +14,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Validation\Rule;
-use Mockery\Generator\StringManipulation\Pass\Pass;
 
 class AuthController extends Controller
 {
@@ -54,9 +53,12 @@ class AuthController extends Controller
             $data->library_id = $request->library_id;
             $data->status = 'pending';
             $data->save();
+
+            //trigger new librarian request event
+            event(new LibrarianRegistered($request->name));
         }
 
-        return redirect()->route('login')->with('success', 'Registration successful. Please wait for approval.');
+        return redirect()->route('login')->with('registerSuccess', 'Registration successful...'); 
     }
 
     public function checkEmailRoles(Request $request)
@@ -79,25 +81,30 @@ class AuthController extends Controller
         $roles = $user->pluck('role')->unique()->values();
         $rolesCount = $roles->count();
 
-        if($rolesCount > 1 && $request->role == 'librarian' && $user[0]->librarian->status == 'pending') {
-
-            return back()->with('loginFailed', 'You are not approved by library admin,wait for approval!!');
+            //if the user have multiple roles and login as librarian
+        if($rolesCount > 1 && $request->role == 'librarian') {
+            $librarianUser = $user->firstWhere('role', 'librarian');
+            if($librarianUser->librarian->status == 'pending') {
+                
+                return back()->with('loginFailed', 'You are not approved by library admin,wait for approval!!');
+                
+            }
 
         } else {
-
-            if ($user[0]->role == 'librarian' && $user[0]->librarian->status == 'pending') {
+            //if the user have single role(librarian)
+            if ($user->count() > 0 && $user[0]->role == 'librarian' && $user[0]->librarian->status == 'pending') {
 
                 return back()->with('loginFailed', 'You are not approved by library admin,wait for approval!!');
 
             }
         }
-
         
         if (Auth::attempt($loginData)) {
 
-            return redirect()->route('dashboard');
+            return redirect()->route('dashboard')->with('logged_in_success','You are logged in successfully!!');
 
         } else {
+            
             return back()->with('loginFailed', 'Invalid credentials, please try again.');
         }
     }

@@ -3,7 +3,7 @@
 @section('title','Add Library')
 
 @push('styles')
-    <link rel="stylesheet" href="{{ url('css/add_library.css') }}">
+<link rel="stylesheet" href="{{ url('css/add_library.css') }}">
 @endpush
 
 @section('content')
@@ -16,11 +16,7 @@
                         <i class="bi bi-building library-icon mb-3"></i>
                         <h2 class="form-header">Add New Library</h2>
                     </div>
-                    @if(session('libraryStored'))
-                        <x-alert type="success">
-                            {{ session('libraryStored') }}
-                        </x-alert>
-                    @endif
+
                     <form method="POST" id="libraryForm" action="{{ route('store.library') }}">
                         @csrf
 
@@ -29,10 +25,10 @@
                             <div class="input-group">
                                 <span class="input-group-text bg-white"><i class="bi bi-building"></i></span>
                                 <input type="text" class="form-control" id="name" name="name"
-                                       placeholder="Enter library name" value="{{ old('name') }}">
+                                    placeholder="Enter library name" value="{{ old('name') }}">
                             </div>
                             @error('name')
-                                <span class="form-error">{{ $message }}</span>
+                            <span class="form-error">{{ $message }}</span>
                             @enderror
                         </div>
 
@@ -41,10 +37,10 @@
                             <div class="input-group">
                                 <span class="input-group-text bg-white"><i class="bi bi-geo-alt"></i></span>
                                 <input type="text" class="form-control" id="location" name="location"
-                                       placeholder="Enter library location" value="{{ old('location') }}">
+                                    placeholder="Enter library location" value="{{ old('location') }}">
                             </div>
                             @error('location')
-                                <span class="form-error">{{ $message }}</span>
+                            <span class="form-error">{{ $message }}</span>
                             @enderror
                         </div>
 
@@ -56,7 +52,7 @@
                                 <option value="closed" {{ old('status') == 'closed' ? 'selected' : '' }}>Closed</option>
                             </select>
                             @error('status')
-                                <span class="form-error">{{ $message }}</span>
+                            <span class="form-error">{{ $message }}</span>
                             @enderror
                         </div>
 
@@ -78,13 +74,34 @@
 @endsection
 
 @push('scripts')
-    <script>
-        // Remove error span when user starts typing or selecting
-        document.querySelectorAll('#libraryForm input, #libraryForm select').forEach(el => {
-            el.addEventListener('input', () => {
-                let err = el.closest('.mb-4').querySelector('.form-error');
-                if (err) err.remove();
-            });
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script> -->
+<script>
+    // Remove error span when user starts typing or selecting
+    document.querySelectorAll('#libraryForm input, #libraryForm select').forEach(el => {
+        el.addEventListener('input', () => {
+            let err = el.closest('.mb-4').querySelector('.form-error');
+            if (err) err.remove();
         });
-    </script>
+    });
+</script>
+
+@if(session('libraryStored'))
+<script>
+    let Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    })
+    Toast.fire({
+        icon: 'success',
+        title: 'Library added successfully..'
+    })
+</script>
+@endif
 @endpush

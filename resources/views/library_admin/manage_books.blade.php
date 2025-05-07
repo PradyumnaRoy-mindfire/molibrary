@@ -3,6 +3,12 @@
 @section('title' , 'Manage Books')
 
 @section('content')
+<style>
+    .swal2-container.swal2-top-end {
+        top: 70px !important;
+        right: 10px;
+    }
+</style>
 <div class="container py-4">
 
     {{-- Header Section --}}
@@ -38,7 +44,7 @@
         <div class="col-md-3 mb-4 book-card" data-category="{{ Str::slug($book->category->name) }}">
             <div class="card shadow-sm h-100">
                 @if($book->image)
-                    <img src="{{ asset('storage/'.$book->image) }}" class="card-img-top" alt="Book Image" style="height: 250px; object-fit: cover;">
+                <img src="{{ asset('storage/'.$book->image) }}" class="card-img-top" alt="Book Image" style="height: 250px; object-fit: cover;">
                 @endif
                 <div class="card-body d-flex flex-column">
                     <h5 class="card-title text-primary">{{ $book->title }}</h5>
@@ -57,7 +63,7 @@
                         <a href="{{ route('edit.book', $book->id) }}" class="btn btn-sm btn-outline-warning">
                             <i class="bi bi-pencil-square"></i> Edit
                         </a>
-                        <button  data-url="{{ route('delete.book', $book->id) }}" class="btn btn-sm btn-outline-danger btnDelete">
+                        <button data-url="{{ route('delete.book', $book->id) }}" class="btn btn-sm btn-outline-danger btnDelete">
                             <i class="bi bi-trash"></i> Delete
                         </button>
                     </div>
@@ -75,4 +81,14 @@
 
 @push('scripts')
 <script src=" {{ url('js/library_admin/manage_books.js') }} "></script>
+@if(session('book_added_success'))
+<script>
+    showBookAddedToast();
+</script>
+@endif
+@if(session('book_edited_success'))
+<script>
+    showBookUpdatedToast();
+</script>
+@endif
 @endpush

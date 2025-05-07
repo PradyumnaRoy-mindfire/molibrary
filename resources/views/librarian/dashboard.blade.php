@@ -34,7 +34,7 @@
                 <div class="member-card bg-purple p-4 shadow" style="background:rgb(240, 78, 4);">
                     <div class="d-flex justify-content-between align-items-center">
                         <div>
-                            <h5 class="mb-0">{{$mostBorrowedBooksCount}}</h5>
+                            <h5 class="mb-0">{{$mostBorrowedBooksCount ?? 0}}</h5>
                             <p class="mb-0">Most Borrowed Books</p>
                         </div>
                         <i class="bi bi-book card-icon"></i>
@@ -77,7 +77,7 @@
 @endsection
 
 @push('scripts')
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script> -->
 <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> -->
 <!-- DataTables JS -->
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>

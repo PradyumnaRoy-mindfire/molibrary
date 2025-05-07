@@ -21,6 +21,10 @@ class CheckMembership
         // dd($user->membership);
 
         if (!$user->membership || now()->gt($user->membership->end_date)) {
+            if($user->membership) {
+                $user->membership->has_access = 0;
+                $user->membership->save();
+            }
             session()->flash('no_membership', true);
             
             return back();

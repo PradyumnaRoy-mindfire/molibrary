@@ -33,18 +33,18 @@ document.querySelectorAll('#sideNavLinks .nav-link').forEach(link => {
 });
 
 // Notification toggle handling
-const notificationBtn = document.getElementById("notificationBtn");
-const notificationBox = document.getElementById("notificationBox");
+// const notificationBtn = document.getElementById("notificationBtn");
+// const notificationBox = document.getElementById("notificationBox");
 
-notificationBtn.addEventListener("click", () => {
-    notificationBox.style.display = notificationBox.style.display === "none" ? "block" : "none";
-});
+// notificationBtn.addEventListener("click", () => {
+//     notificationBox.style.display = notificationBox.style.display === "none" ? "block" : "none";
+// });
 
-document.addEventListener("click", function(event) {
-    if (!notificationBtn.contains(event.target) && !notificationBox.contains(event.target)) {
-        notificationBox.style.display = "none";
-    }
-});
+// document.addEventListener("click", function(event) {
+//     if (!notificationBtn.contains(event.target) && !notificationBox.contains(event.target)) {
+//         notificationBox.style.display = "none";
+//     }
+// });
 
 // logout
 $(document).on("click", ".logout", function() {
@@ -63,3 +63,110 @@ $(document).on("click", ".logout", function() {
         }
     });
 });
+
+function showLoginToast() {
+    let Toast = Swal.mixin({
+        toast: true,
+        position: 'top-end',
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+        didOpen: (toast) => {
+            toast.addEventListener('mouseenter', Swal.stopTimer)
+            toast.addEventListener('mouseleave', Swal.resumeTimer)
+        }
+    })
+    Toast.fire({
+        icon: 'success',
+        title: 'Logged in successfully..'
+    })
+}
+ 
+
+    //showing notification when a book will be added
+function bookAdded() {
+    var channel = pusher.subscribe('library.channel');
+    channel.bind('book.added', function(data) {
+        let BookAddedToast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 10000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+        BookAddedToast.fire({
+            icon: 'success',
+            html: `New Book <strong>${data.book}</strong> just added now...`
+        })
+
+    });
+}
+
+function newBorrowRequest() {
+    var channel = pusher.subscribe('borrow.channel');
+    channel.bind('new.borrow.request', function(data) {
+        let BookAddedToast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 10000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+        BookAddedToast.fire({
+            icon: 'success',
+            html: `New borrow request for <strong>${data.book}</strong> has just come...`,
+        })
+
+    });
+}
+function newReturnRequest() {
+    var channel = pusher.subscribe('return.channel');
+    channel.bind('new.return.request', function(data) {
+        let BookAddedToast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 10000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+        BookAddedToast.fire({
+            icon: 'success',
+            html: `New return request for <strong>${data.book}</strong> has just come...`,
+        })
+
+    });
+}
+
+function newLibrarianRegistered() {
+    var channel = pusher.subscribe('libraryadmin.channel');
+    channel.bind('librarian.registered', function(data) {
+        let BookAddedToast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 10000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        })
+        BookAddedToast.fire({
+            icon: 'success',
+            html: `A new librarian <strong>${data.name}</strong> has just registered...`,
+        })
+
+    });
+}

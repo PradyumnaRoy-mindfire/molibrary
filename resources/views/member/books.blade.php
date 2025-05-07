@@ -32,9 +32,9 @@
     <div class="row d-flex flex" id="bookGrid">
         @foreach($books as $book)
         <div class="col-md-3 mb-4 book-card" data-category="{{ Str::slug($book->category->name) }}">
-            <div class="card h-100 border-0 shadow-sm">
+            <div class="card h-100  shadow-sm">
                 @if($book->image)
-                <img src="{{ asset('storage/'.$book->image) }}" class="card-img-top " alt="Book Image" style="height:250px; object-fit: cover; object-position: center;width: 100%;">
+                <img src="{{ asset('storage/'.$book->image) }}" class="card-img-top card-img" alt="Book Image" style="height:250px; object-fit: cover; ">
                 @endif
 
                 <div class="card-body d-flex flex-column">

@@ -52,6 +52,19 @@ class User extends Authenticatable
     {
         return $this->hasOne(Membership::class, 'user_id')->latestOfMany('end_date');
     }
+    public function activeMemberships()
+    {
+        return $this->hasMany(Membership::class)
+            ->where('end_date', '>=', now());
+    }
+    public function upcomingMemberships()
+    {
+        return $this->hasMany(Membership::class)
+            ->where('start_date', '>', now())
+            ->where('has_access', 1)
+            ->orderBy('start_date', 'asc');
+    }
+
     public function fines()
     {
         return $this->hasManyThrough(Fine::class, Borrow::class, 'users_id', 'borrow_id');

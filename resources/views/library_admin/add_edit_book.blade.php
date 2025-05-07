@@ -69,7 +69,7 @@
                                 </div>
 
                                 <div class="col-md-3">
-                                    <label for="category_id" class="form-label">Category</label>
+                                    <label for="category_id" class="form-label">Category <span class="text-danger">*</span></label>
                                     <select class="form-select @error('category_id') is-invalid @enderror" id="category_id" name="category_id">
                                         <option selected disabled>Select Category</option>
                                         @foreach($categories as $category)
@@ -171,19 +171,7 @@
                                     @enderror
                                 </div>
 
-                                <div class="col-md-6">
-                                    <label for="preview_content_path" class="form-label">Preview Content</label>
-                                    <input type="file" class="form-control @error('preview_content_path') is-invalid @enderror" id="preview_content_path" name="preview_content_path" accept=".pdf">
-                                    @if(isset($book) && $book->preview_content_path)
-                                    <div class="mt-2">
-                                        <p class="text-success"><i class="bi bi-file-earmark-pdf"></i> Current file: {{ basename($book->preview_content_path) }}</p>
-                                        <input type="hidden" name="existing_preview" value="{{ $book->preview_content_path }}">
-                                    </div>
-                                    @endif
-                                    @error('preview_content_path')
-                                    <span class="text-danger previewError">{{ $message }}</span>
-                                    @enderror
-                                </div>
+                                
 
                                 <!-- Fifth Row -->
                                 <div class="col-12">

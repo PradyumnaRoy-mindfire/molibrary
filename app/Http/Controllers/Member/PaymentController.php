@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Log;
 use Stripe\Charge;
 use Stripe\Checkout\Session;
 use Stripe\Exception\ApiErrorException;
+use Carbon\Carbon;
 
 class PaymentController extends Controller
 {
@@ -58,24 +59,70 @@ class PaymentController extends Controller
             'method' => 'card'
         ]);
 
-        // creating record to membership table for the user 
+        // Get active and upcoming memberships
+        $active_memberships = $user->activeMemberships;
+        $upcoming_memberships = $user->upcomingMemberships; 
+        $startDate = now(); 
+
+        if ($active_memberships->isNotEmpty() || $upcoming_memberships->isNotEmpty()) {
+            // Get the latest end date from both active and upcoming memberships of the same type
+            $relevantMemberships = collect();
+
+            // If new plan is Base, consider both active and upcoming Base memberships
+            if ($plan->type == 'Base Membership') {
+                $relevantMemberships = $active_memberships->where('plan.type', 'Base Membership')
+                    ->merge($upcoming_memberships->where('plan.type', 'Base Membership'));
+            }
+            // If new plan is Pro, consider both active and upcoming Pro memberships
+            elseif ($plan->type == 'Pro Membership') {
+                $relevantMemberships = $active_memberships->where('plan.type', 'Pro Membership')
+                    ->merge($upcoming_memberships->where('plan.type', 'Pro Membership'));
+            }
+
+            if ($relevantMemberships->isNotEmpty()) {
+                $latestEndDate = $relevantMemberships->sortByDesc('end_date')->first()->end_date;
+                $startDate = $latestEndDate;
+            }
+
+            
+            if ($plan->type == 'Pro Membership' && $active_memberships->where('plan.type', 'Base Membership')->isNotEmpty() && $active_memberships->where('plan.type', 'Pro Membership')->isEmpty() && $upcoming_memberships->where('plan.type', 'Pro Membership')->isEmpty()) 
+            {
+                $startDate = now();
+            }
+        }
+
+        // dd($user->id,$plan->id,$startDate);
+
         $membership = Membership::create([
             'payments_method_id' => $charge->payment_method,
             'plan_id' => $plan->id,
             'user_id' => $user->id,
             'has_access' => $charge->status === 'succeeded' ? 1 : 0,
-            'start_date' => now(),
-            'end_date' => now()->addMinutes($plan->duration),
+            'start_date' => $startDate,
+            'end_date' => Carbon::parse($startDate, config('app.timezone'))->addMinutes($plan->duration),
             'renewed_at' => now(),
         ]);
-        $user->book_limit = $membership->plan->max_books_limit;
+
+        //to load the relationship immediately 
+        $user->refresh();
+
+        //calculating the max limit for the user according to  his borrowed quantity  
+        $max_limit = $user->activeMemberships->max(fn($membership) => $membership->plan->max_books_limit);
+        
+        $pending_borrow_count = $user->borrows->filter(function ($borrow) {
+            return ($borrow->type === 'borrow' && ($borrow->status === 'pending' || $borrow->status === 'borrowed')) ||
+                ($borrow->type === 'return' && $borrow->status === 'pending');
+        })->count();
+        
+
+        $user->book_limit = $max_limit - $pending_borrow_count;
         $user->save();
 
 
         //send payment invoice notification
-        $user->notify(new PaymentInvoiceNotification($charge));
+        // $user->notify(new PaymentInvoiceNotification($charge));
 
-        if ($charge->status === 'failed') {
+        if ($charge->status !== 'succeeded') {
             return redirect()->back()->with('payment_failed', 'Payment failed. Please try again.');
         }
         return redirect()->back()->with('payment_success', 'Payment successful!');

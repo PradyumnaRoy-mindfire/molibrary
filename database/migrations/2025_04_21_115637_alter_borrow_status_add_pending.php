@@ -14,7 +14,7 @@ return new class extends Migration
     {
         
         Schema::table('borrows', function (Blueprint $table) {
-            
+            // $table->enum('status', ['borrowed', 'returned', 'overdue', 'active', 'expire', 'pending'])->change();
         });
         DB::statement("ALTER TABLE borrows MODIFY COLUMN status ENUM('borrowed', 'returned', 'overdue', 'active', 'expire', 'pending')");
     }

@@ -121,7 +121,7 @@ class SuperAdminController extends Controller
             'address' => $request->address
         ]);
 
-        return redirect()->route('library.admins')->with('editAdminSuccess', 'Admin details updated successfully!');
+        return redirect()->route('library.admins')->with('libraryAdminUpdated', 'Admin details updated successfully!');
     }
 
     

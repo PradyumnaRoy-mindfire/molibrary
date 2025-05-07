@@ -148,7 +148,7 @@ class DashboardControler extends Controller
             ->withCount('books')
             ->with('admin:id,name,email')
             ->get();
-        // dd($libraries);
+        
         return view('super_admin.dashboard_cards.popular_libraries', compact('libraries'));
     }
 
@@ -195,7 +195,7 @@ class DashboardControler extends Controller
     public function mostBorrowedBooks(Library $library)
     {
         $books = $library->mostBorrowedBooks()->with(['author', 'category'])->get();
-
+        
         return view('librarian.dashboard_cards.most_borrowed_books', compact('books'));
     }
 

@@ -20,6 +20,7 @@ class CheckEbookMembership
 
 
         if (!$user->membership|| $user->membership->plan->ebook_access == 0 || now()->gt($user->membership->end_date)) {
+            
             session()->flash('no_membership', true);
             
             return back();

@@ -16,18 +16,21 @@ use App\Http\Controllers\SuperAdmin\SuperAdminController;
 use App\Http\Middleware\CheckEbookMembership;
 use App\Http\Middleware\CheckMembership;
 use App\Http\Middleware\RoleMiddleware;
-use App\Models\Ebook;
 use Illuminate\Auth\Middleware\Authenticate;
 use Illuminate\Support\Facades\Route;
 
 
+
 Route::get('/', function () {
-    return redirect()->route('login.form');
-});
-Route::get('/', function () {
+    if(auth()->check()){
+        return redirect()->route('dashboard');
+    }
     return view('welcome');
 });
 
+Route::get('/toaster', function () {
+    return view('toaster');
+});
 
 // Route::get('/custom-card', function() {
 //     return view('payment.customcard');

@@ -204,6 +204,7 @@
 
         function clearErrors() {
             passwordError.style.display = "none";
+
             confirmError.style.display = "none";
         }
 

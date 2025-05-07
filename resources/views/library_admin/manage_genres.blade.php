@@ -13,7 +13,7 @@
 <div class="container py-5">
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-3">
         <h3 class="mb-3 mb-md-0 text-white"> Book Categories</h3>
-        <a href="{{ route('add.genre') }}" class="btn" style="background-color:rgb(116, 184, 8);">
+        <a href="{{ route('add.genre') }}" class="btn" style="background-color:rgb(116, 184, 8); color:rgb(255, 255, 255);">
             <i class="bi bi-plus-circle me-1"></i> Add New Genre
         </a>
     </div>

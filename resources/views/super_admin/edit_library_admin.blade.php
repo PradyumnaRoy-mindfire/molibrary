@@ -72,6 +72,10 @@
                             <button type="submit" class="btn btn-primary btn-lg w-100 py-2 fw-bold mt-3">
                                 <i class="bi bi-person-plus me-2"></i>Update
                             </button>
+
+                            <a href="{{ route('library.admins') }}" class="btn btn-secondary btn-lg w-100 py-2 fw-bold mt-3">
+                            <i class="bi bi-arrow-left me-2"></i>Back
+                           </a>
                         </form>
                     </div>
                 </div>

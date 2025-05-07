@@ -91,7 +91,7 @@ class PaymentController extends Controller
             }
         }
 
-        // dd($user->id,$plan->id,$startDate);
+        
 
         $membership = Membership::create([
             'payments_method_id' => $charge->payment_method,
@@ -169,7 +169,7 @@ class PaymentController extends Controller
 
         //send payment invoice notification
         $payment = $charge;
-        auth()->user()->notify(new PaymentInvoiceNotification($payment));
+        // auth()->user()->notify(new PaymentInvoiceNotification($payment));
 
         if ($charge->status === 'failed') {
             return redirect()->back()->with('payment_failed', 'Payment failed. Please try again.');

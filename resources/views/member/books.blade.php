@@ -38,7 +38,11 @@
                 @endif
 
                 <div class="card-body d-flex flex-column">
-                    <h5 class="card-title text-primary fw-semibold">{{ $book->title }}</h5>
+                    <h5 class="card-title text-primary fw-semibold">{{ $book->title }} 
+                        @if($book->has_ebook)
+                        <i class="bi bi-file-earmark-pdf fs-4 fw-bold" style="color: red;" title="E-Book Available"></i>
+                        @endif
+                    </h5>
 
                     <p class="card-text mb-1">
                         <i class="bi bi-person-fill me-1 text-muted"></i><strong>Author:</strong> {{ $book->author->name ?? 'Unknown' }}

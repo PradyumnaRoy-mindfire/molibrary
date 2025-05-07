@@ -12,12 +12,13 @@ class ManageGenreController extends Controller
     //
     public function showGenres()
     {
+        $library = auth()->user()->libraries()->first();
         $totalGlobalBorrowed = Borrow::count();
 
-        $categories = Category::with(['books'])->get()->map(function ($category) use ($totalGlobalBorrowed) {
-            $totalAvailableBooks = $category->books->sum('total_copies');
+        $categories = Category::with(['books'])->get()->map(function ($category) use ($totalGlobalBorrowed,$library) {
+            $totalAvailableBooks = $category->books->where('library_id', $library->id)->sum('total_copies');
 
-            $borrowedCount = Borrow::whereIn('book_id', $category->books->pluck('id'))->count();
+            $borrowedCount = Borrow::where('library_id', $library->id)->whereIn('book_id', $category->books->pluck('id'))->count();
 
             $borrowSharePercent = $totalGlobalBorrowed > 0
                 ? round(($borrowedCount / $totalGlobalBorrowed) * 100, 2)

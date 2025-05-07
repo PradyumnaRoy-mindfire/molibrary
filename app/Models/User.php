@@ -40,6 +40,10 @@ class User extends Authenticatable
     {
         return $this->hasOne(Librarian::class);
     }
+    public function library()
+    {
+        return $this->hasOne(Library::class, 'admin_id');
+    }
     public function libraries()
     {
         return $this->hasMany(Library::class, 'admin_id');
@@ -47,6 +51,11 @@ class User extends Authenticatable
     public function borrows()
     {
         return $this->hasMany(Borrow::class, 'users_id');
+    }
+
+    public function memberships()
+    {
+        return $this->hasMany(Membership::class, 'user_id');
     }
     public function membership()
     {

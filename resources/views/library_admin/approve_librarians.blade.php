@@ -54,9 +54,7 @@
                             </td>
                         </tr>
                         @empty
-                        <tr>
-                            <td colspan="4" class="text-center">No pending librarians found.</td>
-                        </tr>
+                        
                         @endforelse
 
 

@@ -15,7 +15,7 @@ class BorrowController extends Controller
     //
     public function borrowConfirmation($action, Book $book)
     {
-        $library = Library::where('id', $book->library_id)->first();
+        $library = $book->library;
 
         $borrowCount = Borrow::where('book_id', $book->id)->count('id');
 

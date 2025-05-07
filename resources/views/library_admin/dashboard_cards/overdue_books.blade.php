@@ -2,6 +2,12 @@
 <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
 <link href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.bootstrap5.min.css" rel="stylesheet">
 
+<style>
+    #users-table_length:first-child,#users-table_info {
+        display: flex;
+    }
+</style>
+
 <div class="container mt-3">
 <h4 class="text-center text-white">Overdue Books</h4>
     <div class="card">
@@ -12,8 +18,8 @@
                         <th class="text-center align-middle">Book Name</th>
                         <th class="text-center align-middle">ISBN</th>
                         <th class="text-center align-middle">Borrowed By</th>
-                        <th class="text-center align-middle">Return Date</th>
                         <th class="text-center align-middle">Issued Date</th>
+                        <th class="text-center align-middle">Due Date</th>
                     </tr>
                 </thead>
                 <tbody>

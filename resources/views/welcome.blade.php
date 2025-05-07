@@ -21,7 +21,7 @@
     <a class="navbar-brand" href="#">MoLibrary</a>
     <ul class="navbar-nav">
       <li class="nav-item">
-        <a class="nav-link" href="#">About Us</a>
+        <a class="nav-link" href="#bottombef">About Us</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" href="{{ route('register') }}">Register</a>

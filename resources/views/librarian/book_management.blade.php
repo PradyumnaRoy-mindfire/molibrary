@@ -38,7 +38,7 @@
                     
                     
                     
-                    @foreach($borrowRequests as $request)
+                    @forelse($borrowRequests as $request)
                         @php
                             $user = $request->user;
                           
@@ -81,7 +81,12 @@
                                 @endif
                             </td>
                         </tr>
-                    @endforeach
+                    @empty
+                        <tr>
+                            <td colspan="7" class="text-center">No Requests Found.</td>
+                        </tr>
+                    @endforelse
+                   
                 </tbody>
             </table>
         </div>

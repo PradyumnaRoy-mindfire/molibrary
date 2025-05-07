@@ -43,7 +43,7 @@ class LibrarianController extends Controller
                 if ($returnDate->gt($dueDate)) {
                     $minutesLate = $dueDate->diffInMinutes($returnDate);
 
-                    $finePerMinute = 1;     //fine amount is 1 rupees per minute
+                    $finePerMinute = 10;     //fine amount is 10 rupees per minute
                     $fineAmount = round($minutesLate * $finePerMinute, 2);
                     $userRequest->fine()->create([
                         'amount' => $fineAmount,
@@ -51,7 +51,7 @@ class LibrarianController extends Controller
                     ]);
 
                     //sending mail to the user about fine
-                    $userRequest->user->notify(new FineNotification($userRequest));
+                    // $userRequest->user->notify(new FineNotification($userRequest));
                 }
 
                 //update book total_copies
@@ -64,7 +64,7 @@ class LibrarianController extends Controller
                 $userRequest->book->total_copies -= 1;
 
                 //sending mail to the user about borrow request
-                //$userRequest->user->notify(new BorrowRequestApprovedNotification($userRequest)); 
+                // $userRequest->user->notify(new BorrowRequestApprovedNotification($userRequest)); 
             }
         } else if ($action === 'reject') {
             $userRequest->status = 'rejected';

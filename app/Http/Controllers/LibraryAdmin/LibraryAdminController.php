@@ -18,7 +18,8 @@ class LibraryAdminController extends Controller
     }
 
     public function showLibrarybooks()
-    {
+    {   
+        $library = Library::where('admin_id', Auth::id())->first();
         $adminId = Auth::id();
         $books = Book::with(['author', 'category', 'library'])
             ->whereHas('library', function ($query) use ($adminId) {
@@ -30,7 +31,7 @@ class LibraryAdminController extends Controller
 
         $categories = Category::all();
 
-        return view('library_admin.manage_books', compact('books', 'categories'));
+        return view('library_admin.manage_books', compact('books', 'categories', 'library'));
     }
 
     public function approveLibrarians()

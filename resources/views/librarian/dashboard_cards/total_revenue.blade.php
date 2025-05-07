@@ -2,6 +2,12 @@
 <link href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" rel="stylesheet">
 <link href="https://cdn.datatables.net/responsive/2.4.1/css/responsive.bootstrap5.min.css" rel="stylesheet">
 
+<style>
+    #users-table_length:first-child,#users-table_info {
+        display: flex;
+    }
+</style>
+
 <div class="container mt-3">
 <h4 class="text-center text-white">Total Revenue</h4>
         <div class="card">

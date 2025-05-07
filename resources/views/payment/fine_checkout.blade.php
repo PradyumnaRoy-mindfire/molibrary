@@ -58,7 +58,7 @@
 
                         <div class="row mt-4">
                             <div class="col-md-6 mb-3 mb-md-0">
-                                <a href="{{ route('memberships') }}" class="btn btn-outline-secondary btn-lg w-100">
+                                <a href="javascript:history.back()" class="btn btn-outline-secondary btn-lg w-100">
                                     <div class="d-flex align-items-center justify-content-center">
                                         <i class="fas fa-arrow-left me-2"></i>
                                         <span>Cancel</span>

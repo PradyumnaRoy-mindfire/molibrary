@@ -29,9 +29,9 @@
                     <p class="card-text mb-3">
                         <i class="bi bi-person-check text-secondary me-1"></i>
                         <strong>Admin:</strong>
-                        @if ($library->admin_id)
-                        {{ $library->admin_name }}
-                        <small class="text-muted">({{ $library->admin_email }})</small>
+                        @if ($library->admin)
+                        {{ $library->admin->name }}
+                        <small class="text-muted">({{ $library->admin->email }})</small>
                         @else
                             <a class="btn btn-sm btn-outline-primary mt-1 mt-md-0" href="{{ route('assign.admin', $library->id) }}">Assign Admin</a>
                         @endif

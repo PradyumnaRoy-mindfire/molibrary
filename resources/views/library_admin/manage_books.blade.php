@@ -13,8 +13,8 @@
 
     {{-- Header Section --}}
     <div class="d-flex flex-column flex-md-row justify-content-between align-items-center mb-3">
-        <h3 class="mb-3 mb-md-0 text-white">{{$books[0]->library->name}} Book Collection</h3>
-        <a href="{{ route('add.book',$books[0]->library_id) }}" class="btn btn-success">
+        <h3 class="mb-3 mb-md-0 text-white">{{$library->name}} Book Collection</h3>
+        <a href="{{ route('add.book',$library->id) }}" class="btn btn-success">
             <i class="bi bi-plus-circle me-1"></i> Add Book
         </a>
     </div>
@@ -40,14 +40,18 @@
 
     {{-- Book Cards  --}}
     <div class="row" id="bookGrid">
-        @foreach($books as $book)
+        @forelse($books as $book)
         <div class="col-md-3 mb-4 book-card" data-category="{{ Str::slug($book->category->name) }}">
             <div class="card shadow-sm h-100">
                 @if($book->image)
                 <img src="{{ asset('storage/'.$book->image) }}" class="card-img-top" alt="Book Image" style="height: 250px; object-fit: cover;">
                 @endif
                 <div class="card-body d-flex flex-column">
-                    <h5 class="card-title text-primary">{{ $book->title }}</h5>
+                    <h5 class="card-title text-primary">{{ $book->title }}
+                        @if($book->has_ebook)
+                        <i class="bi bi-file-earmark-pdf fs-4 fw-bold" style="color: red;" title="E-Book Available"></i>
+                        @endif
+                    </h5>
                     <p class="card-text mb-1"><strong>Author:</strong> {{ $book->author->name ?? 'Unknown'}}</p>
                     <p class="card-text mb-1"><strong>Available:</strong> {{ $book->total_copies}}</p>
                     <div class="mb-1 d-flex justify-content-between">
@@ -70,7 +74,11 @@
                 </div>
             </div>
         </div>
-        @endforeach
+        @empty
+        <div class="col-md-12 mt-5">
+            <h4 class="text-center text-white"> No books found!</h4>
+        </div>
+        @endforelse
     </div>
     <div class="d-flex justify-content-center mt-4">
         {{ $books->links() }}

@@ -78,7 +78,8 @@ class MemberController extends Controller
     {
 
         $plans = Plan::all();
-        $memberships = Membership::with('plan')->where('user_id', Auth::user()->id)->get();
+        
+        $memberships = auth()->user()->memberships;
 
         return view('member.membership_plans', compact('plans', 'memberships'));
     }
@@ -131,7 +132,7 @@ class MemberController extends Controller
                 if ($activeBorrow->type == 'return' && now()->lt(now()->setTime(18, 0))) {
                     $expectedAvailability = now()->setTime(18, 0)->format('F j, Y, g:i a');
                 } else if (now()->gt($dueDate)) {  // Due date already passed but not returned
-                    $expectedAvailability = now()->addDay();
+                    $expectedAvailability = now()->addDay()->setTime(18, 0);
                 } else {
                     // if the book is borrowed then its due date is available 
                     $expectedAvailability = $dueDate;

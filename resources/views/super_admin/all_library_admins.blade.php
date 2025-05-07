@@ -20,12 +20,12 @@
             <tbody>
                 @forelse ($admins as $admin)
                 <tr class="text-center">
-                    <td>{{ $admin->admin_name }}</td>
-                    <td>{{ $admin->admin_phone }}</td>
-                    <td>{{ $admin->library_name }}</td>
-                    <td>{{ $admin->librarian_count }}</td>
+                    <td>{{ $admin->name }}</td>
+                    <td>{{ $admin->phone }}</td>
+                    <td>{{ $admin->library->name }}</td>
+                    <td>{{ $admin->library->librarians->count() }}</td>
                     <td>
-                        <a href="{{ route('library.admin.edit', $admin->admin_id) }}" class="btn btn-warning btn-sm">
+                        <a href="{{ route('library.admin.edit', $admin->id) }}" class="btn btn-warning btn-sm">
                             <i class="bi bi-pencil-square me-1"></i>Edit Details
                         </a>
                     </td>

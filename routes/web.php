@@ -32,6 +32,7 @@ Route::get('/toaster', function () {
     return view('toaster');
 });
 
+
 // Route::get('/custom-card', function() {
 //     return view('payment.customcard');
 // });

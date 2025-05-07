@@ -79,7 +79,7 @@
 
                         <div class="metadata-item">
                             <i class="fas fa-chart-line metadata-icon"></i>
-                            <span class="metadata-label">Borrowed:</span>
+                            <span class="metadata-label">Borrowed By:</span>
                             <span class="metadata-value">{{$borrowCount}}</span>
                             @if($borrowCount > 0)
                             <span class="availability-tag reserved-badge">Popular</span>
@@ -104,7 +104,7 @@
             </div>
 
             <div class="action-buttons">
-                <a href="{{ route('browse.books') }}" class="btn btn-outline-secondary btn-back ms-2">
+                <a href="javascript:history.back()" class="btn btn-outline-secondary btn-back ms-2">
                     <i class="fas fa-arrow-left me-2"></i>Back
                 </a>
 

@@ -33,31 +33,20 @@ class LibraryController extends Controller
     // showing libraries
     public function showLibraries()
     {
-        $libraries = Library::leftJoin('users', 'libraries.admin_id', '=', 'users.id')
-            ->select('libraries.*', 'users.name as admin_name', 'users.email as admin_email')
-            ->get();
+        $libraries = Library::all();
         return view('super_admin.manage_library', compact('libraries'));
     }
 
     //showing the library admins
     public function showLibraryAdmins()
     {
-        $admins = Library::join('users', 'libraries.admin_id', '=', 'users.id')
-        ->leftJoin('librarians', 'libraries.id', '=', 'librarians.library_id')
-        ->select(
-            'users.id as admin_id',
-            'users.name as admin_name',
-            'users.phone as admin_phone',
-            'libraries.name as library_name',
-            DB::raw('COUNT(librarians.id) as librarian_count')
-        )
-        ->groupBy('users.id', 'users.name', 'libraries.name')
-        ->paginate(10);
+        $admins = User::where('role', 'library_admin')
+            ->with('library.librarians')
+            ->paginate(10);
 
         return view('super_admin.all_library_admins', compact('admins'));
-
     }
 
     //edit a library admin
-   
+
 }

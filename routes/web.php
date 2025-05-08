@@ -225,8 +225,13 @@ Route::controller(SuperAdminController::class)->group(function () {
 Route::controller(LibraryController::class)->group(function () {
 
     Route::middleware(Authenticate::class, RoleMiddleware::class . ':super_admin')->group(function () {
-        Route::get('/add-library',  'createLibraryForm')->name('add.library');
+        //add a new library
+        Route::get('/manage-library/add-library/{library?}',  'createLibraryForm')->name('add.library');
         Route::post('/store-library',  'createLibrary')->name('store.library');
+
+        //edit a library
+        Route::get('/manage-library/{library}/edit',  'createLibraryForm')->name('edit.library');
+        Route::post('/manage-library/{library}/edit',  'updateLibrary')->name('update.library');
 
         Route::get('/manage-library',  'showLibraries')->name('manage.library');
         Route::get('/restricted-libraries', 'restricted')->name('restricted.libraries');

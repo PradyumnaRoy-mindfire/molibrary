@@ -59,7 +59,20 @@ class PaymentController extends Controller
             'method' => 'card'
         ]);
 
-        // Get active and upcoming memberships
+        $this->handleMembership($charge,$user,$plan);
+        
+
+        //send payment invoice notification
+        // $user->notify(new PaymentInvoiceNotification($charge));
+
+        if ($charge->status !== 'succeeded') {
+            return redirect()->back()->with('payment_failed', 'Payment failed. Please try again.');
+        }
+        return redirect()->back()->with('payment_success', 'Payment successful!');
+    }
+
+    private function handleMembership($charge, $user,$plan) {
+        // Getting the active and upcoming memberships
         $active_memberships = $user->activeMemberships;
         $upcoming_memberships = $user->upcomingMemberships; 
         $startDate = now(); 
@@ -68,7 +81,7 @@ class PaymentController extends Controller
             // Get the latest end date from both active and upcoming memberships of the same type
             $relevantMemberships = collect();
 
-            // If new plan is Base, consider both active and upcoming Base memberships
+            // if new plan is Base, consider both active and upcoming Base memberships then merge both
             if ($plan->type == 'Base Membership') {
                 $relevantMemberships = $active_memberships->where('plan.type', 'Base Membership')
                     ->merge($upcoming_memberships->where('plan.type', 'Base Membership'));
@@ -83,15 +96,13 @@ class PaymentController extends Controller
                 $latestEndDate = $relevantMemberships->sortByDesc('end_date')->first()->end_date;
                 $startDate = $latestEndDate;
             }
-
             
+            //if the curr plan is pro , there is active base membership and no pro membership is active , also no upcoming membership is there , then start it now
             if ($plan->type == 'Pro Membership' && $active_memberships->where('plan.type', 'Base Membership')->isNotEmpty() && $active_memberships->where('plan.type', 'Pro Membership')->isEmpty() && $upcoming_memberships->where('plan.type', 'Pro Membership')->isEmpty()) 
             {
                 $startDate = now();
             }
         }
-
-        
 
         $membership = Membership::create([
             'payments_method_id' => $charge->payment_method,
@@ -118,14 +129,6 @@ class PaymentController extends Controller
         $user->book_limit = $max_limit - $pending_borrow_count;
         $user->save();
 
-
-        //send payment invoice notification
-        // $user->notify(new PaymentInvoiceNotification($charge));
-
-        if ($charge->status !== 'succeeded') {
-            return redirect()->back()->with('payment_failed', 'Payment failed. Please try again.');
-        }
-        return redirect()->back()->with('payment_success', 'Payment successful!');
     }
 
     public function payFine(Borrow $borrow)

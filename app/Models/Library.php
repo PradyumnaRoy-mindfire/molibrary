@@ -7,6 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class Library extends Model
 {
     //
+    protected $fillable = [
+        'name',
+        'status', 
+        'location', 
+        'admin_id'
+    ];
     public function admin()
     {
         return $this->belongsTo(User::class, 'admin_id');
@@ -35,5 +41,9 @@ class Library extends Model
             }])
             ->having('borrows_count', '>', 1)
             ->orderBy('borrows_count', 'desc');
+    }
+
+    public function fines(){
+        return $this->hasManyThrough(Fine::class,Borrow::class,'library_id','borrow_id');
     }
 }

@@ -70,11 +70,11 @@
                 <a class="nav-link " href="{{ route('dashboard') }}"><i class="bi bi-house-door me-2 fs-4 fw-bold "></i><span>Dashboard</span></a>
             </li>
             @if(Auth::user()->role === 'super_admin')
+            <!-- <li class="nav-item">
+                <a class="nav-link" href="{{-- route('add.library') --}}"><i class="bi bi-building-add me-2 fs-4 fw-bold"></i><span>Add Library</span></a>
+            </li> -->
             <li class="nav-item">
-                <a class="nav-link" href="{{ route('add.library') }}"><i class="bi bi-building-add me-2 fs-4 fw-bold"></i><span>Add Library</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ route('manage.library') }}"><i class="bi bi-gear-wide-connected me-2 fs-4 fw-bold"></i><span>Manage Library</span></a>
+                <a class="nav-link" href="{{ route('manage.library') }}"><i class="bi bi-building-add me-2 fs-4 fw-bold"></i><span>Manage Library</span></a>
             </li>
 
             <li class="nav-item">

@@ -23,6 +23,9 @@ class MemberController extends Controller
     {
 
         $books = Book::with(['author', 'category', 'library'])
+            ->whereHas('library', function ($query) {
+                $query->where('status', 'open');
+            })
             ->select('books.*')
             ->orderBy('created_at', 'desc')
             ->paginate(4);

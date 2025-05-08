@@ -16,11 +16,11 @@ return new class extends Migration
             $table->unsignedBigInteger('users_id');
             $table->unsignedBigInteger('book_id');
             $table->unsignedBigInteger('library_id');
-            $table->enum('type', ['borrow', 'reserve']);
+            $table->enum('type', ['borrow', 'reserve','return']);
             $table->timestamp('borrow_date')->nullable();
             $table->timestamp('due_date')->nullable();
             $table->timestamp('return_date')->nullable();
-            $table->enum('status', ['borrowed', 'returned', 'overdue', 'active', 'expire']);
+            $table->enum('status', ['borrowed', 'returned', 'overdue', 'active', 'expire','rejected']);
             $table->timestamps();
 
             $table->foreign('users_id')->references('id')->on('users')->onDelete('cascade');

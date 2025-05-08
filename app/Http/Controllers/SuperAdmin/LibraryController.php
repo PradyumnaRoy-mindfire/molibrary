@@ -12,9 +12,12 @@ use PhpParser\Node\Expr\Assign;
 class LibraryController extends Controller
 {
     //
-    public function createLibraryForm()
+    public function createLibraryForm($library = null)
     {
-        return view('super_admin.add_library');
+        if ($library) {
+            $library = Library::findOrFail($library);
+        }
+        return view('super_admin.add_edit_library', compact('library'));
     }
 
     public function createLibrary(LibraryRequest $request)
@@ -27,7 +30,18 @@ class LibraryController extends Controller
         $data->status = $request->status;
         $data->location = $request->location;
         $data->save();
-        return back()->with('libraryStored', 'Library added Successfully..');
+        return redirect()->route('manage.library')->with('libraryToast', 'Library added Successfully..');
+    }
+
+    public function updateLibrary(LibraryRequest $request, Library $library)
+    {
+        //validations are in the library request 
+        $request->validated();
+        $library->update($request->all());
+       
+        $library->save();
+
+        return redirect()->route('manage.library')->with('libraryToast', 'Library Updated Successfully..');
     }
 
     // showing libraries

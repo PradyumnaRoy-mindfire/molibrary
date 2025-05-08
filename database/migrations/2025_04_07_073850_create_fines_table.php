@@ -17,7 +17,7 @@ return new class extends Migration
             $table->double('amount');
             $table->double('discount')->default(0);
             $table->enum('status', ['pending', 'paid']);
-            $table->unsignedBigInteger('payment_id')->nullable();
+            $table->string('payment_id')->nullable();
             $table->timestamps();
 
             $table->foreign('borrow_id')->references('id')->on('borrows')->onDelete('cascade');

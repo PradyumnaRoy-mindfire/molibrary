@@ -30,7 +30,7 @@
             </div>
 
             <div class="d-flex align-items-center gap-3">
-                <!-- <div class="position-relative">
+                <div class="position-relative">
                     <button class="btn text-white position-relative pe-0" id="notificationBtn">
                         <i class="bi bi-bell-fill" style="font-size: 1.5rem;"></i>
                         <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"> 3 </span>
@@ -46,7 +46,7 @@
                             <a href="#" class="text-primary">View all notifications</a>
                         </div>
                     </div>
-                </div> -->
+                </div>
 
                 <div class="text-white fw-bold">Welcome, {{ Auth::user()->name }}</div>
 

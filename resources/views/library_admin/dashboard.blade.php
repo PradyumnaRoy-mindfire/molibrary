@@ -26,6 +26,7 @@
                 </div>
             </div>
 
+
             <!-- Popular Libraries -->
             <div class="col-12 col-md-6 col-xl-3 popular-libraries" data-type="popular-libraries" data-route="{{ route('low.stock') }}">
                 <div class="member-card bg-orange p-4 shadow" style="background:rgb(134, 6, 173);">
@@ -61,13 +62,12 @@
 @endsection
 
 @push('scripts')
-<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script> -->
-    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script> -->
+
 <!-- DataTables JS -->
-    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
-    <!-- Responsive DataTables JS -->
-    <!-- <script src="https://cdn.datatables.net/responsive/2.4.1/js/dataTables.responsive.min.js"></script> -->
-    <script src="https://cdn.datatables.net/responsive/2.4.1/js/responsive.bootstrap5.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+<!-- Responsive DataTables JS -->
+<!-- <script src="https://cdn.datatables.net/responsive/2.4.1/js/dataTables.responsive.min.js"></script> -->
+<script src="https://cdn.datatables.net/responsive/2.4.1/js/responsive.bootstrap5.min.js"></script>
 <script src="{{ url('js/library_admin/dashboard.js') }}"></script>
 @endpush

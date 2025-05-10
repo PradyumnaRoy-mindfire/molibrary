@@ -11,12 +11,14 @@ use App\Http\Controllers\Member\BorrowController;
 use App\Http\Controllers\Member\EbookController;
 use App\Http\Controllers\Member\MemberController;
 use App\Http\Controllers\Member\PaymentController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\SuperAdmin\LibraryController;
 use App\Http\Controllers\SuperAdmin\SuperAdminController;
 use App\Http\Middleware\CheckEbookMembership;
 use App\Http\Middleware\CheckMembership;
 use App\Http\Middleware\RoleMiddleware;
 use Illuminate\Auth\Middleware\Authenticate;
+use Illuminate\Notifications\Notification;
 use Illuminate\Support\Facades\Route;
 
 
@@ -64,6 +66,14 @@ Route::controller(ForgotPasswordController::class)->group(function () {
 
     Route::post('/verify-otp',  'verifyOtp')->name('verify.otp');
     Route::post('/reset-password',  'resetPassword')->name('reset.password');
+});
+
+Route::controller(NotificationController::class)->group(function () {
+
+    Route::middleware(Authenticate::class)->group(function () {
+        Route::get('/notifications/{notification}', 'showMembershipExpiryNotification')->name('show.notification');
+    });
+    
 });
 
 //show role wise dahsboard after login
@@ -148,7 +158,7 @@ Route::controller(EbookController::class)->group(function () {
 Route::controller(PaymentController::class)->group(function () {
 
     Route::middleware(Authenticate::class, RoleMiddleware::class . ':member')->group(function () {
-        Route::get('/checkout/{plan}', 'showCheckoutForm')->name('checkout');
+        Route::get('/memberships/checkout/{plan}', 'showCheckoutForm')->name('checkout');
         Route::post('/checkout/{plan}', 'processCheckout')->name('checkout.process');
 
         Route::get('/borrowing-history/pay-fine/{borrow}', 'payFine')->name('pay.fine');

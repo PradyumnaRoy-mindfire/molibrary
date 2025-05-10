@@ -1,9 +1,9 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     let nameInput = document.getElementById('name');
     let emailInput = document.getElementById('email');
 
     [nameInput, emailInput].forEach(input => {
-        input.addEventListener('input', function() {
+        input.addEventListener('input', function () {
             const errorDiv = document.getElementById(`${input.id}-error`);
             errorDiv.classList.add('d-none');
         });
@@ -33,19 +33,40 @@ const style = {
     }
 };
 
-const card = elements.create('card', {
+
+let cardNumber = elements.create('cardNumber', {
     style: style
 });
-card.mount('#card-element');
+let cardExpiry = elements.create('cardExpiry', {
+    style: style
+});
+let cardCvc = elements.create('cardCvc', {
+    style: style
+});
 
-// showing real-time validation errors from the card element
-card.addEventListener('change', function(event) {
-    const displayError = document.getElementById('card-errors');
-    if (event.error) {
-        displayError.textContent = event.error.message;
-    } else {
-        displayError.textContent = '';
-    }
+cardNumber.mount('#card-number');
+cardExpiry.mount('#card-expiry');
+cardCvc.mount('#card-cvc');
+
+
+cardNumber.on('change', function (event) {
+    const errorDiv = document.getElementById('card-number-error');
+        errorDiv.textContent = '';
+        errorDiv.classList.add('d-none');
+    
+});
+
+cardExpiry.on('change', function (event) {
+    const errorDiv = document.getElementById('card-expiry-error');
+        errorDiv.textContent = '';
+        errorDiv.classList.add('d-none');
+});
+
+// Listen for errors in CVC field
+cardCvc.on('change', function (event) {
+    const errorDiv = document.getElementById('card-cvc-error');
+        errorDiv.textContent = '';
+        errorDiv.classList.add('d-none');
 });
 
 const form = document.getElementById('payment-form');
@@ -81,16 +102,34 @@ form.addEventListener('submit', async (e) => {
     const {
         token,
         error
-    } = await stripe.createToken(card);
+    } = await stripe.createToken(cardNumber);
 
     if (error) {
         // Reset button
         button.disabled = false;
         button.innerHTML = buttonText;
 
-        // Display error
-        const errorElement = document.getElementById('card-errors');
-        errorElement.textContent = error.message;
+      
+        console.log(error);
+        if (error.code === "incomplete_number" || error.code === "invalid_number") {
+            let errorDiv = document.getElementById('card-number-error');
+            errorDiv.textContent = error.message;
+            errorDiv.classList.remove('d-none');
+        } 
+        if (error.code === 'invalid_expiry_year' || error.code === 'invalid_expiry_year_past' || error.code === 'invalid_expiry_year_future' || error.code === 'incomplete_expiry') {
+            let errorDiv = document.getElementById('card-expiry-error');
+            errorDiv.textContent = error.message;
+            errorDiv.classList.remove('d-none');
+        } 
+         if (error.code === 'incomplete_cvc') {
+            let errorDiv = document.getElementById('card-cvc-error');
+            errorDiv.textContent = error.message;
+            errorDiv.classList.remove('d-none');
+        }else {
+            const fallback = document.getElementById('card-errors');
+            return;
+            // fallback.textContent = error.message;
+        }
     } else {
         const input = document.createElement('input');
         input.type = 'hidden';
@@ -100,6 +139,12 @@ form.addEventListener('submit', async (e) => {
         form.submit();
     }
 });
+
+
+
+
+
+
 
 
 

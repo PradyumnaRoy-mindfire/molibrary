@@ -101,7 +101,7 @@
                 <tr>
                     <td class="text-center">{{ $membership->payments_method_id }}</td>
                     <td class="text-center">{{ ucwords($membership->plan->type,' ') }}</td>
-                    <td class="text-center">{{ \Carbon\Carbon::parse($membership->start_date)->format('M d, Y h:i A') }}</td>
+                    <td class="text-center"  data-order="{{ \Carbon\Carbon::parse($membership->start_date)->format('Y-m-d H:i:s') }}">{{ \Carbon\Carbon::parse($membership->start_date)->format('M d, Y h:i A') }}</td>
                     <td class="text-center">{{ \Carbon\Carbon::parse($membership->end_date)->format('M d, Y h:i A')}}</td>
                     <td class="text-center">@if($upcoming == true) <span class="badge badge-warning" style="background-color:rgb(247, 189, 16);">Upcoming</span> @elseif($membership->has_access == 1) <span class="badge badge-active">Active</span> @else <span class="badge badge-expired">Expired</span> @endif</td>
                 </tr>
@@ -118,7 +118,6 @@
 @endsection
 
 @push('scripts')
-<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script> -->
 <script>
     document.addEventListener('DOMContentLoaded', function() {
         const toggleButtons = document.querySelectorAll('.toggle-description');
@@ -137,11 +136,13 @@
 
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+<script src="https://cdn.datatables.net/plug-ins/1.13.4/sorting/datetime-moment.js"></script>
+
 
 <script>
     $(document).ready(function() {
         $('#membershipTable').DataTable({
-            order: [[3, 'desc']], // Order by 4th column (0-indexed) descending
+            order: [[2, 'desc']], // Order by 3th column (0-indexed) descending
             language: {
                 searchPlaceholder: "Search membership...",
                 search: "",

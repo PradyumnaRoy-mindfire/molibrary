@@ -83,6 +83,13 @@ class User extends Authenticatable
         return $this->hasMany(Ebook::class);
     }
 
+    public function scopeMembershipExpiringSoon($query)
+    {
+        return $query->whereHas('memberships', function ($query) {
+            $query->where('has_access', 1)
+                ->whereBetween('end_date', [now(), now()->addMinutes(3)]);  //wher end date is between now and now + 3 minutes notify the user 
+        });
+    }
 
 
 

@@ -9,15 +9,13 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
 
     <link rel="stylesheet" href="{{ url('css/navbar.css') }}">
-    <style>
-
-    </style>
+    
 </head>
 
 <body>
 
     <!-- Top Navbar -->
-    <nav class="navbar horizontal-nav p-3">
+    <nav class="navbar horizontal-nav p-3" style="position: sticky;">
         <div class="container-fluid d-flex align-items-center justify-content-between">
             <div class="d-flex align-items-center">
                 <button class="btn text-white me-2" id="sidebarToggle">
@@ -30,23 +28,62 @@
             </div>
 
             <div class="d-flex align-items-center gap-3">
+
                 <div class="position-relative">
                     <button class="btn text-white position-relative pe-0" id="notificationBtn">
                         <i class="bi bi-bell-fill" style="font-size: 1.5rem;"></i>
-                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"> 3 </span>
+                        @php
+                        $unreadCount = auth()->user()->unreadNotifications->count();
+                        @endphp
+                        @if($unreadCount > 0)
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="notificationBadge">
+                            {{ $unreadCount }}
+                        </span>
+                        @endif
                     </button>
                     <div id="notificationBox" class="card shadow-sm position-absolute end-0 mt-2" style="width: 300px; display: none; z-index: 1050;">
-                        <div class="card-header fw-bold">Notifications</div>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">New book added: "AI in 2025"</li>
-                            <li class="list-group-item">Your membership is expiring soon</li>
-                            <li class="list-group-item">Reminder: Return "Clean Code"</li>
+                        <div class="card-header d-flex justify-content-between align-items-center">
+                            <span class="fw-bold">Notifications</span>
+                            @if($unreadCount > 0)
+                            <button type="submit" class="btn btn-sm btn-outline-secondary">Mark all read</button>
+                            @endif
+                        </div>
+                        <ul class="list-group list-group-flush" id="notificationList">
+                            @forelse(auth()->user()->notifications as $notification)
+                            <li class="list-group-item notification-item {{ $notification->read_at ? '' : 'unread' }}"
+                                data-notification-id="{{ $notification->id }}">
+                                <span class="notification-title">{{ $notification->data['title'] }}</span>
+                                <span class="notification-time fs-6 mt-1 float-start ">{{ $notification->created_at->diffForHumans() }}</span>
+                                <button class="mt-1 badge-customm float-end" id="markAsReadBtn">Mark as Read</button>
+                            </li>
+                            @empty
+                            <li class="list-group-item text-center text-muted">No notifications</li>
+                            @endforelse
                         </ul>
-                        <div class="card-footer text-center">
-                            <a href="#" class="text-primary">View all notifications</a>
+                    </div>
+                </div>
+
+                <!-- Modal for notification details -->
+                <div class="modal fade" id="notificationModal" tabindex="-1" aria-labelledby="notificationModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="notificationModalLabel">Notification Details</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+
+                            <div class="modal-body" id="notificationModalBody"></div>
+
+                            <div class="modal-footer" id="notificationModalFooter">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            </div>
                         </div>
                     </div>
                 </div>
+
+
+
 
                 <div class="text-white fw-bold">Welcome, {{ Auth::user()->name }}</div>
 
@@ -136,7 +173,7 @@
 
 
     <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script> -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script> -->
     <script src="https://js.pusher.com/8.4.0/pusher.min.js"></script>
     <script>
         let logoutUrl = "{{ route('logout') }}";
@@ -146,12 +183,14 @@
         var pusher = new Pusher("{{ config('broadcasting.connections.pusher.key') }}", {
             cluster: "{{ config('broadcasting.connections.pusher.options.cluster') }}"
         });
-
     </script>
 
-  
     <script src="{{ url('js/navbar.js') }}"></script>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
+    <!-- Bootstrap JavaScript Bundle (includes Popper) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
     @if(session('logged_in_success'))
     <script>
@@ -166,16 +205,16 @@
     @endif
 
     @if(auth()->user()->role === 'librarian')
-        <script>
-            newBorrowRequest();
-            newReturnRequest();
-        </script>
+    <script>
+        newBorrowRequest();
+        newReturnRequest();
+    </script>
     @endif
 
     @if(auth()->user()->role === 'library_admin')
-        <script>
-            newLibrarianRegistered();
-        </script>
+    <script>
+        newLibrarianRegistered();
+    </script>
     @endif
 
 </body>

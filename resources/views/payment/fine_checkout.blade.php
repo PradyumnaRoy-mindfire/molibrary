@@ -50,9 +50,36 @@
                             </div>
                         </div>
 
-                        <div class="mb-4">
+                        <!-- <div class="mb-4">
                             <label class="fw-bold mb-2"><i class="far fa-credit-card me-2"></i>Card Details</label>
                             <div id="card-element" class="form-control p-3" style="height: 45px;"></div>
+                            <div id="card-errors" class="text-danger mt-2" role="alert"></div>
+                        </div> -->
+
+                        <div class="card-fields-container mb-3 mt-3">
+                            <label for="card_number"><i class="far fa-credit-card me-2"></i>Card Number</label>
+                            <div class="form-floating mb-3">
+                                <div id="card-number" class="form-control p-3" style="height: 45px;"></div>
+                                <div class="text-danger small mt-1 d-none" id="card-number-error">Please enter a valid card number.</div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="card_expiry"><i class="far fa-calendar-alt me-2"></i> Expiry Date</label>
+                                    <div class="form-floating mb-3">
+                                        <div id="card-expiry" class="form-control p-3" style="height: 45px;"></div>
+                                        <div class="text-danger small mt-1 d-none" id="card-expiry-error">Enter a valid expiration date.</div>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <label for="card_cvc"><i class="fas fa-lock me-2"></i>CVC</label>
+                                    <div class="form-floating mb-3">
+                                        <div id="card-cvc" class="form-control p-3" style="height: 45px;"></div>
+                                        <div class="text-danger small mt-1 d-none" id="card-cvc-error">Enter a valid CVC code.</div>
+                                    </div>
+                                </div>
+                            </div>
                             <div id="card-errors" class="text-danger mt-2" role="alert"></div>
                         </div>
 

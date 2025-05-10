@@ -22,7 +22,7 @@ const currentUrl = window.location.href;
 
 document.querySelectorAll('#sideNavLinks .nav-link').forEach(link => {
     const linkUrl = link.href;
-    if (currentUrl === linkUrl || currentUrl.startsWith(linkUrl)||currentUrl.endsWith(linkUrl)) {
+    if (currentUrl === linkUrl || currentUrl.startsWith(linkUrl) || currentUrl.endsWith(linkUrl)) {
         link.classList.add('active');
     }
 
@@ -32,22 +32,139 @@ document.querySelectorAll('#sideNavLinks .nav-link').forEach(link => {
     });
 });
 
-// Notification toggle handling
-// const notificationBtn = document.getElementById("notificationBtn");
-// const notificationBox = document.getElementById("notificationBox");
+// Toggle notification box
+let notificationBtn = document.getElementById('notificationBtn');
+let notificationBox = document.getElementById('notificationBox');
+let notificationBackDrop = document.getElementsByClassName('modal-backdrop');
+notificationBtn.addEventListener('click', function (e) {
+    e.stopPropagation();
+    if (notificationBox.style.display === 'none' || notificationBox.style.display === '') {
+        notificationBox.style.display = 'block';
+    } else {
+        notificationBox.style.display = 'none';
+    }
+});
 
-// notificationBtn.addEventListener("click", () => {
-//     notificationBox.style.display = notificationBox.style.display === "none" ? "block" : "none";
-// });
 
-// document.addEventListener("click", function(event) {
-//     if (!notificationBtn.contains(event.target) && !notificationBox.contains(event.target)) {
-//         notificationBox.style.display = "none";
-//     }
-// });
+
+// Close the  notification box when clicking outside
+document.addEventListener('click', function (e) {
+    if (!notificationBox.contains(e.target) && e.target !== notificationBtn) {
+        if(notificationBackDrop.length < 1) {
+            notificationBox.style.display = 'none';
+        } 
+    }
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+
+    const notificationItems = document.querySelectorAll('.notification-item');
+
+    // Setup Modal
+    const notificationModal = new bootstrap.Modal(document.getElementById('notificationModal'));
+    const modalTitle = document.getElementById('notificationModalLabel');
+    const modalBody = document.getElementById('notificationModalBody');
+    const modalFooter = document.getElementById('notificationModalFooter');
+    const markAsReadBtn = document.getElementById('markAsReadBtn');
+
+    // to open the modal on click event to each notification ,show details
+    notificationItems.forEach(item => {
+        item.addEventListener('click', function() {
+
+            const notificationId = this.getAttribute('data-notification-id');
+
+            fetch(`/notifications/${notificationId}`)
+                .then(response => response.json())
+                .then(data => {
+                    modalTitle.textContent = 'hello';
+                    modalTitle.textContent = data.title;
+                    modalBody.innerHTML = `<p>${data.message}</p> <small class="text-muted float-end">${data.time}</small>`;
+
+                    if (data.action_url) {
+                        //if there is already an anchor tag with id notificationActionLink
+                        let actionLink = document.getElementById('notificationActionLink');
+                        if (!actionLink) {
+                            actionLink = document.createElement('a');
+                            actionLink.id = 'notificationActionLink';
+                            actionLink.className = 'btn btn-primary';
+                            modalFooter.appendChild(actionLink);
+                        }
+
+                        actionLink.textContent = data.action_text || 'View Details';
+                        actionLink.href = data.action_url;
+                    }
+
+
+                    // Update mark as read button
+                    if (data.read_at) {
+                        markAsReadBtn.style.display = 'none';
+                    } else {
+                        markAsReadBtn.style.display = 'inline-block';
+                        markAsReadBtn.onclick = function() {
+                            markAsRead(notificationId);
+                        };
+                    }
+
+                    // Show the modal
+                    document.querySelector('.modal').style.zIndex = 1060;
+
+                    notificationModal.show();
+
+                  
+                })
+                .catch(error => {
+                    console.error('Error fetching notification details:', error);
+                });
+        });
+    });
+
+    // Mark notification as read
+    function markAsRead(id) {
+        fetch(`/notifications/${id}/mark-as-read`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Find notification item in DOM and remove unread class
+                    const item = document.querySelector(`.notification-item[data-notification-id="${id}"]`);
+                    if (item) {
+                        item.classList.remove('unread');
+                    }
+
+                    // Hide mark as read button
+                    markAsReadBtn.style.display = 'none';
+
+                    // Update the notification count
+                    updateNotificationCount();
+                }
+            })
+            .catch(error => {
+                console.error('Error marking notification as read:', error);
+            });
+    }
+
+    // Update notification count badge
+    function updateNotificationCount() {
+        const unreadItems = document.querySelectorAll('.notification-item.unread');
+        const badge = document.getElementById('notificationBadge');
+
+        if (unreadItems.length > 0) {
+            badge.textContent = unreadItems.length;
+            badge.style.display = 'inline-block';
+        } else {
+            badge.style.display = 'none';
+        }
+    }
+});
+
 
 // logout
-$(document).on("click", ".logout", function() {
+$(document).on("click", ".logout", function () {
     Swal.fire({
         title: "Are you sure?",
         text: "You won't be able to revert this!",
@@ -81,12 +198,12 @@ function showLoginToast() {
         title: 'Logged in successfully..'
     })
 }
- 
 
-    //showing notification when a book will be added
+
+//showing notification when a book will be added
 function bookAdded() {
     var channel = pusher.subscribe('library.channel');
-    channel.bind('book.added', function(data) {
+    channel.bind('book.added', function (data) {
         let BookAddedToast = Swal.mixin({
             toast: true,
             position: 'top-end',
@@ -108,7 +225,7 @@ function bookAdded() {
 
 function newBorrowRequest() {
     var channel = pusher.subscribe('borrow.channel');
-    channel.bind('new.borrow.request', function(data) {
+    channel.bind('new.borrow.request', function (data) {
         let BookAddedToast = Swal.mixin({
             toast: true,
             position: 'top-end',
@@ -129,7 +246,7 @@ function newBorrowRequest() {
 }
 function newReturnRequest() {
     var channel = pusher.subscribe('return.channel');
-    channel.bind('new.return.request', function(data) {
+    channel.bind('new.return.request', function (data) {
         let BookAddedToast = Swal.mixin({
             toast: true,
             position: 'top-end',
@@ -151,7 +268,7 @@ function newReturnRequest() {
 
 function newLibrarianRegistered() {
     var channel = pusher.subscribe('libraryadmin.channel');
-    channel.bind('librarian.registered', function(data) {
+    channel.bind('librarian.registered', function (data) {
         let BookAddedToast = Swal.mixin({
             toast: true,
             position: 'top-end',

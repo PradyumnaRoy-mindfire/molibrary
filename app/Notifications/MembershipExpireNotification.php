@@ -51,7 +51,7 @@ class MembershipExpireNotification extends Notification implements ShouldQueue
         }
         return [
             'title' => 'Membership Expiry Reminder',
-            'message' => 'Your ' . $this->membership->plan->type . ' membership will expire on ' . $this->membership->end_date,
+            'message' => 'Hello,'.auth()->user()->name.'Your ' . $this->membership->plan->type . ' membership will expire on ' . $this->membership->end_date.' Please renew the membership to get more features',
             'action_url' =>  "http://molibrary.in/memberships/checkout/".$this->membership->plan->id,
             'action_text' => 'Renew Membership',
             'time' => $formattedTime,

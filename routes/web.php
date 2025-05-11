@@ -72,6 +72,8 @@ Route::controller(NotificationController::class)->group(function () {
 
     Route::middleware(Authenticate::class)->group(function () {
         Route::get('/notifications/{notification}', 'showMembershipExpiryNotification')->name('show.notification');
+        Route::post('/notifications/{notificationId}/mark-as-read', 'markAsRead')->name('mark.as.read');
+        Route::post('/notifications/mark-all-as-read', 'markAllAsRead')->name('mark.as.read');
     });
     
 });

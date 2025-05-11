@@ -32,6 +32,9 @@ document.querySelectorAll('#sideNavLinks .nav-link').forEach(link => {
     });
 });
 
+
+            //notification handler code
+
 // Toggle notification box
 let notificationBtn = document.getElementById('notificationBtn');
 let notificationBox = document.getElementById('notificationBox');
@@ -45,18 +48,101 @@ notificationBtn.addEventListener('click', function (e) {
     }
 });
 
-
-
 // Close the  notification box when clicking outside
 document.addEventListener('click', function (e) {
     if (!notificationBox.contains(e.target) && e.target !== notificationBtn) {
-        if(notificationBackDrop.length < 1) {
+        if (notificationBackDrop.length < 1) {
             notificationBox.style.display = 'none';
-        } 
+        }
     }
 });
 
-document.addEventListener('DOMContentLoaded', function() {
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    document.addEventListener('click', function (e) {
+        // Check if the clicked element has the custom attribute data read 
+        const markAsReadId = e.target.getAttribute('data-mark-as-read');
+
+        // If it has the attribute, handle it and prevent all other click events
+        if (markAsReadId) {
+            e.preventDefault();
+            e.stopPropagation();
+            e.stopImmediatePropagation(); // This is the key line that stops all other event handlers
+
+            markAsRead(markAsReadId);
+
+            // Return false to ensure no other handlers runs
+            return false;
+        }
+    }, true);
+
+         // Mark notification as read
+    function markAsRead(id) {
+        fetch(`/notifications/${id}/mark-as-read`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Find notification item in DOM and remove unread class
+                    const item = document.querySelector(`.notification-item[data-notification-id="${id}"]`);
+                    if (item) {
+
+                        item.classList.remove('unread');
+
+                        item.style.display = 'none';
+                    }
+                    // Update the notification count
+                    updateNotificationCount();
+                }
+            })
+            .catch(error => {
+                console.error('Error marking notification as read:', error);
+            });
+    }
+
+    // Mark all notifications as read handler code
+    const markAllAsReadBtn = document.getElementById('markAllAsReadBtn');
+    const notificationList = document.querySelector('#notificationList');
+    const badge = document.getElementById('notificationBadge');
+    markAllAsReadBtn.addEventListener('click', function () {
+        markAllAsRead();
+    });
+
+    function markAllAsRead() {
+        fetch(`/notifications/mark-all-as-read`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+            }
+        })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    // Find notification item in DOM and remove unread class
+                   let items = document.querySelectorAll('.notification-item');
+                   items.forEach(item => {
+                       item.style.display = 'none';
+                    
+                   });
+                   //remove the red bagdge from the bell
+                   badge.style.display = 'none';
+                   //remove the mark all as read button
+                   markAllAsReadBtn.style.display = 'none';
+                   //show the no notification message
+                   notificationList.innerHTML = ' <li class="list-group-item text-center text-muted">No notifications</li>';
+                }
+            })
+            .catch(error => {
+                console.error('Error marking notification as read:', error);
+            });
+    }
 
     const notificationItems = document.querySelectorAll('.notification-item');
 
@@ -65,11 +151,10 @@ document.addEventListener('DOMContentLoaded', function() {
     const modalTitle = document.getElementById('notificationModalLabel');
     const modalBody = document.getElementById('notificationModalBody');
     const modalFooter = document.getElementById('notificationModalFooter');
-    const markAsReadBtn = document.getElementById('markAsReadBtn');
 
     // to open the modal on click event to each notification ,show details
     notificationItems.forEach(item => {
-        item.addEventListener('click', function() {
+        item.addEventListener('click', function () {
 
             const notificationId = this.getAttribute('data-notification-id');
 
@@ -94,23 +179,12 @@ document.addEventListener('DOMContentLoaded', function() {
                         actionLink.href = data.action_url;
                     }
 
-
-                    // Update mark as read button
-                    if (data.read_at) {
-                        markAsReadBtn.style.display = 'none';
-                    } else {
-                        markAsReadBtn.style.display = 'inline-block';
-                        markAsReadBtn.onclick = function() {
-                            markAsRead(notificationId);
-                        };
-                    }
-
                     // Show the modal
                     document.querySelector('.modal').style.zIndex = 1060;
 
                     notificationModal.show();
 
-                  
+
                 })
                 .catch(error => {
                     console.error('Error fetching notification details:', error);
@@ -118,40 +192,10 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Mark notification as read
-    function markAsRead(id) {
-        fetch(`/notifications/${id}/mark-as-read`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                }
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    // Find notification item in DOM and remove unread class
-                    const item = document.querySelector(`.notification-item[data-notification-id="${id}"]`);
-                    if (item) {
-                        item.classList.remove('unread');
-                    }
-
-                    // Hide mark as read button
-                    markAsReadBtn.style.display = 'none';
-
-                    // Update the notification count
-                    updateNotificationCount();
-                }
-            })
-            .catch(error => {
-                console.error('Error marking notification as read:', error);
-            });
-    }
-
     // Update notification count badge
     function updateNotificationCount() {
         const unreadItems = document.querySelectorAll('.notification-item.unread');
-        const badge = document.getElementById('notificationBadge');
+        // const badge = document.getElementById('notificationBadge');
 
         if (unreadItems.length > 0) {
             badge.textContent = unreadItems.length;
@@ -162,6 +206,11 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
+
+
+
+
+                //showing sweetalerts and realtime notifications    
 
 // logout
 $(document).on("click", ".logout", function () {

@@ -7,9 +7,10 @@
     <title>MoLibrary</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <link rel="stylesheet" href="{{ url('css/navbar.css') }}">
-    
+
 </head>
 
 <body>
@@ -45,16 +46,21 @@
                         <div class="card-header d-flex justify-content-between align-items-center">
                             <span class="fw-bold">Notifications</span>
                             @if($unreadCount > 0)
-                            <button type="submit" class="btn btn-sm btn-outline-secondary">Mark all read</button>
+                            <button type="submit" class="btn btn-sm btn-outline-secondary" id="markAllAsReadBtn">Mark all read</button>
+                            @else 
+                            <!-- this button is for -->
+                            <button type="submit" class="btn btn-sm btn-outline-secondary" id="markAllAsReadBtn" style="display: none;">Mark all read</button>
                             @endif
                         </div>
                         <ul class="list-group list-group-flush" id="notificationList">
-                            @forelse(auth()->user()->notifications as $notification)
+                            @forelse(auth()->user()->unreadNotifications as $notification)
                             <li class="list-group-item notification-item {{ $notification->read_at ? '' : 'unread' }}"
                                 data-notification-id="{{ $notification->id }}">
                                 <span class="notification-title">{{ $notification->data['title'] }}</span>
                                 <span class="notification-time fs-6 mt-1 float-start ">{{ $notification->created_at->diffForHumans() }}</span>
-                                <button class="mt-1 badge-customm float-end" id="markAsReadBtn">Mark as Read</button>
+                                <button class="mt-1 badge-customm float-end mark-as-read-btn"
+                                    data-mark-as-read="{{ $notification->id }}"
+                                   >Mark as Read</button>
                             </li>
                             @empty
                             <li class="list-group-item text-center text-muted">No notifications</li>

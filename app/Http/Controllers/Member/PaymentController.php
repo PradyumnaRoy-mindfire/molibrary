@@ -63,7 +63,7 @@ class PaymentController extends Controller
         
 
         //send payment invoice notification
-        // $user->notify(new PaymentInvoiceNotification($charge));
+        $user->notify(new PaymentInvoiceNotification($charge));
 
         if ($charge->status !== 'succeeded') {
             return redirect()->back()->with('payment_failed', 'Payment failed. Please try again.');
@@ -172,7 +172,7 @@ class PaymentController extends Controller
 
         //send payment invoice notification
         $payment = $charge;
-        // auth()->user()->notify(new PaymentInvoiceNotification($payment));
+        auth()->user()->notify(new PaymentInvoiceNotification($payment));
 
         if ($charge->status === 'failed') {
             return redirect()->back()->with('payment_failed', 'Payment failed. Please try again.');

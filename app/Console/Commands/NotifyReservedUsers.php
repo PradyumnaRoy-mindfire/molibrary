@@ -41,7 +41,7 @@ class NotifyReservedUsers extends Command
                 // Sending mail notification with borrow_id
                 $borrow->notified = true;
                 $borrow->save();
-                // $borrow->user->notify(new BookAvailableNotification($borrow));
+                $borrow->user->notify(new BookAvailableNotification($borrow));
             }
         }
 

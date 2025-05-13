@@ -1,0 +1,54 @@
+
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .   #our application is on the root folder that's why '.' is there 
+      dockerfile: Dockerfile   #dockerfile name
+    container_name: molibrary-app
+    ports:
+      - "8000:80"
+    volumes:              #mounting volumes in the folder because whenever we will change any thing in the codebase we want that should be reflect also in the container 
+      - ./:/var/www/html
+    depends_on:             #saying that this service is depends updon the database
+      - db
+    networks:
+      - molibrary-net
+
+  db:
+    image: mysql:8.0
+    container_name: molibrary-db
+    restart: always
+    environment:
+      MYSQL_DATABASE: molibrary
+      MYSQL_ROOT_PASSWORD: mindfire
+      MYSQL_PASSWORD: mindfire
+      MYSQL_USER: root
+    ports:
+      - "3306:3306"
+    volumes:
+      - dbdata:/var/lib/mysql
+    networks:
+      - molibrary-net
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin:5.2.1
+    container_name: molibrary-phpmyadmin
+    restart: always
+    environment:
+      PMA_HOST: db
+      MYSQL_ROOT_PASSWORD: mindfire
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+    networks:
+      - molibrary-net
+
+volumes:
+  dbdata:
+
+networks:
+  molibrary-net:
+    driver: bridge

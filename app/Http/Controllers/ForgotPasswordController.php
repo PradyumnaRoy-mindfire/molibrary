@@ -41,7 +41,7 @@ class ForgotPasswordController extends Controller
             // $otp = 12345;
             session(['otp' => $otp]);
             $data = ['otp' => $otp];
-        //    $user->notify(new ForgotPasswordNotification($data));  // this is good approach
+           $user->notify(new ForgotPasswordNotification($data));  // this is good approach
 
 
 

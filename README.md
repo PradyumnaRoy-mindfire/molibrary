@@ -3,47 +3,139 @@
 
 It supports various user roles (Super Admin, Library Admin, Librarian, and Member) and includes rich features such as real-time notifications, secure authentication, and plan-based subscriptions — offering a seamless experience for both administrators and members.
 
+## 🛠️ Tech Stack
+- **Frontend:** HTML, CSS, Javascript, Bootstrap
+- **Backend:** PHP 8.3(Laravel 12 Framework)
+- **Database:** Mysql(managed via phpMyAdmin)
+- **Templating Engine:** Mysql(managed via phpMyAdmin)
+- **Database:** Mysql(managed via phpMyAdmin)
+- **Authentication:** Laravel's built-in Auth class  
+- **Notifications:** Laravel Notification System (Database channel),Real time notification(Pusher),Mail Notification(Mail trap)  
+- **Payment Integration:** Stripe API  
+- **Task Scheduling:** Laravel Scheduler & Queued Jobs using Supervisor
+- **Version Control:** Git, GitHub  
+- **Deployment:** Docker, AWS
 
-## Learning Laravel
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+## 🌐 Project Setup
+Follow the steps below to set up and run the project on your local machine:
+### 1. Install basic Software:
+- Php 8.3.19
+- Laravel 12
+- Apache 2.4.52
+- Mysql 8.0
+- phpmyadmin 5.2.1
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 1. Clone the Repository
+```bash
+git clone https://github.com/PradyumnaRoy-mindfire/molibrary.git
+cd molibrary
+```
+### 2. Install Composer(2.8.6) and Dependencies
+Open the terminal and run the following commands
+```bash
+composer install
+npm install
+```
+### 3. Copy the Environment File
+```bash
+cp .env.example .env
+```
 
-## Laravel Sponsors
+### 4. Set up Virtual Host
+* ```bash
+    sudo nano /etc/apache2/sites-available/mysite.conf
+    ```
+* ``` bash
+    <VirtualHost *:80>
+        ServerAdmin webmaster@localhost
+        ServerName molibrary.in
+        ServerAlias https://www.molibrary.in
+        DocumentRoot /var/www/html/molibrary/public
+        ErrorLog ${APACHE_LOG_DIR}/error.log
+        CustomLog ${APACHE_LOG_DIR}/access.log combined
+    </VirtualHost>
+    ```
+* ```bash 
+    sudo a2ensite mysite.conf
+    ```
+* ```bash 
+    sudo apache2ctl configtest
+    ```
+* ```bash 
+    sudo systemctl restart apache2
+    ```
+* ```bash 
+    sudo nano /etc/hosts
+    127.0.0.1       molibrary.in
+    ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### 5. Configure Environment Variables
+Open the .env file and set up your database and other credentials:
+```bash
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=your_database_name
+DB_USERNAME=your_database_user
+DB_PASSWORD=your_database_password   
+```
+Configure Mail, Stripe, and other services here.
 
-### Premium Partners
+### 6. Run Migrations
+```bash
+php artisan migrate
+```
+### 7. Compile Frontend Assets
+```bash
+npm run dev
+```
+### 8. Start Laravel Development Server
+```bash
+php artisan serve
+```
+Now open http://molibrary.in in the browser.
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+## 🔑 Role-wise Key Features
 
-## Contributing
+### 🛡️ 1. Super Admin
+- Add and manage multiple libraries
+- Assign Library Admin to each library
+- Activate/Deactivate library accounts
+- View overall system activity and library status
+- Monitor librarian and member activity across libraries
+- Manage system-wide notifications
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+---
 
-## Code of Conduct
+### 🏢 2. Library Admin
+- Approve or reject librarian registration requests
+- Manage library-specific books (add, edit, delete)
+- Track book inventory and availability
+- Manage member subscriptions and approvals
+- View issued/returned book reports
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+---
 
-## Security Vulnerabilities
+### 👨‍🏫 3. Librarian
+- Issue and return or reject books request to members
+- View and manage active book loans
+- Send notification to the members with pending fines 
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+---
 
-## License
+### 👤 4. Member
+- Register and subscribe to a library plan
+- Search and explore available books
+- Borrow and return books based on membership
+- Can reserve a out of stock book and get notification after it becomes available
+- View active loans and due dates
+- Pay fine for the overdue books
+- Get notified about expiry, due books, and reminders
+- Renew or upgrade membership plans
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+
+
+

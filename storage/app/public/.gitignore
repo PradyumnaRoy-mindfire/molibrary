@@ -1,3 +1,6 @@
 *
-!static
 !.gitignore
+!logo.png
+!sounds
+!sounds/turn-page.mp3
+!borrowPopup.png

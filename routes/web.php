@@ -74,6 +74,9 @@ Route::controller(NotificationController::class)->group(function () {
         Route::get('/notifications/{notification}', 'showMembershipExpiryNotification')->name('show.notification');
         Route::post('/notifications/{notificationId}/mark-as-read', 'markAsRead')->name('mark.as.read');
         Route::post('/notifications/mark-all-as-read', 'markAllAsRead')->name('mark.as.read');
+
+            //librarian sending fine notification to the user 
+        Route::get('/librarian/fine/{fine}/notification/{user}', 'sendingFineNotification')->name('librarian.fine.notification');
     });
     
 });

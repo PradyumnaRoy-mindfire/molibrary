@@ -40,21 +40,13 @@ class MembershipExpireNotification extends Notification implements ShouldQueue
      */
     public function toArray(object $notifiable): array
     {
-        $time = now();
-
-        if ($time->isToday()) {
-            $formattedTime = 'Today, ' . $time->format('g A');
-        } elseif ($time->isYesterday()) {
-            $formattedTime = 'Yesterday, ' . $time->format('g A');
-        } else {
-            $formattedTime = $time->format('M d, Y g:i A');  // fallback format
-        }
+        
         return [
             'title' => 'Membership Expiry Reminder',
-            'message' => 'Hello,'.auth()->user()->name.'Your ' . $this->membership->plan->type . ' membership will expire on ' . $this->membership->end_date.' Please renew the membership to get more features',
+            'message' => 'Hello,'.auth()->user()->name.'Your ' . $this->membership->plan->type . ' membership will expire on ' . $this->membership->end_date.' Please renew the membership to get more features as soon as possible.Thanks...',
             'action_url' =>  "http://molibrary.in/memberships/checkout/".$this->membership->plan->id,
             'action_text' => 'Renew Membership',
-            'time' => $formattedTime,
+            'time' => now()->format('M d, Y g:i A'),
         ];
     }
 }

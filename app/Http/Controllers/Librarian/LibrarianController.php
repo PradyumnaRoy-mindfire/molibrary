@@ -8,6 +8,7 @@ use App\Models\Fine;
 use App\Models\Librarian;
 use App\Notifications\BorrowRequestApprovedNotification;
 use App\Notifications\FineNotification;
+use App\Notifications\ReturnAcceptNotification;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -43,7 +44,7 @@ class LibrarianController extends Controller
                 if ($returnDate->gt($dueDate)) {
                     $minutesLate = $dueDate->diffInMinutes($returnDate);
 
-                    $finePerMinute = 10;     //fine amount is 10 rupees per minute
+                    $finePerMinute = 1;     //fine amount is 10 rupees per minute
                     $fineAmount = round($minutesLate * $finePerMinute, 2);
                     $userRequest->fine()->create([
                         'amount' => $fineAmount,
@@ -57,6 +58,9 @@ class LibrarianController extends Controller
                 //update book total_copies
                 $userRequest->book->total_copies += 1;
                 $userRequest->user->book_limit += 1;
+
+                //send a notification to the user that book has been returned
+                $userRequest->user->notify(new ReturnAcceptNotification($userRequest));
             } else {
                 $userRequest->borrow_date = now();
                 $userRequest->due_date = now()->addMinutes(2);

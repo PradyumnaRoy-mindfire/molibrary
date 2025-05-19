@@ -23,7 +23,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($libraries as $library)
+                    @foreach ($libraries as $library)
                     <tr>
                         <td class="text-center">{{ $library->name }}</td>
                         <td class="text-center">{{ $library->location }}</td>
@@ -31,11 +31,8 @@
                         <td class="text-center">{{ $library->admin->name }}</td>
                         <td class="text-center"> @if($library->status == 'open') <span class="badge bg-success">Active</span> @else <span class="badge bg-danger">Inactive</span> @endif </td>
                     </tr>
-                    @empty
-                    <tr>
-                        <td colspan="5">No Library found.</td>
-                    </tr>
-                    @endforelse
+                    
+                    @endforeach
                 </tbody>
             </table>
         </div>

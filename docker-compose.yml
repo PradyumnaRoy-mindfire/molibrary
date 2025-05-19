@@ -10,7 +10,7 @@ services:
     ports:
       - "8000:80"
     volumes:              #mounting volumes in the folder because whenever we will change any thing in the codebase we want that should be reflect also in the container 
-      - ./:/var/www/html
+      - ./:/var/www/html/molibrary
     depends_on:             #saying that this service is depends updon the database
       - db
     networks:
@@ -24,9 +24,9 @@ services:
       MYSQL_DATABASE: molibrary
       MYSQL_ROOT_PASSWORD: mindfire
       MYSQL_PASSWORD: mindfire
-      MYSQL_USER: root
+      MYSQL_USER: myuser
     ports:
-      - "3306:3306"
+      - "3307:3306"
     volumes:
       - dbdata:/var/lib/mysql
     networks:

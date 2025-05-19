@@ -36,7 +36,7 @@ class PendingFineNotification extends Notification
         return [
             'title' => 'Due Fine Reminder Notification',
             'message' => 'Hello, '.$this->fine->borrow->user->name.' You have a pending fine of Rs.'.$this->fine->amount.' for the book '.$this->fine->borrow->book->title.'. and the due date was '.$this->fine->borrow->due_date.'. Please settle the fine as soon as possible to maintain the borrow privileges.Thanks...',
-            'action_url' =>  "http://molibrary.in/borrowing-history/pay-fine/".$this->fine->borrow->id,
+            'action_url' =>  route('pay.fine', $this->fine->borrow->id),
             'action_text' => 'Pay Now',
             'time' => now()->format('M d, Y g:i A'),
         ];

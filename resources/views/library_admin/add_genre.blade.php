@@ -42,6 +42,7 @@
 
                         <div class="d-grid">
                             <button type="submit" class="btn btn-gradient py-3">Add Genre</button>
+                            <a href="javascript:history.back()" class="btn btn-gradient py-3 mt-3">Back</a>
                         </div>
                     </form>
                 </div>

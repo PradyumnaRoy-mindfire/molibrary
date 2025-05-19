@@ -24,7 +24,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($books as $book)
+                    @foreach ($books as $book)
                     <tr>
                         <td class="text-center">{{ $book->title }}</td>
                         <td class="text-center">{{ $book->isbn }}</td>
@@ -32,11 +32,8 @@
                         <td class="text-center">{{ $book->category->name }}</td>
                         <td class="text-center"> {{ $book->borrows_count }} </td>
                     </tr>
-                    @empty
-                    <tr>
-                        <td colspan="5">No book found....</td>
-                    </tr>
-                    @endforelse
+                    
+                    @endforeach
                 </tbody>
             </table>
         </div>

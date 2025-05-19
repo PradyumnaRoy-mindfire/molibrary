@@ -23,7 +23,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @forelse ($payments as $payment)
+                    @foreach ($payments as $payment)
                     <tr>
                         <td>{{ $payment->borrow->user->name }}</td>
                         <td>{{ $payment->borrow->user->email }}</td>
@@ -31,11 +31,8 @@
                         <td>{{ $payment->amount }}</td>
                         <td>{{ $payment->status }}</td>
                     </tr>
-                    @empty
-                    <tr>
-                        <td colspan="5">No payments found.</td>
-                    </tr>
-                    @endforelse
+                    
+                    @endforeach
                 </tbody>
             </table>
         </div>
